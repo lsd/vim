@@ -1,0 +1,9 @@
+/tmp/*.swp
+/backups/*~
+/bundle/*
+!/bundle/neobundle.vim
+/bundle/neobundle.vim/.git
+/autoload/*
+/plugin/*
+/doc/tags
+/doc/*.txt

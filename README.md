@@ -31,4 +31,3 @@ CONSOLE VIM?
 I disable the left/right sidebars when opening vim in a console. They only auto
 open in MacVim because of how I use MacVim and vim. If you want these buffers
 to open with vim, remove the if has("gui_running") clause
-

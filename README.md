@@ -16,7 +16,7 @@ https://github.com/Shougo/neobundle.vim
 
 SCREENSHOT
 ===
-![Alt text](http://raw.github.com/lsd/vim/master/screenshot-mac.png "MacVim 7.3 colorscheme wombat on 10.8.2 with Inconsolata:18")
+![Alt text](https://raw.github.com/lsd/vim/master/screenshot-mac.png "MacVim 7.3 colorscheme wombat on 10.8.2 with Inconsolata:18")
 
 INSTALLATION
 ===

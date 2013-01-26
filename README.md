@@ -16,7 +16,7 @@ https://github.com/Shougo/neobundle.vim
 
 SCREENSHOT
 ===
-![Alt text](screenshot-mac.png "MacVim 7.3 colorscheme wombat on 10.8.2 with Inconsolata:18")
+![Alt text](/lsd/vim/blob/master/screenshot-mac.png "MacVim 7.3 colorscheme wombat on 10.8.2 with Inconsolata:18")
 
 INSTALLATION
 ===
@@ -24,9 +24,7 @@ Clone repo, symlink ~/.vimrc to repo/vimrc and ~/.vim to repo
 
 Install the Inconsolata font in the fonts dir or remove the guifont line
 
-For convenience, I've included the plugins in the bundle/ dir. These may be old!
-Launch MacVim or vim and run :NeoBundleUpdate to update the enclosed plugins
-
+Launch MacVim or vim and run :NeoBundleInstall to install the plugins
 
 CONSOLE VIM?
 ===

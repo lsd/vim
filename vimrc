@@ -1,3 +1,38 @@
+" Dim inactive windows using 'colorcolumn' setting
+" This tends to slow down redrawing, but is very useful.
+" Based on https://groups.google.com/d/msg/vim_use/IJU-Vk-QLJE/xz4hjPjCRBUJ
+" XXX: this will only work with lines containing text (i.e. not '~')
+function! s:DimInactiveWindows()
+  for i in range(1, tabpagewinnr(tabpagenr(), '$'))
+    let l:range = ""
+    if i != winnr()
+      if &wrap
+        " HACK: when wrapping lines is enabled, we use the maximum number
+        " of columns getting highlighted. This might get calculated by
+        " looking for the longest visible line and using a multiple of
+        " winwidth().
+        let l:width=256 " max
+      else
+        let l:width=winwidth(i)
+      endif
+      let l:range = join(range(1, l:width), ',')
+    endif
+    call setwinvar(i, '&colorcolumn', l:range)
+  endfor
+endfunction
+augroup DimInactiveWindows
+  au!
+  au WinEnter * call s:DimInactiveWindows()
+  au WinEnter * set cursorline
+  au WinLeave * set nocursorline
+augroup END
+
+
+
+
+
+
+
 " http://github.com/lsd/vim - Updated 01/26/2012
 " I use MacVim but this setup should be OS-agnostic.
 " Extraneous buffers are enabled in MacVim but not console 
@@ -49,6 +84,7 @@ endif
 call neobundle#rc(expand('~/.vim/bundle/'))
 " After install, turn shell ~/.vim/bundle/vimproc, (n,g)make -f your_machines_makefile
 NeoBundle 'Shougo/vimproc'
+NeoBundle 'vim-scripts/Txtfmt-The-Vim-Highlighter'
 " Original repos (vim.org) on github
 NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'vim-ruby/vim-ruby'
@@ -94,13 +130,17 @@ nnoremap <F2> :set invpaste paste?<CR>
 nnoremap <F4> :buffers<CR>:buffer<Space>
 nnoremap <F5> :set wrap!<CR>
 nnoremap <F6> :TlistToggle<CR>
+nnoremap <F7> :!ruby -c %<CR>
 nnoremap <F8> :UndotreeToggle<cr> 
 nnoremap <F9> :GundoToggle<CR>
 nnoremap <F12> :so ~/.vimrc<CR>
 nnoremap <silent> <C-J> :bp<CR>
 nnoremap <silent> <C-K> :bn<CR>
 nnoremap <silent> <C-T> :CommandT<CR>
-nnoremap <esc><esc><esc><esc> :qa!<CR>
+nnoremap <esc><esc><esc> :qa<CR>
+nnoremap <ESC><F1><F2> :qa!<CR>
+"nnoremap <D-w> :qa<CR>
+"nnoremap <D-w><D-w><D-w> :qa!<CR>
 nnoremap :qw :qa<CR>
 nnoremap :qW :qa<CR>
 nnoremap :Qw :qa<CR>
@@ -115,7 +155,7 @@ let Tlist_Process_File_Always = 1
 let Tlist_Show_Menu = 1
 let Tlist_Sort_Type = "name"
 let Tlist_Use_Right_Window = 1
-let Tlist_WinWidth = 20
+let Tlist_WinWidth = 5
 
 let g:indent_guides_guide_size = 1 
 let g:indent_guides_enable_on_vim_startup = 1
@@ -142,12 +182,15 @@ if has("gui_running")
   let g:nerdtree_tabs_autoclose = 1
 
   " Setup the buffers
+  "autocmd VimEnter <buffer=1> hi ColorColumn guibg=#111111
+  "autocmd VimEnter <buffer=1> call s:DimInactiveWindows()
   autocmd VimEnter * NERDTreeTabsToggle
   autocmd VimEnter * wincmd c
   autocmd VimEnter * BuffergatorToggle
   autocmd VimEnter * TlistToggle
   autocmd VimEnter * wincmd b
   autocmd VimEnter * wincmd h
+  
 
   " Toggle left sidebar http://justmao.name/life/integrate-nerdtree-and-buffergator/
   fu! LSidebarToggle()
@@ -173,8 +216,8 @@ if has("gui_running")
   set guioptions-=L
   set guioptions-=r
   set guioptions-=R
-  colors wombat
-  set guifont=Inconsolata:h18
+  colors hybrid "wombat
+  set guifont=Inconsolata:h16
 else
     set bg=dark
     colors zenburn
@@ -184,18 +227,25 @@ set vb
 syntax on
 set tags=./tags;/
 
+" TODO organize these and release as a vim-code-injector plugin
+" The maps below need to be hit very fast.
 inoremap <??    <?php echo  ?><Left><Left><Left>
 inoremap <?     <?php  ?><Left><Left><Left>
 inoremap <%     <%  %><Left><Left><Left>
 inoremap <%%    <%=  %><Left><Left><Left>
+
+inoremap ccl    console.log();<Left><Left>
+inoremap cc'    console.log('');<Left><Left><Left>
+inoremap cc"    console.log("");<Left><Left><Left>
+
+inoremap rri    raise [].to_yaml<Left><Left><Left><Left><Left><Left><Left><Left><Left>
+inoremap dbg    debugger
 
 inoremap {      {}<Left>
 inoremap {<CR>  {<CR>}<Esc>O
 inoremap {{     {
 inoremap {}     {}
 inoremap <silent> }   }<ESC>
-
-
 
 
 " EVERYTHING BELOW IS EXPERIMENTAL

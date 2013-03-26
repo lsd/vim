@@ -48,6 +48,8 @@ set backspace=indent,eol,start
 set history=1000
 set nowrap
 set number
+set lines=65
+set columns=180
 set copyindent
 set ignorecase
 set smartcase
@@ -91,6 +93,7 @@ NeoBundle 'vim-ruby/vim-ruby'
 NeoBundle 'Lokaltog/vim-easymotion'
 NeoBundle 'jeetsukumaran/vim-buffergator'
 NeoBundle 'tilljoel/vim-automatic-ctags'
+NeoBundle 'git://github.com/kchmck/vim-coffee-script.git'
 " vim-scripts repos
 NeoBundle 'L9'
 NeoBundle 'FuzzyFinder'
@@ -118,6 +121,7 @@ endif
 " ESC x4 (fast) - quit all!
 " F1 - toggle left (nerd/buffergator)
 " F2 - pastetoggle
+" F3 - save/run current working ruby file
 " F4 - list buffers (bufexplorer) 
 " F5 - Toggle wrap!
 " F6 - TagListToggle
@@ -127,6 +131,7 @@ endif
 nnoremap <esc> :set hlsearch!<CR><esc>
 nnoremap <F1> :NERDTreeTabsToggle<CR>
 nnoremap <F2> :set invpaste paste?<CR>
+nnoremap <F3> :w<CR>:!ruby %<CR>
 nnoremap <F4> :buffers<CR>:buffer<Space>
 nnoremap <F5> :set wrap!<CR>
 nnoremap <F6> :TlistToggle<CR>
@@ -137,7 +142,7 @@ nnoremap <F12> :so ~/.vimrc<CR>
 nnoremap <silent> <C-J> :bp<CR>
 nnoremap <silent> <C-K> :bn<CR>
 nnoremap <silent> <C-T> :CommandT<CR>
-nnoremap <silent> <C-W><C-W> :qa!<CR>
+nnoremap <silent> <C-Q><C-W><C-Q> :qa!<CR>
 nnoremap <esc><esc><esc> :qa<CR>
 nnoremap <ESC><F1><F2> :qa!<CR>
 "nnoremap <D-w> :qa<CR>

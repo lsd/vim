@@ -35,8 +35,8 @@ augroup END
 
 " http://github.com/lsd/vim - Updated 01/26/2012
 " I use MacVim but this setup should be OS-agnostic.
-" Extraneous buffers are enabled in MacVim but not console 
-" vim, for which toggle keys exist to open up NERDTree, 
+" Extraneous buffers are enabled in MacVim but not console
+" vim, for which toggle keys exist to open up NERDTree,
 " Taglist, MiniBuffexplorer, etc.
 
 set t_Co=256
@@ -48,8 +48,6 @@ set backspace=indent,eol,start
 set history=1000
 set nowrap
 set number
-set lines=65
-set columns=180
 set copyindent
 set ignorecase
 set smartcase
@@ -122,7 +120,7 @@ endif
 " F1 - toggle left (nerd/buffergator)
 " F2 - pastetoggle
 " F3 - save/run current working ruby file
-" F4 - list buffers (bufexplorer) 
+" F4 - list buffers (bufexplorer)
 " F5 - Toggle wrap!
 " F6 - TagListToggle
 " F8 - UndoTreeToggle
@@ -136,7 +134,7 @@ nnoremap <F4> :buffers<CR>:buffer<Space>
 nnoremap <F5> :set wrap!<CR>
 nnoremap <F6> :TlistToggle<CR>
 nnoremap <F7> :!ruby -c %<CR>
-nnoremap <F8> :UndotreeToggle<cr> 
+nnoremap <F8> :UndotreeToggle<cr>
 nnoremap <F9> :GundoToggle<CR>
 nnoremap <F12> :so ~/.vimrc<CR>
 nnoremap <silent> <C-J> :bp<CR>
@@ -151,7 +149,7 @@ nnoremap :qw :qa<CR>
 nnoremap :qW :qa<CR>
 nnoremap :Qw :qa<CR>
 nnoremap :QW :qa<CR>
- 
+
 let g:Powerline_symbols = 'fancy'
 
 let Tlist_Exit_OnlyWindow = 1
@@ -163,15 +161,17 @@ let Tlist_Sort_Type = "name"
 let Tlist_Use_Right_Window = 1
 let Tlist_WinWidth = 5
 
-let g:indent_guides_guide_size = 1 
+let g:indent_guides_guide_size = 1
 let g:indent_guides_enable_on_vim_startup = 1
 let g:indent_guides_auto_colors = 0
 autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=#222222 ctermbg=232
 autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=#222222 ctermbg=232
- 
+
 au BufRead,BufNewFile *.as set ft=actionscript
- 
+
 if has("gui_running")
+  set lines=65
+  set columns=180
   " Split VIEWPORT horizontally, with new split on the top
   " https://github.com/jeetsukumaran/vim-buffergator/blob/master/doc/buffergator.txt
   let g:buffergator_viewport_split_policy = "b"
@@ -180,19 +180,19 @@ if has("gui_running")
   let g:buffergator_split_size = 20
   let g:buffergator_autoupdate = 1
   let g:buffergator_display_regime = 'bufname'
- 
+
   " http://mg.pov.lt/vim/doc/NERD_tree.txt
   let NERDTreeIgnore = ['\.swp$', '\.DS_Store$','\.git$','\.vim$', '\~$', 'tags']
   let NERDTreeMouseMode = 3
   let NERDTreeShowLineNumbers = 0
   let NERDTreeChDirMode = 2
-  let g:NERDTreeShowHidden = 0 
+  let g:NERDTreeShowHidden = 0
   "let g:nerdtree_tabs_focus_on_files = 1
   "let g:nerdtree_tabs_open_on_new_tab = 1
   let g:nerdtree_tabs_meaningful_tab_names = 1
   let g:nerdtree_tabs_autoclose = 1
-  let g:nerdtree_tabs_synchronize_view = 0  
-  let g:NERDTreeWinSize = 35 
+  let g:nerdtree_tabs_synchronize_view = 0
+  let g:NERDTreeWinSize = 35
   let g:nerdtree_tabs_open_on_console_startup = 0
   let g:nerdtree_tabs_open_on_gui_startup = 1
   let g:nerdtree_tabs_no_startup_for_diff = 1
@@ -205,9 +205,9 @@ if has("gui_running")
   autocmd VimEnter * wincmd c
   autocmd VimEnter * BuffergatorToggle
   "autocmd VimEnter * TlistToggle
-"  autocmd VimEnter * wincmd b
+  "autocmd VimEnter * wincmd b
   autocmd VimEnter * wincmd b
-  
+
 
   " Toggle left sidebar http://justmao.name/life/integrate-nerdtree-and-buffergator/
   fu! LSidebarToggle()
@@ -275,7 +275,7 @@ inoremap <silent> }   }<ESC>
 " \:if '}}'=="<C-R>=escape(@0,'"\')<CR>"<BAR>
 
 "au syntax * cal rainbow_parentheses#activate()
-"au filetypedetect BufRead,BufNewFile *.txt setfiletype txtfmt 
+"au filetypedetect BufRead,BufNewFile *.txt setfiletype txtfmt
 
 " Experimenting with neocomplcache
 " Disable AutoComplPop.

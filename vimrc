@@ -5,11 +5,8 @@
 " I use MacVim but this setup should be OS-agnostic.
 " Please contribute/contact if you encounter problems.
 "
-" FEATURES
-" (TODO)
 " Extraneous buffers enabled in MacVim (not console.)
-" for which toggle keys exist to open up NERDTree,
-" Taglist, MiniBuffexplorer, etc.
+" Note: This cfg maps all function keys, use/edit as needed
 
 set t_Co=256
 set nocompatible
@@ -43,9 +40,13 @@ set foldmethod=indent
 set foldnestmax=10
 set nofoldenable
 set foldlevel=1
+set bg=dark
+set vb
+colors hybrid
 set backup
 set backupdir=~/.vim/backups
 set directory=~/.vim/tmp
+set tags=./tags;/
 
 " Setup NeoBundle (don't set neobundle setting in .gvimrc)
 filetype off " REQUIRED
@@ -87,19 +88,18 @@ if neobundle#exists_not_installed_bundles()
   echomsg 'Execute ":NeoBundleInstall"'
 endif
 
-"" Function key binding overview
-" ESC - Toggle search highlight on/off
-" ESC x4 (fast) - quit all!
-" F1 - toggle left (nerd/buffergator)
-" F2 - pastetoggle
-" F3 - save/run current working ruby file
-" F4 - list buffers (bufexplorer)
-" F5 - Toggle wrap!
-" F6 - TagListToggle
-" F8 - UndoTreeToggle
-" F9 - Gundo (undo tree)
-" F12 - re-source .vimrc
-nnoremap <esc> :set hlsearch!<CR><esc>
+"Function key binding overview
+" ESC Toggle search highlight on/off
+" F1  Toggle left (nerd/buffergator) TODO Fn keys should be univeral
+" F2  Pastetoggle
+" F3  Save/run current ruby file TODO Fn keys should be universal
+" F4  List buffers (bufexplorer)
+" F5  Toggle wrap!
+" F6  TagListToggle TODO currently OFF
+" F8  UndoTreeToggle TODO 2 unto trees?
+" F9  Gundo (undo tree) TODO ^^
+" F12 Re-source .vimrc
+nnoremap <ESC> :set hlsearch!<CR><esc>
 nnoremap <F1> :NERDTreeTabsToggle<CR>
 nnoremap <F2> :set invpaste paste?<CR>
 nnoremap <F3> :w<CR>:!ruby %<CR>
@@ -110,14 +110,13 @@ nnoremap <F7> :!ruby -c %<CR>
 nnoremap <F8> :UndotreeToggle<cr>
 nnoremap <F9> :GundoToggle<CR>
 nnoremap <F12> :so ~/.vimrc<CR>
+
+nnoremap <silent> <C-T> :CommandT<CR>
 nnoremap <silent> <C-J> :bp<CR>
 nnoremap <silent> <C-K> :bn<CR>
-nnoremap <silent> <C-T> :CommandT<CR>
-nnoremap <silent> <C-Q><C-W><C-Q> :qa!<CR>
-nnoremap <esc><esc><esc> :qa<CR>
-nnoremap <ESC><F1><F2> :qa!<CR>
-"nnoremap <D-w> :qa<CR>
-"nnoremap <D-w><D-w><D-w> :qa!<CR>
+
+" TODO: !!! Cmd+W should close ALL buffers.
+nnoremap <silent> <C-W><C-W>0 :qa!<CR>
 nnoremap :qw :qa<CR>
 nnoremap :qW :qa<CR>
 nnoremap :Qw :qa<CR>
@@ -142,11 +141,11 @@ autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=#222222 ctermbg=232
 
 au BufRead,BufNewFile *.as set ft=actionscript
 
-set bg=dark
 if has("gui_running")
   set lines=65
-  set columns=180
-  " Split VIEWPORT horizontally, with new split on the top
+  set columns=160
+
+  " Split VIEWPORT horizontally new split on top
   " https://github.com/jeetsukumaran/vim-buffergator/blob/master/doc/buffergator.txt
   let g:buffergator_viewport_split_policy = "b"
   let g:buffergator_suppress_keymaps = 0
@@ -172,14 +171,11 @@ if has("gui_running")
   let g:nerdtree_tabs_no_startup_for_diff = 1
   let g:nerdtree_tabs_smart_startup_focus = 1
 
-  " Setup the buffers
-  "autocmd VimEnter <buffer=1> hi ColorColumn guibg=#111111
-  "autocmd VimEnter <buffer=1> call s:DimInactiveWindows()
+  autocmd VimEnter <buffer=1> hi ColorColumn guibg=#111111
+
   autocmd VimEnter * NERDTreeTabsToggle
   autocmd VimEnter * wincmd c
   autocmd VimEnter * BuffergatorToggle
-  "autocmd VimEnter * TlistToggle
-  "autocmd VimEnter * wincmd b
   autocmd VimEnter * wincmd b
 
   " Toggle left sidebar http://justmao.name/life/integrate-nerdtree-and-buffergator/
@@ -201,7 +197,7 @@ if has("gui_running")
   map <Leader>} :blast<cr>
   map <Leader>{ :bfirst<cr>
 
-  " Remove toolbar, left scrollbar and right scrollbar
+  " Remove Tool+scroll bars
   set guioptions-=T
   set guioptions-=l
   set guioptions-=L
@@ -212,27 +208,24 @@ if has("gui_running")
   "g:solarized_visibility= "high"
   "g:solarized_hitrail   = 1
   "colors solarized
-  colors hybrid
-else
-    colors hybrid
 endif
 
-set vb
+
 syntax on
-set tags=./tags;/
 
-" TODO organize these and release as a vim-code-injector plugin
-" The maps below need to be hit very fast.
-inoremap <??    <?php echo  ?><Left><Left><Left>
-inoremap <?     <?php  ?><Left><Left><Left>
-inoremap <%     <%  %><Left><Left><Left>
-inoremap <%%    <%=  %><Left><Left><Left>
 
+" INJECTIONS (Delay is set low, meaning: hit these keys fast)
+" TODO package as plugin
 inoremap {      {}<Left>
 inoremap {<CR>  {<CR>}<Esc>O
 inoremap {{     {
 inoremap {}     {}
 inoremap <silent> }   }<ESC>
+
+inoremap <?     <?php  ?><Left><Left><Left>
+inoremap <??    <?php echo  ?><Left><Left><Left>
+inoremap <%     <%  %><Left><Left><Left>
+inoremap <%%    <%=  %><Left><Left><Left>
 
 inoremap ccl    console.log();<Left><Left>
 inoremap cc'    console.log('');<Left><Left><Left>
@@ -242,20 +235,8 @@ inoremap rri    raise [].to_yaml<Left><Left><Left><Left><Left><Left><Left><Left>
 inoremap brp    binding.remote_pry
 
 
-" EVERYTHING BELOW IS EXPERIMENTAL
-"
-" \:let tmp0=&clipboard <BAR>
-" \let &clipboard=''<BAR>
-" \let tmp1=@"<BAR>
-" \let tmp2=@0<CR>
-" \y2l
-" \:if '}}'=="<C-R>=escape(@0,'"\')<CR>"<BAR>
-
-"au syntax * cal rainbow_parentheses#activate()
-"au filetypedetect BufRead,BufNewFile *.txt setfiletype txtfmt
-
-" Experimenting with neocomplcache
-" Disable AutoComplPop.
+" NOTE: All below is EXPERIMENTAL and probably breaks something
+" neocomplcache - disable AutoComplPop
 let g:acp_enableAtStartup = 1
 let g:neocomplcache_enable_at_startup = 1
 let g:neocomplcache_enable_smart_case = 1
@@ -283,9 +264,9 @@ inoremap <expr><C-l>     neocomplcache#complete_common_string()
 
 " Recommended key-mappings.
 " <CR>: close popup and save indent
+" <C-h>, <BS>: close popup and delete backword char
 inoremap <expr><CR>  neocomplcache#smart_close_popup() . "\<CR>"
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
-" <C-h>, <BS>: close popup and delete backword char
 inoremap <expr><C-h> neocomplcache#smart_close_popup()."\<C-h>"
 inoremap <expr><BS> neocomplcache#smart_close_popup()."\<C-h>"
 inoremap <expr><C-y>  neocomplcache#close_popup()
@@ -349,3 +330,13 @@ augroup DimInactiveWindows
   au WinEnter * set cursorline
   au WinLeave * set nocursorline
 augroup END
+
+" \:let tmp0=&clipboard <BAR>
+" \let &clipboard=''<BAR>
+" \let tmp1=@"<BAR>
+" \let tmp2=@0<CR>
+" \y2l
+" \:if '}}'=="<C-R>=escape(@0,'"\')<CR>"<BAR>
+
+"au syntax * cal rainbow_parentheses#activate()
+"au filetypedetect BufRead,BufNewFile *.txt setfiletype txtfmt

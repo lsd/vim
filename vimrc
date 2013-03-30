@@ -1,42 +1,14 @@
-" Dim inactive windows using 'colorcolumn' setting
-" This tends to slow down redrawing, but is very useful.
-" Based on https://groups.google.com/d/msg/vim_use/IJU-Vk-QLJE/xz4hjPjCRBUJ
-" XXX: this will only work with lines containing text (i.e. not '~')
-function! s:DimInactiveWindows()
-  for i in range(1, tabpagewinnr(tabpagenr(), '$'))
-    let l:range = ""
-    if i != winnr()
-      if &wrap
-        " HACK: when wrapping lines is enabled, we use the maximum number
-        " of columns getting highlighted. This might get calculated by
-        " looking for the longest visible line and using a multiple of
-        " winwidth().
-        let l:width=256 " max
-      else
-        let l:width=winwidth(i)
-      endif
-      let l:range = join(range(1, l:width), ',')
-    endif
-    call setwinvar(i, '&colorcolumn', l:range)
-  endfor
-endfunction
-augroup DimInactiveWindows
-  au!
-  au WinEnter * call s:DimInactiveWindows()
-  au WinEnter * set cursorline
-  au WinLeave * set nocursorline
-augroup END
-
-
-
-
-
-
-
-" http://github.com/lsd/vim - Updated 01/26/2012
+" Vim web development config
+" http://github.com/lsd/vim
+" Updated 03/30/2013
+"
 " I use MacVim but this setup should be OS-agnostic.
-" Extraneous buffers are enabled in MacVim but not console
-" vim, for which toggle keys exist to open up NERDTree,
+" Please contribute/contact if you encounter problems.
+"
+" FEATURES
+" (TODO)
+" Extraneous buffers enabled in MacVim (not console.)
+" for which toggle keys exist to open up NERDTree,
 " Taglist, MiniBuffexplorer, etc.
 
 set t_Co=256
@@ -85,6 +57,7 @@ call neobundle#rc(expand('~/.vim/bundle/'))
 " After install, turn shell ~/.vim/bundle/vimproc, (n,g)make -f your_machines_makefile
 NeoBundle 'Shougo/vimproc'
 NeoBundle 'vim-scripts/Txtfmt-The-Vim-Highlighter'
+NeoBundle 'altercation/vim-colors-solarized'
 " Original repos (vim.org) on github
 NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'vim-ruby/vim-ruby'
@@ -169,6 +142,7 @@ autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=#222222 ctermbg=232
 
 au BufRead,BufNewFile *.as set ft=actionscript
 
+set bg=dark
 if has("gui_running")
   set lines=65
   set columns=180
@@ -179,7 +153,7 @@ if has("gui_running")
   let g:buffergator_autodismiss_on_select = 0
   let g:buffergator_split_size = 20
   let g:buffergator_autoupdate = 1
-  let g:buffergator_display_regime = 'bufname'
+  let g:buffergator_display_regime = 'basename'
 
   " http://mg.pov.lt/vim/doc/NERD_tree.txt
   let NERDTreeIgnore = ['\.swp$', '\.DS_Store$','\.git$','\.vim$', '\~$', 'tags']
@@ -208,13 +182,13 @@ if has("gui_running")
   "autocmd VimEnter * wincmd b
   autocmd VimEnter * wincmd b
 
-
   " Toggle left sidebar http://justmao.name/life/integrate-nerdtree-and-buffergator/
   fu! LSidebarToggle()
     let b = bufnr("%")
     execute "NERDTreeToggle | BuffergatorToggle"
     execute ( bufwinnr(b) . "wincmd w" )
   endf
+
   map  <silent> <Leader>w  <esc>:call LSidebarToggle()<cr>
   map! <silent> <Leader>w  <esc>:call LSidebarToggle()<cr>
 
@@ -233,11 +207,14 @@ if has("gui_running")
   set guioptions-=L
   set guioptions-=r
   set guioptions-=R
-  colors hybrid "wombat
   set guifont=Inconsolata:h16
+  "g:solarized_contrast  = "high"
+  "g:solarized_visibility= "high"
+  "g:solarized_hitrail   = 1
+  "colors solarized
+  colors hybrid
 else
-    set bg=dark
-    colors zenburn
+    colors hybrid
 endif
 
 set vb
@@ -251,18 +228,18 @@ inoremap <?     <?php  ?><Left><Left><Left>
 inoremap <%     <%  %><Left><Left><Left>
 inoremap <%%    <%=  %><Left><Left><Left>
 
-inoremap ccl    console.log();<Left><Left>
-inoremap cc'    console.log('');<Left><Left><Left>
-inoremap cc"    console.log("");<Left><Left><Left>
-
-inoremap rri    raise [].to_yaml<Left><Left><Left><Left><Left><Left><Left><Left><Left>
-inoremap dbg    debugger
-
 inoremap {      {}<Left>
 inoremap {<CR>  {<CR>}<Esc>O
 inoremap {{     {
 inoremap {}     {}
 inoremap <silent> }   }<ESC>
+
+inoremap ccl    console.log();<Left><Left>
+inoremap cc'    console.log('');<Left><Left><Left>
+inoremap cc"    console.log("");<Left><Left><Left>
+
+inoremap rri    raise [].to_yaml<Left><Left><Left><Left><Left><Left><Left><Left><Left>
+inoremap brp    binding.remote_pry
 
 
 " EVERYTHING BELOW IS EXPERIMENTAL
@@ -345,3 +322,30 @@ smap <expr><TAB> neosnippet#expandable() ? "\<Plug>(neosnippet_expand_or_jump)" 
 if has('conceal')
   set conceallevel=2 concealcursor=i
 endif
+
+" Dim inactive windows using 'colorcolumn'. May slow down redrawing on old machines
+" Based on https://groups.google.com/d/msg/vim_use/IJU-Vk-QLJE/xz4hjPjCRBUJ
+function! s:DimInactiveWindows()
+  for i in range(1, tabpagewinnr(tabpagenr(), '$'))
+    let l:range = ""
+    if i != winnr()
+      if &wrap
+        " HACK: when wrapping lines is enabled, we use the maximum number
+        " of columns getting highlighted. This might get calculated by
+        " looking for the longest visible line and using a multiple of
+        " winwidth().
+        let l:width=256 " max
+      else
+        let l:width=winwidth(i)
+      endif
+      let l:range = join(range(1, l:width), ',')
+    endif
+    call setwinvar(i, '&colorcolumn', l:range)
+  endfor
+endfunction
+augroup DimInactiveWindows
+  au!
+  au WinEnter * call s:DimInactiveWindows()
+  au WinEnter * set cursorline
+  au WinLeave * set nocursorline
+augroup END

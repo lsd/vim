@@ -1,4 +1,4 @@
-/tmp/*.swp
+/tmp/
 /backups/*~
 /bundle/*
 !/bundle/neobundle.vim

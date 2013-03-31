@@ -59,6 +59,7 @@ call neobundle#rc(expand('~/.vim/bundle/'))
 NeoBundle 'Shougo/vimproc'
 NeoBundle 'vim-scripts/Txtfmt-The-Vim-Highlighter'
 NeoBundle 'altercation/vim-colors-solarized'
+NeoBundle 'plasticboy/vim-markdown'
 " Original repos (vim.org) on github
 NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'vim-ruby/vim-ruby'
@@ -122,6 +123,7 @@ nnoremap :qW :qa<CR>
 nnoremap :Qw :qa<CR>
 nnoremap :QW :qa<CR>
 
+let g:vim_markdown_folding_disabled=1
 let g:Powerline_symbols = 'fancy'
 
 let Tlist_Exit_OnlyWindow = 1

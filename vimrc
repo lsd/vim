@@ -42,7 +42,7 @@ set nofoldenable
 set foldlevel=1
 set bg=dark
 set vb
-colors hybrid
+
 set backup
 set backupdir=~/.vim/backups
 set directory=~/.vim/tmp
@@ -209,9 +209,10 @@ if has("gui_running")
   "g:solarized_contrast  = "high"
   "g:solarized_visibility= "high"
   "g:solarized_hitrail   = 1
-  "colors solarized
+  colors hybrid
+else
+  colors zenburn
 endif
-
 
 syntax on
 

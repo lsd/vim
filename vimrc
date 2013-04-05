@@ -97,18 +97,18 @@ endif
 " F4  List buffers (bufexplorer)
 " F5  Toggle wrap!
 " F6  TagListToggle TODO currently OFF
-" F8  UndoTreeToggle TODO 2 unto trees?
-" F9  Gundo (undo tree) TODO ^^
+" F8  Spellcheck toggle on/off
+" F9  Gundo Undo Tree
 " F12 Re-source .vimrc
 nnoremap <ESC> :set hlsearch!<CR><esc>
 nnoremap <F1> :NERDTreeTabsToggle<CR>
 nnoremap <F2> :set invpaste paste?<CR>
-nnoremap <F3> :w<CR>:!ruby %<CR>
+nnoremap <F3> :!ruby -c %; :w<CR>:!ruby %<CR>
 nnoremap <F4> :buffers<CR>:buffer<Space>
 nnoremap <F5> :set wrap!<CR>
 nnoremap <F6> :TlistToggle<CR>
 nnoremap <F7> :!ruby -c %<CR>
-nnoremap <F8> :UndotreeToggle<cr>
+nnoremap <F8> :set spell!<CR>
 nnoremap <F9> :GundoToggle<CR>
 nnoremap <F12> :so ~/.vimrc<CR>
 

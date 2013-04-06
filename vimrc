@@ -40,13 +40,21 @@ set foldmethod=indent
 set foldnestmax=10
 set nofoldenable
 set foldlevel=1
+set tags=./tags;/
 set bg=dark
 set vb
 
-set backup
-set backupdir=~/.vim/backups
-set directory=~/.vim/tmp
-set tags=./tags;/
+if $VIM_NOBACKUPS == "true"
+	echo ""
+	echo "NOTICE: vim backups temporarily disabled. (VIM_NOBACKUPS == true)"
+	echo "_________________________________________________________________"
+  set nobackup
+  set nowritebackup
+else
+  set backup
+  set backupdir=~/.vim/backups
+  set directory=~/.vim/tmp
+endif
 
 " Setup NeoBundle (don't set neobundle setting in .gvimrc)
 filetype off " REQUIRED

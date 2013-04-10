@@ -1,12 +1,13 @@
 " Vim web development config
 " http://github.com/lsd/vim
-" Updated 03/30/2013
-"
+" Updated 04/08/2013
+
 " I use MacVim but this setup should be OS-agnostic.
 " Please contribute/contact if you encounter problems.
-"
+
 " Extraneous buffers enabled in MacVim (not console.)
 " Note: This cfg maps all function keys, use/edit as needed
+" FIXME typing on console vim is very sluggish
 
 set t_Co=256
 set nocompatible
@@ -21,8 +22,10 @@ set copyindent
 set ignorecase
 set smartcase
 set showmatch
+set showbreak=↪
+set showmode
 set cursorline
-set cmdheight=1
+set cmdheight=2
 set mat=5
 set scrolloff=4
 set virtualedit=all
@@ -33,14 +36,19 @@ set gdefault
 set hlsearch
 set incsearch
 set formatoptions+=1
+
+" Does this belong here or in the TOGGLE below?
 set pastetoggle=<F2>
-set showmode
+
 set complete-=k complete+=k
 set foldmethod=indent
 set foldnestmax=10
 set nofoldenable
 set foldlevel=1
-set tags=./tags;/
+
+" TODO make sure gem-ctags is being used
+set tags=./.tags;./tags;./
+
 set bg=dark
 set vb
 
@@ -63,29 +71,45 @@ if has('vim_starting')
 endif
 
 call neobundle#rc(expand('~/.vim/bundle/'))
-" After install, turn shell ~/.vim/bundle/vimproc, (n,g)make -f your_machines_makefile
+" After install, exec ~/.vim/bundle/vimproc, (n,g)make -f your_machines_makefile
+NeoBundle 'Shougo/neocomplcache.git'
+NeoBundle 'Shougo/neosnippet.git'
 NeoBundle 'Shougo/vimproc'
-NeoBundle 'vim-scripts/Txtfmt-The-Vim-Highlighter'
-NeoBundle 'altercation/vim-colors-solarized'
+NeoBundle 'Shougo/vimshell'
+NeoBundle 'kien/ctrlp.vim.git'
+NeoBundle 'honza/vim-snippets'
+NeoBundle 'vim-ruby/vim-ruby'
 NeoBundle 'plasticboy/vim-markdown'
 " Original repos (vim.org) on github
 NeoBundle 'tpope/vim-fugitive'
-NeoBundle 'vim-ruby/vim-ruby'
+NeoBundle 'tpope/vim-unimpaired'
+NeoBundle 'tpope/vim-abolish'
+NeoBundle 'tpope/vim-surround'
+NeoBundle 'tpope/vim-bundler'
+NeoBundle 'tpope/vim-surround'
+NeoBundle 'tpope/vim-characterize'
+NeoBundle 'tpope/vim-haml'
+NeoBundle 'tpope/vim-rake'
 NeoBundle 'Lokaltog/vim-easymotion'
 NeoBundle 'jeetsukumaran/vim-buffergator'
 NeoBundle 'tilljoel/vim-automatic-ctags'
 NeoBundle 'git://github.com/kchmck/vim-coffee-script.git'
+NeoBundle 'vim-scripts/Txtfmt-The-Vim-Highlighter'
+NeoBundle 'altercation/vim-colors-solarized'
 " vim-scripts repos
+NeoBundle 'vim-scripts/ShowMarks'
+NeoBundle 'vim-scripts/dbext.vim'
+NeoBundle 'majutsushi/tagbar'
+NeoBundle 'mileszs/ack.vim'
+NeoBundle 'project.tar.gz'
 NeoBundle 'L9'
-NeoBundle 'FuzzyFinder'
+"NeoBundle 'FuzzyFinder'
 NeoBundle 'Gundo'
 NeoBundle 'mattn/zencoding-vim'
 NeoBundle 'scrooloose/nerdtree'
 NeoBundle 'jistr/vim-nerdtree-tabs'
-NeoBundle 'Shougo/neocomplcache.git'
-NeoBundle 'Shougo/neosnippet.git'
 NeoBundle 'nathanaelkane/vim-indent-guides'
-" Non git/github repos
+" Non github
 NeoBundle 'git://git.wincent.com/command-t.git'
 NeoBundle 'git://github.com/Lokaltog/vim-powerline.git'
 NeoBundle 'http://svn.macports.org/repository/macports/contrib/mpvim/'
@@ -97,28 +121,72 @@ if neobundle#exists_not_installed_bundles()
   echomsg 'Execute ":NeoBundleInstall"'
 endif
 
-"Function key binding overview
-" ESC Toggle search highlight on/off
+" Autoreload vimrc on edit
+augroup reload_vimrc " {
+    autocmd!
+    autocmd BufWritePost $MYVIMRC source $MYVIMRC
+augroup END " }
+
+" /TOGGLES
+
+" Search Highlight
+nnoremap \tl :set hlsearch!<CR><esc>
+
+" Spellcheck
+nnoremap \ts :set spell!<CR>
+
+" Writer mode (no distractions, zen)
+nnoremap \tw :echo TODO toggle writer mode<CR>
+
+nnoremap \tw :echo TODO toggle contrast/invert<CR>
+"] nnoremap \tw :echo TODO toggle writer mode<CR>
+
+" Marks/signs?
+nnoremap \tm :ShowMarksToggle<CR>
+
+" FEATURES IN PROGRESS
+
+" Rename (copy/del) current file with markdown extension
+"   nnoremap \t :<CR>
+"   file is ~/Desktop/wut.txt
+"   we want ~/Desktop/wut.markdown
+" :w %:p:r.markdown
+" :e#
+" :call "delete(#)
+
+" ?
+" nnoremap \t :<CR>
+
+" ?
+" nnoremap \t :<CR>
+
+" Bind set of keys to switch colorschemes
+
+
+" [FN KEYS]
 " F1  Toggle left (nerd/buffergator) TODO Fn keys should be univeral
 " F2  Pastetoggle
 " F3  Save/run current ruby file TODO Fn keys should be universal
 " F4  List buffers (bufexplorer)
 " F5  Toggle wrap!
-" F6  TagListToggle TODO currently OFF
-" F8  Spellcheck toggle on/off
+" F6  TagBarToggle (currently OFF)
+" F7  Check current .rb syntax
 " F9  Gundo Undo Tree
 " F12 Re-source .vimrc
-nnoremap <ESC> :set hlsearch!<CR><esc>
-nnoremap <F1> :NERDTreeTabsToggle<CR>
-nnoremap <F2> :set invpaste paste?<CR>
 nnoremap <F3> :!ruby -c %; :w<CR>:!ruby %<CR>
-nnoremap <F4> :buffers<CR>:buffer<Space>
-nnoremap <F5> :set wrap!<CR>
-nnoremap <F6> :TlistToggle<CR>
 nnoremap <F7> :!ruby -c %<CR>
-nnoremap <F8> :set spell!<CR>
+nnoremap <F5> :set wrap!<CR>
+nnoremap <F2> :set invpaste paste?<CR>
+nnoremap <F4> :buffers<CR>:buffer<Space>
+" destructive
+nnoremap md! :.markdown<CR>:echo The file is now .markdown<CR>
+nnoremap <F1> :NERDTreeTabsToggle<CR>
+nnoremap <F6> :TlistToggle<CR>
 nnoremap <F9> :GundoToggle<CR>
-nnoremap <F12> :so ~/.vimrc<CR>
+" nnoremap <F> :NeoBundleInstall<CR>
+
+" I set it to refresh vimrc when it's updated
+"nnoremap <F12> :so ~/.vimrc<CR>
 
 nnoremap <silent> <C-T> :CommandT<CR>
 nnoremap <silent> <C-J> :bp<CR>
@@ -126,11 +194,9 @@ nnoremap <silent> <C-K> :bn<CR>
 
 " TODO: !!! Cmd+W should close ALL buffers.
 nnoremap <silent> <C-W><C-W>0 :qa!<CR>
-nnoremap :qw :qa<CR>
-nnoremap :qW :qa<CR>
-nnoremap :Qw :qa<CR>
-nnoremap :QW :qa<CR>
-
+nnoremap :qq :qa<CR>
+nnoremap :qq! :qa!<CR>
+             
 let g:vim_markdown_folding_disabled=1
 let g:Powerline_symbols = 'fancy'
 
@@ -150,6 +216,9 @@ autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=#222222 ctermbg=232
 autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=#222222 ctermbg=232
 
 au BufRead,BufNewFile *.as set ft=actionscript
+
+" Automatically spellcheck Git commits
+autocmd FileType gitcommit setlocal spell
 
 if has("gui_running")
   set lines=65
@@ -181,7 +250,7 @@ if has("gui_running")
   let g:nerdtree_tabs_no_startup_for_diff = 1
   let g:nerdtree_tabs_smart_startup_focus = 1
 
-  autocmd VimEnter <buffer=1> hi ColorColumn guibg=#111111
+  autocmd VimEnter <buffer=1> hi ColorColumn guibg=#333333
 
   autocmd VimEnter * NERDTreeTabsToggle
   autocmd VimEnter * wincmd c
@@ -259,8 +328,9 @@ let g:neocomplcache_lock_buffer_name_pattern = '\*ku\*'
 let g:neocomplcache_dictionary_filetype_lists = {
     \ 'default' : '/Library/Dictionaries/Oxford American Writer''s Thesaurus.dictionary',
     \ 'vimshell' : $HOME.'/.vimshell_hist',
+    \ 'zsh' : $HOME.'/.zsh_history',
     \ 'scheme' : $HOME.'/.gosh_completions',
-    \ 'rails' : '/Library/Dictionaries/Rails\ 3.1.dictionary',
+    \ 'rails' : '/Library/Dictionaries/Rails 3.1.dictionary',
     \ }
 
 if !exists('g:neocomplcache_keyword_patterns')
@@ -290,7 +360,7 @@ autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
 autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
 autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 
-highlight ExtraWhitespace ctermbg=237 guibg=#333333
+highlight ExtraWhitespace ctermbg=237 guibg=#dd5555
 autocmd Syntax * syn match ExtraWhitespace /\s\+$\| \+\ze\t/
 
 " Enable heavy omni completion.
@@ -304,7 +374,8 @@ let g:neocomplcache_omni_patterns.c = '\%(\.\|->\)\h\w*'
 let g:neocomplcache_omni_patterns.cpp = '\h\w*\%(\.\|->\)\h\w*\|\h\w*::'
 " /neocomplcache
 
-let g:neosnippet#snippets_directory='~/.vim/bundle/snipmate-snippets/snippets'
+"let g:neosnippet#snippets_directory='~/.vim/bundle/snipmate-snippets/snippets'
+let g:neosnippet#snippets_directory='~/.vim/bundle/vim-snippets/snippets'
 imap <C-k>     <Plug>(neosnippet_expand_or_jump)
 smap <C-k>     <Plug>(neosnippet_expand_or_jump)
 " SuperTab like snippets behavior

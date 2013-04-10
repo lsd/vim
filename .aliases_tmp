@@ -1,0 +1,170 @@
+#!/bin/sh
+
+##############################
+alias v='mvim'
+alias n='nanoc'
+alias psa='ps axu | grep -i'
+alias kirby="echo tar -zcvf '$1' '$2'"
+##############################
+
+export NOTES="/Users/`whoami`/repo/Sorona/latest-notes"
+export VISUAL='/Applications/mvim -f'
+export EDITOR='/Applications/mvim -f'
+alias crontab='VISUAL=vim EDITOR=vim VIM_NOBACKUPS=true crontab'
+
+# apache.alias
+alias ensite='sudo a2ensite '
+alias dissite='sudo a2ensite '
+alias enmod='sudo a2enmod '
+alias dismod='sudo a2enmod '
+alias a2ensite='sudo a2ensite '
+alias a2enmod='sudo a2enmod '
+alias restart_apache='sudo apachectl restart'
+alias restart_apache2='sudo apache2ctl restart'
+# apt.alias
+alias apt='sudo apt-get'
+alias aptinstall='sudo apt-get install'
+alias aptupdate='sudo apt-get update'
+alias aptupgrade='sudo apt-get upgrade'
+alias aptfix='sudo apt-get -f install'
+alias aptrm='sudo apt-get remove'
+alias aptsearch='apt-cache search'
+if [ "`uname`" = "Darwin" ]; then
+  USING_OSX=true
+  VISUAL='mvim -f'
+  EDITOR='mvim -f'
+fi
+alias ctags='/usr/local/bin/ctags'
+# git.alias
+# git aliases can also go in ~/.gitconfig
+alias g='git'
+alias gst='git status'
+alias gs='git push'
+alias gc='git commit'
+alias gca='git commit -a'
+alias ga='git add'
+alias gco='git checkout'
+alias gb='git branch'
+alias gm='git merge'
+alias gd="git diff"
+# experimental.alias
+alias nil="echo 'are you sure? (CTRL+C to cancel)' && cat /dev/null > "
+alias gimme="ME=`whoami` && sudo echo \"chown $ME.$ME\""
+# local.alias
+
+PWNJUTSU='stage@ssh.pwnjutsu.com'
+alias pwn_push="echo scp $1 $PWNJUTSU: "
+alias pwnjutsu='mosh blue@ssh.pwnjutsu.com'
+alias pwnjutsu_ip='ssh blue@207.192.74.106'
+alias pwnjutsu_lish='ssh linode293679@newark598.linode.com'
+
+# work.alias
+alias ww_staging='ssh -A stg-waywire@sand-web-1'
+alias ww_prod='ssh -A waywire@prod-admin-2'
+#alias ack='ack --color-lineno=green --color-filename=white --color --follow'
+alias git_costaging='git co waywire/staging_branch'
+alias git_wwfetch='git fetch waywire && git log -n3'
+alias logwstg="ssh -t stg-waywire@prod-admin-2 'tail -f /var/log/waywire-staging.log'"
+alias logwprod="ssh -t waywire@prod-admin-2 'tail -f /var/log/waywire-production.log'"
+alias logcdev="ssh -t dev-waywire@prod-admin-2 'tail -f /var/log/waywire-development-cron.log'"
+alias ww_stg_log="scp stg-waywire@prod-admin-2:/var/log/waywire-staging.log2013012*.gz ~/Desktop/ww-staging-logs/"
+alias logwprodcp="ruby ~/Sites/waywire_deploy/utils/get_prod_log.rb"
+
+ 
+###################################################################
+function go_dir() {
+  # ++ more control, exposes more functions, opens new window
+  #  $ alias projects="cd $DIR_PROJECTS && open -g${new_win} . "
+  #  $ go[tab] # expands to => go-projects
+  #  I have been using this. adding a quick entry occasionally.
+  #  There's a lot of duplicated content. It looks like I find
+  #  this useful and revise it based on evaluating my experience
+  #  with it and my likes/dislikes.
+  #  $ go[tab] # expands to => go-projects
+  local new_win='-n' # set to '' to jump to existing finder window
+	local dir=$1
+	echo "Jumping into: $dir\n"
+	cd $dir
+	#open -g ${new_win} $dir
+}
+
+alias go_desktop="go_dir $DIR_DESKTOP"
+
+################################################################# 
+# ruby.alias
+pre="rbenv exec bundle exec"
+alias cap="$pre cap"
+alias spec="$pre spec"
+alias rake="$pre rake"
+alias rails="$pre rails"
+alias guard="$pre guard"
+alias thin="$pre thin -p 3000"
+# sudo.alias
+alias suvim='sudo vim'  
+alias sucp='sudo cp'
+alias sumv='sudo mv'
+# system.alias
+alias upornot_google="ping google.com"
+alias upornot_pwnjutsu="ping pwnjutsu.com"
+alias rd='rmdir'
+alias rm='rm -i'
+alias free="free -m"
+alias dfhuman="df -h"
+
+# TODO What are the most used ls aliases? 
+# # might cause cluttered namespace? I like ls, ls, lsa, lsd
+if [ "`uname`" = "Darwin" ]; then
+  unset ls
+  unset lsf
+  unset lsd
+  # To get color to show up when piping to less/more, we need to force the color
+  # and define a terminal, since it's not sending output to a TTY.
+  # Then we need to have more/less escape the color sequences using -r
+  # demo: CLICOLOR_FORCE='YES';TERM='xterm-color';ls | less -r
+  #alias ls="CLICOLOR_FORCE='YES';TERM='xterm-color';ls -G"
+  alias ls="TERM='xterm-color';ls -G"
+  alias less='less -r'
+  alias more='more -r'
+
+  alias lsf='ls -hAlFG'
+  alias lsd='ls -dG */'
+else
+  alias ls='ls --color=always'
+  alias lsf='ls -hAlF --group-directories-first --color=always --time-style=+" %m/%d/%y %I:%M %p "'
+  alias lsd='ls -d */'
+fi
+
+if [ -x /usr/bin/dircolors ]; then
+  test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+  alias grep='grep --color=auto'
+  alias fgrep='fgrep --color=auto'
+  alias egrep='egrep --color=auto'
+  alias l='ls --color -l'
+  alias lh='ls --color -lh'
+  alias ll='ls --color -la'
+  alias ls='ls --color=auto'
+fi
+
+alias la='ls -A'
+alias l='ls -CF'
+alias lsa='ls -lasthc'
+alias ll='ls -all'
+alias lsd='ls -adG */'
+
+# utils.alias
+alias untar="tar -zxvf "
+alias untar2="tar -xvjf "
+#alias targz="tar -zvcf $1 $2"
+#alias ungz="tar -zxvf $1"
+
+alias scan="grep -Rin --color"
+alias scan_case="grep -Rn --color -l" # case-sensitive
+alias scan_lite="grep -Rin --color -l" # only display filenames
+alias scan_fast="grep -Rin --color --mmap"
+
+# This shows files with size (bytes) of at least N digits
+alias du_bytes='du -s * | grep "^[0-9]\{1\}"'
+alias du_kb='du -s * | grep "^[0-9]\{4\}"'
+alias du_mb='du -s * | grep "^[0-9]\{7\}"'
+alias du_gb='du -s * | grep "^[0-9]\{10\}"'
+alias du_n="du -s * | grep \"^[0-9]\{$1\}\""

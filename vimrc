@@ -81,6 +81,7 @@ NeoBundle 'honza/vim-snippets'
 NeoBundle 'vim-ruby/vim-ruby'
 NeoBundle 'plasticboy/vim-markdown'
 " Original repos (vim.org) on github
+NeoBundle 'tpope/vim-rails'
 NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'tpope/vim-unimpaired'
 NeoBundle 'tpope/vim-abolish'
@@ -196,8 +197,8 @@ nnoremap <silent> <C-K> :bn<CR>
 nnoremap <silent> <C-W><C-W>0 :qa!<CR>
 nnoremap :qq :qa<CR>
 nnoremap :qq! :qa!<CR>
-             
-let g:vim_markdown_folding_disabled=1
+
+let g:vim_markdown_folding_disabled=0
 let g:Powerline_symbols = 'fancy'
 
 let Tlist_Exit_OnlyWindow = 1
@@ -317,7 +318,7 @@ inoremap brp    binding.remote_pry
 
 " NOTE: All below is EXPERIMENTAL and probably breaks something
 " neocomplcache - disable AutoComplPop
-let g:acp_enableAtStartup = 1
+let g:acp_enableAtStartup = 0
 let g:neocomplcache_enable_at_startup = 1
 let g:neocomplcache_enable_smart_case = 1
 let g:neocomplcache_enable_camel_case_completion = 1
@@ -329,6 +330,7 @@ let g:neocomplcache_dictionary_filetype_lists = {
     \ 'default' : '/Library/Dictionaries/Oxford American Writer''s Thesaurus.dictionary',
     \ 'vimshell' : $HOME.'/.vimshell_hist',
     \ 'zsh' : $HOME.'/.zsh_history',
+    \ 'sh' : $HOME.'/.bash_history',
     \ 'scheme' : $HOME.'/.gosh_completions',
     \ 'rails' : '/Library/Dictionaries/Rails 3.1.dictionary',
     \ }

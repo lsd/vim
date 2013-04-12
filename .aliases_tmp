@@ -1,15 +1,33 @@
 #!/bin/sh
 
-##############################
+export NOTES="/Users/`whoami`/repo/Sorona/latest-notes"
+export SITES="/Users/`whoami`/repo/sites"
+export MACVIM='/Applications/mvim'
+export VISUAL="$MACVIM -f"
+export EDITOR="$MACVIM"
+export SHWAGGER='~/.aliases_tmp'
+
 alias v='mvim'
 alias n='nanoc'
+
 alias psa='ps axu | grep -i'
 alias kirby="echo tar -zcvf '$1' '$2'"
+
+# refresh aliases_tmp
+alias rf=". $SHWAGGER && echo '$SHWAGGER Refreshed'"
+# also refresh bashrc, zshrc, etc?
+
+# Open all common configs in vim
+export GITCFG='~/.gitignore_global ./.rbenv-version ./.rvmrc ./.gitignore ./.git/config' 
+export RAILSCFG='./Gemfile ./Procfile ./.pryrc ./config/application.rb ./Guardfile ./Rakefile ./README.markdown ./README.me ./README.mkd ./README ./config/routes.rb ./.rbenv-version'
+alias virc="$EDITOR ~/.vimrc $GIT $RAILS $SHWAGGER"
+
+# mkdir -p, put .gitkeep in it, add a md, add to git
+alias mkp="echo 'going to mkdir -p $1' and add to git. OK? (ctrl+c to cancel)' && read; mkdir -p '$1' && touch '$1'/.gitkeep && echo '$1' >> '$1'.md;"
+alias mkg="echo mkp '$1' && git add '$1'"
+
 ##############################
 
-export NOTES="/Users/`whoami`/repo/Sorona/latest-notes"
-export VISUAL='/Applications/mvim -f'
-export EDITOR='/Applications/mvim -f'
 alias crontab='VISUAL=vim EDITOR=vim VIM_NOBACKUPS=true crontab'
 
 # apache.alias

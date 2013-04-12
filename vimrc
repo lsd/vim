@@ -1,6 +1,6 @@
 " Vim web development config
 " http://github.com/lsd/vim
-" Updated 04/08/2013
+" Updated 04/12/2013
 
 " I use MacVim but this setup should be OS-agnostic.
 " Please contribute/contact if you encounter problems.
@@ -36,15 +36,18 @@ set gdefault
 "set hlsearch " use \tl to toggle
 set incsearch
 set formatoptions+=1
-
+set foldminlines=4
 " Does this belong here or in the TOGGLE below?
 set pastetoggle=<F2>
-
 set complete-=k complete+=k
-set foldmethod=indent
-set foldnestmax=10
-set nofoldenable
+
+highlight FoldColumn guibg=grey guifg=blue
+highlight Folded ctermfg=11 ctermbg=8 guibg=#444444 guifg=#cccccc
+set foldenable
+set foldmethod=syntax
+set foldnestmax=6
 set foldlevel=1
+set fillchars=
 
 " TODO make sure gem-ctags is being used
 set tags=./.tags;./tags;./
@@ -137,8 +140,12 @@ nnoremap \tc :%s:	:  :<CR><ESC>
 nnoremap \tcc :%s:\s\+: :<CR><ESC>
 
 " /TOGGLES
+
 " Search Highlight
 nnoremap \tl :set hlsearch!<CR><ESC>
+
+" Search Highlight
+nnoremap \tg <ESC>:TagbarOpenAutoClose<CR><ESC>
 
 " Spellcheck
 nnoremap \ts :set spell!<CR>
@@ -191,7 +198,8 @@ nnoremap <F4> :buffers<CR>:buffer<Space>
 " destructive
 nnoremap md! :.markdown<CR>:echo The file is now .markdown<CR>
 nnoremap <F1> :NERDTreeTabsToggle<CR>
-nnoremap <F6> :TlistToggle<CR>
+"nnoremap <F6> :TlistToggle<CR>
+nnoremap <F6> :TagbarToggle<CR>
 nnoremap <F9> :GundoToggle<CR>
 
 " Highlight tabs/trailing/blank lines
@@ -297,7 +305,7 @@ if has("gui_running")
   set guioptions-=L
   set guioptions-=r
   set guioptions-=R
-  set guifont=Inconsolata:h16
+  set guifont=Monaco:h17
   "g:solarized_contrast  = "high"
   "g:solarized_visibility= "high"
   "g:solarized_hitrail   = 1
@@ -376,7 +384,7 @@ autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
 autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
 autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 
-highlight ExtraWhitespace ctermbg=237 guibg=#dd5555
+highlight ExtraWhitespace ctermbg=111 guibg=#dd5555
 autocmd Syntax * syn match ExtraWhitespace /\s\+$\| \+\ze\t/
 
 " Enable heavy omni completion.

@@ -33,7 +33,7 @@ set timeoutlen=200
 set mouse=a
 set nolist
 set gdefault
-set hlsearch
+"set hlsearch " use \tl to toggle
 set incsearch
 set formatoptions+=1
 
@@ -53,9 +53,9 @@ set bg=dark
 set vb
 
 if $VIM_NOBACKUPS == "true"
-	echo ""
-	echo "NOTICE: vim backups temporarily disabled. (VIM_NOBACKUPS == true)"
-	echo "_________________________________________________________________"
+  echo ""
+  echo "NOTICE: vim backups temporarily disabled. (VIM_NOBACKUPS == true)"
+  echo "_________________________________________________________________"
   set nobackup
   set nowritebackup
 else
@@ -128,10 +128,17 @@ augroup reload_vimrc " {
     autocmd BufWritePost $MYVIMRC source $MYVIMRC
 augroup END " }
 
-" /TOGGLES
+let showmarks_enable = 0
 
+" Change all [TAB] to 2 [SPACE]s
+nnoremap \tc :%s:	:  :<CR><ESC>
+
+" Change ALL whitespace to single [SPACE]
+nnoremap \tcc :%s:\s\+: :<CR><ESC>
+
+" /TOGGLES
 " Search Highlight
-nnoremap \tl :set hlsearch!<CR><esc>
+nnoremap \tl :set hlsearch!<CR><ESC>
 
 " Spellcheck
 nnoremap \ts :set spell!<CR>
@@ -173,21 +180,28 @@ nnoremap \tm :ShowMarksToggle<CR>
 " F6  TagBarToggle (currently OFF)
 " F7  Check current .rb syntax
 " F9  Gundo Undo Tree
+" F11 Toggle whitespace on/off (replace \tl?)
 " F12 Re-source .vimrc
 nnoremap <F3> :!ruby -c %; :w<CR>:!ruby %<CR>
 nnoremap <F7> :!ruby -c %<CR>
 nnoremap <F5> :set wrap!<CR>
 nnoremap <F2> :set invpaste paste?<CR>
 nnoremap <F4> :buffers<CR>:buffer<Space>
+
 " destructive
 nnoremap md! :.markdown<CR>:echo The file is now .markdown<CR>
 nnoremap <F1> :NERDTreeTabsToggle<CR>
 nnoremap <F6> :TlistToggle<CR>
 nnoremap <F9> :GundoToggle<CR>
+
+" Highlight tabs/trailing/blank lines
+nnoremap <F11> <ESC>:set hlsearch!<CR>/\s<CR><ESC>
+
 " nnoremap <F> :NeoBundleInstall<CR>
 
-" I set it to refresh vimrc when it's updated
-"nnoremap <F12> :so ~/.vimrc<CR>
+" current file re-sources .vimrc when its updated
+" other files need to have this called:
+nnoremap <F12> :so ~/.vimrc<CR>
 
 nnoremap <silent> <C-T> :CommandT<CR>
 nnoremap <silent> <C-J> :bp<CR>
@@ -265,17 +279,17 @@ if has("gui_running")
     execute ( bufwinnr(b) . "wincmd w" )
   endf
 
-  map  <silent> <Leader>w  <esc>:call LSidebarToggle()<cr>
-  map! <silent> <Leader>w  <esc>:call LSidebarToggle()<cr>
+  map  <silent> <Leader>w  <ESC>:call LSidebarToggle()<CR>
+  map! <silent> <Leader>w  <ESC>:call LSidebarToggle()<CR>
 
-  map <Leader>n :NERDTreeCWD<cr>
-  map <Leader>b :BuffergatorOpen<cr>
-  map <Leader>v :wincmd b<cr>
+  map <Leader>n :NERDTreeCWD<CR>
+  map <Leader>b :BuffergatorOpen<CR>
+  map <Leader>v :wincmd b<CR>
 
-  map <Leader>] :bnext<cr>
-  map <Leader>[ :bprevious<cr>
-  map <Leader>} :blast<cr>
-  map <Leader>{ :bfirst<cr>
+  map <Leader>] :bnext<CR>
+  map <Leader>[ :bprevious<CR>
+  map <Leader>} :blast<CR>
+  map <Leader>{ :bfirst<CR>
 
   " Remove Tool+scroll bars
   set guioptions-=T
@@ -297,22 +311,22 @@ syntax on
 
 " INJECTIONS (Delay is set low, meaning: hit these keys fast)
 " TODO package as plugin
-inoremap {      {}<Left>
-inoremap {<CR>  {<CR>}<Esc>O
+inoremap {      {}<LEFT>
+inoremap {<CR>  {<CR>}<ESC>O
 inoremap {{     {
 inoremap {}     {}
 inoremap <silent> }   }<ESC>
 
-inoremap <?     <?php  ?><Left><Left><Left>
-inoremap <??    <?php echo  ?><Left><Left><Left>
-inoremap <%     <%  %><Left><Left><Left>
-inoremap <%%    <%=  %><Left><Left><Left>
+inoremap <?     <?php  ?><LEFT><LEFT><LEFT>
+inoremap <??    <?php echo  ?><LEFT><LEFT><LEFT>
+inoremap <%     <%  %><LEFT><LEFT><LEFT>
+inoremap <%%    <%=  %><LEFT><LEFT><LEFT>
 
-inoremap ccl    console.log();<Left><Left>
-inoremap cc'    console.log('');<Left><Left><Left>
-inoremap cc"    console.log("");<Left><Left><Left>
+inoremap ccl    console.log();<LEFT><LEFT>
+inoremap cc'    console.log('');<LEFT><LEFT><LEFT>
+inoremap cc"    console.log("");<LEFT><LEFT><LEFT>
 
-inoremap rri    raise [].to_yaml<Left><Left><Left><Left><Left><Left><Left><Left><Left>
+inoremap rri    raise [].to_yaml<LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT>
 inoremap brp    binding.remote_pry
 
 

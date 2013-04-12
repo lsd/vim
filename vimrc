@@ -43,7 +43,7 @@ set complete-=k complete+=k
 
 highlight FoldColumn guibg=grey guifg=blue
 highlight Folded ctermfg=11 ctermbg=8 guibg=#444444 guifg=#cccccc
-set foldenable
+set nofoldenable
 set foldmethod=syntax
 set foldnestmax=6
 set foldlevel=1
@@ -51,6 +51,11 @@ set fillchars=
 
 " TODO make sure gem-ctags is being used
 set tags=./.tags;./tags;./
+
+" CommandT (important.cmdT lags on big projects)
+set wildignore+=*.o,*.obj,.git,.svn,vendor/rails/**,tmp/**
+let g:CommandTMaxCachedDirectories=10
+let g:CommandTMaxHeight=20
 
 set bg=dark
 set vb

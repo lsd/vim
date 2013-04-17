@@ -52,8 +52,13 @@ set fillchars=
 " TODO make sure gem-ctags is being used
 set tags=./.tags;./tags;./
 
+" MRU - Most Recently Used
+let g:MRU_Max_Entries=200
+let g:MRU_Max_Menu_Entries=30
+let g:MRU_Window_Open_Always=1
+
 " CommandT (important.cmdT lags on big projects)
-set wildignore+=*.o,*.obj,.git,.svn,vendor/rails/**,tmp/**
+set wildignore+=*.o,*.obj,.git,.svn,vendor/rails/**,tmp/**,public/system/**
 let g:CommandTMaxCachedDirectories=10
 let g:CommandTMaxHeight=20
 
@@ -80,12 +85,13 @@ endif
 
 call neobundle#rc(expand('~/.vim/bundle/'))
 " After install, exec ~/.vim/bundle/vimproc, (n,g)make -f your_machines_makefile
-NeoBundle 'Shougo/neocomplcache.git'
-NeoBundle 'Shougo/neosnippet.git'
+"NeoBundle 'Shougo/neocomplcache.git'
+"NeoBundle 'Shougo/neosnippet.git'
 NeoBundle 'Shougo/vimproc'
 NeoBundle 'Shougo/vimshell'
+"NeoBundle 'honza/vim-snippets'
 NeoBundle 'kien/ctrlp.vim.git'
-NeoBundle 'honza/vim-snippets'
+NeoBundle 'honza/writer.vim'
 NeoBundle 'vim-ruby/vim-ruby'
 NeoBundle 'plasticboy/vim-markdown'
 " Original repos (vim.org) on github
@@ -103,19 +109,22 @@ NeoBundle 'Lokaltog/vim-easymotion'
 NeoBundle 'jeetsukumaran/vim-buffergator'
 NeoBundle 'tilljoel/vim-automatic-ctags'
 NeoBundle 'git://github.com/kchmck/vim-coffee-script.git'
-NeoBundle 'vim-scripts/Txtfmt-The-Vim-Highlighter'
+"NeoBundle 'git://github.com/vimplugins/project.vim.git'
 NeoBundle 'altercation/vim-colors-solarized'
 " vim-scripts repos
 NeoBundle 'vim-scripts/ShowMarks'
 NeoBundle 'vim-scripts/dbext.vim'
+NeoBundle 'vim-scripts/Txtfmt-The-Vim-Highlighter'
+NeoBundle 'vim-scripts/mru.vim'
+NeoBundle 'vim-scripts/YankRing.vim'
 NeoBundle 'majutsushi/tagbar'
 NeoBundle 'mileszs/ack.vim'
-NeoBundle 'project.tar.gz'
 NeoBundle 'L9'
 "NeoBundle 'FuzzyFinder'
 NeoBundle 'Gundo'
 NeoBundle 'mattn/zencoding-vim'
 NeoBundle 'scrooloose/nerdtree'
+NeoBundle 'scrooloose/nerdcommenter'
 NeoBundle 'jistr/vim-nerdtree-tabs'
 NeoBundle 'nathanaelkane/vim-indent-guides'
 " Non github
@@ -131,10 +140,10 @@ if neobundle#exists_not_installed_bundles()
 endif
 
 " Autoreload vimrc on edit
-augroup reload_vimrc " {
-    autocmd!
-    autocmd BufWritePost $MYVIMRC source $MYVIMRC
-augroup END " }
+"augroup reload_vimrc " {
+"    autocmd!
+"    autocmd BufWritePost $MYVIMRC source $MYVIMRC
+"augroup END " }
 
 let showmarks_enable = 0
 
@@ -184,6 +193,14 @@ nnoremap \tm :ShowMarksToggle<CR>
 
 
 " [FN KEYS]
+noremap \h :echomsg 'F3=MRU  F6=Tagbar  F8=writer  F10=NeoBundleInstall  F11=Whitespace  '<CR>
+noremap \em :Emodel 
+noremap \ev :Eview 
+noremap \ec :Econtroller 
+noremap \es :Espec 
+noremap \ej :Ejavascript 
+noremap \et :Etask 
+
 " F1  Toggle left (nerd/buffergator) TODO Fn keys should be univeral
 " F2  Pastetoggle
 " F3  Save/run current ruby file TODO Fn keys should be universal
@@ -194,29 +211,29 @@ nnoremap \tm :ShowMarksToggle<CR>
 " F9  Gundo Undo Tree
 " F11 Toggle whitespace on/off (replace \tl?)
 " F12 Re-source .vimrc
-nnoremap <F3> :!ruby -c %; :w<CR>:!ruby %<CR>
-nnoremap <F7> :!ruby -c %<CR>
-nnoremap <F5> :set wrap!<CR>
 nnoremap <F2> :set invpaste paste?<CR>
+nnoremap <F3> :MRU<CR>
+"nnoremap <F3> :!ruby -c %; :w<CR>:!ruby %<CR>
 nnoremap <F4> :buffers<CR>:buffer<Space>
+nnoremap <F5> :set wrap!<CR>
+nnoremap <F7> :!ruby -c %<CR>
 
 " destructive
-nnoremap md! :.markdown<CR>:echo The file is now .markdown<CR>
 nnoremap <F1> :NERDTreeTabsToggle<CR>
-"nnoremap <F6> :TlistToggle<CR>
 nnoremap <F6> :TagbarToggle<CR>
+nnoremap <F8> :WriterToggle<CR>
 nnoremap <F9> :GundoToggle<CR>
 
 " Highlight tabs/trailing/blank lines
 nnoremap <F11> <ESC>:set hlsearch!<CR>/\s<CR><ESC>
-
-" nnoremap <F> :NeoBundleInstall<CR>
+nnoremap <F10> :NeoBundleInstall<CR>
 
 " current file re-sources .vimrc when its updated
 " other files need to have this called:
 nnoremap <F12> :so ~/.vimrc<CR>
 
-nnoremap <silent> <C-T> :CommandT<CR>
+"nnoremap <silent> <C-T> :CommandT<CR>
+nnoremap <silent> <C-T> :CtrlP<CR>
 nnoremap <silent> <C-J> :bp<CR>
 nnoremap <silent> <C-K> :bn<CR>
 
@@ -256,8 +273,8 @@ if has("gui_running")
   " https://github.com/jeetsukumaran/vim-buffergator/blob/master/doc/buffergator.txt
   let g:buffergator_viewport_split_policy = "b"
   let g:buffergator_suppress_keymaps = 0
-  let g:buffergator_autodismiss_on_select = 0
-  let g:buffergator_split_size = 20
+  let g:buffergator_autodismiss_on_select = 1
+  let g:buffergator_split_size = 15
   let g:buffergator_autoupdate = 1
   let g:buffergator_display_regime = 'basename'
 
@@ -316,7 +333,8 @@ if has("gui_running")
   "g:solarized_hitrail   = 1
   colors hybrid
 else
-  colors zenburn
+  colors hybrid
+  "colors zenburn
 endif
 
 syntax on
@@ -345,103 +363,102 @@ inoremap brp    binding.remote_pry
 
 " NOTE: All below is EXPERIMENTAL and probably breaks something
 " neocomplcache - disable AutoComplPop
-let g:acp_enableAtStartup = 0
-let g:neocomplcache_enable_at_startup = 1
-let g:neocomplcache_enable_smart_case = 1
-let g:neocomplcache_enable_camel_case_completion = 1
-let g:neocomplcache_enable_underbar_completion = 1
-let g:neocomplcache_min_syntax_length = 2
-let g:neocomplcache_lock_buffer_name_pattern = '\*ku\*'
-
-let g:neocomplcache_dictionary_filetype_lists = {
-    \ 'default' : '/Library/Dictionaries/Oxford American Writer''s Thesaurus.dictionary',
-    \ 'vimshell' : $HOME.'/.vimshell_hist',
-    \ 'zsh' : $HOME.'/.zsh_history',
-    \ 'sh' : $HOME.'/.bash_history',
-    \ 'scheme' : $HOME.'/.gosh_completions',
-    \ 'rails' : '/Library/Dictionaries/Rails 3.1.dictionary',
-    \ }
-
-if !exists('g:neocomplcache_keyword_patterns')
-  let g:neocomplcache_keyword_patterns = {}
-endif
-let g:neocomplcache_keyword_patterns['default'] = '\h\w*'
-
-imap <C-k>     <Plug>(neocomplcache_snippets_expand)
-smap <C-k>     <Plug>(neocomplcache_snippets_expand)
-inoremap <expr><C-g>     neocomplcache#undo_completion()
-inoremap <expr><C-l>     neocomplcache#complete_common_string()
-
-" Recommended key-mappings.
-" <CR>: close popup and save indent
-" <C-h>, <BS>: close popup and delete backword char
-inoremap <expr><CR>  neocomplcache#smart_close_popup() . "\<CR>"
-inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
-inoremap <expr><C-h> neocomplcache#smart_close_popup()."\<C-h>"
-inoremap <expr><BS> neocomplcache#smart_close_popup()."\<C-h>"
-inoremap <expr><C-y>  neocomplcache#close_popup()
-inoremap <expr><C-e>  neocomplcache#cancel_popup()
-
-" Enable omni completion.
-autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-
-highlight ExtraWhitespace ctermbg=111 guibg=#dd5555
-autocmd Syntax * syn match ExtraWhitespace /\s\+$\| \+\ze\t/
-
-" Enable heavy omni completion.
-if !exists('g:neocomplcache_omni_patterns')
-  let g:neocomplcache_omni_patterns = {}
-endif
-let g:neocomplcache_omni_patterns.ruby = '[^. *\t]\.\w*\|\h\w*::'
-autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
-let g:neocomplcache_omni_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
-let g:neocomplcache_omni_patterns.c = '\%(\.\|->\)\h\w*'
-let g:neocomplcache_omni_patterns.cpp = '\h\w*\%(\.\|->\)\h\w*\|\h\w*::'
-" /neocomplcache
-
-"let g:neosnippet#snippets_directory='~/.vim/bundle/snipmate-snippets/snippets'
-let g:neosnippet#snippets_directory='~/.vim/bundle/vim-snippets/snippets'
-imap <C-k>     <Plug>(neosnippet_expand_or_jump)
-smap <C-k>     <Plug>(neosnippet_expand_or_jump)
-" SuperTab like snippets behavior
-imap <expr><TAB> neosnippet#expandable() ? "\<Plug>(neosnippet_expand_or_jump)" : pumvisible() ? "\<C-n>" : "\<TAB>"
-smap <expr><TAB> neosnippet#expandable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
-" For snippet_complete marker
-if has('conceal')
-  set conceallevel=2 concealcursor=i
-endif
-
-" Dim inactive windows using 'colorcolumn'. May slow down redrawing on old machines
-" Based on https://groups.google.com/d/msg/vim_use/IJU-Vk-QLJE/xz4hjPjCRBUJ
-function! s:DimInactiveWindows()
-  for i in range(1, tabpagewinnr(tabpagenr(), '$'))
-    let l:range = ""
-    if i != winnr()
-      if &wrap
-        " HACK: when wrapping lines is enabled, we use the maximum number
-        " of columns getting highlighted. This might get calculated by
-        " looking for the longest visible line and using a multiple of
-        " winwidth().
-        let l:width=256 " max
-      else
-        let l:width=winwidth(i)
-      endif
-      let l:range = join(range(1, l:width), ',')
-    endif
-    call setwinvar(i, '&colorcolumn', l:range)
-  endfor
-endfunction
-augroup DimInactiveWindows
-  au!
-  au WinEnter * call s:DimInactiveWindows()
-  au WinEnter * set cursorline
-  au WinLeave * set nocursorline
-augroup END
-
+"--let g:acp_enableAtStartup = 0
+"--let g:neocomplcache_enable_at_startup = 1
+"--let g:neocomplcache_enable_smart_case = 1
+"--let g:neocomplcache_enable_camel_case_completion = 1
+"--let g:neocomplcache_enable_underbar_completion = 1
+"--let g:neocomplcache_min_syntax_length = 2
+"--let g:neocomplcache_lock_buffer_name_pattern = '\*ku\*'
+"--
+"--let g:neocomplcache_dictionary_filetype_lists = {
+"--    \ 'default' : '/Library/Dictionaries/Oxford American Writer''s Thesaurus.dictionary',
+"--    \ 'vimshell' : $HOME.'/.vimshell_hist',
+"--    \ 'zsh' : $HOME.'/.zsh_history',
+"--    \ 'sh' : $HOME.'/.bash_history',
+"--    \ 'rails' : '/Library/Dictionaries/Rails 3.1.dictionary',
+"--    \ }
+"--
+"--if !exists('g:neocomplcache_keyword_patterns')
+"--  let g:neocomplcache_keyword_patterns = {}
+"--endif
+"--let g:neocomplcache_keyword_patterns['default'] = '\h\w*'
+"--
+"--imap <C-k>     <Plug>(neocomplcache_snippets_expand)
+"--smap <C-k>     <Plug>(neocomplcache_snippets_expand)
+"--inoremap <expr><C-g>     neocomplcache#undo_completion()
+"--inoremap <expr><C-l>     neocomplcache#complete_common_string()
+"--
+"--" Recommended key-mappings.
+"--" <CR>: close popup and save indent
+"--" <C-h>, <BS>: close popup and delete backword char
+"--inoremap <expr><CR>  neocomplcache#smart_close_popup() . "\<CR>"
+"--inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+"--inoremap <expr><C-h> neocomplcache#smart_close_popup()."\<C-h>"
+"--inoremap <expr><BS> neocomplcache#smart_close_popup()."\<C-h>"
+"--inoremap <expr><C-y>  neocomplcache#close_popup()
+"--inoremap <expr><C-e>  neocomplcache#cancel_popup()
+"--
+"--" Enable omni completion.
+"--autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+"--autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+"--autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+"--autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+"--autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+"--
+"--highlight ExtraWhitespace ctermbg=111 guibg=#dd5555
+"--autocmd Syntax * syn match ExtraWhitespace /\s\+$\| \+\ze\t/
+"--
+"--" Enable heavy omni completion.
+"--if !exists('g:neocomplcache_omni_patterns')
+"--  let g:neocomplcache_omni_patterns = {}
+"--endif
+"--let g:neocomplcache_omni_patterns.ruby = '[^. *\t]\.\w*\|\h\w*::'
+"--autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
+"--let g:neocomplcache_omni_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
+"--let g:neocomplcache_omni_patterns.c = '\%(\.\|->\)\h\w*'
+"--let g:neocomplcache_omni_patterns.cpp = '\h\w*\%(\.\|->\)\h\w*\|\h\w*::'
+"--" /neocomplcache
+"--
+"--"let g:neosnippet#snippets_directory='~/.vim/bundle/snipmate-snippets/snippets'
+"--let g:neosnippet#snippets_directory='~/.vim/bundle/vim-snippets/snippets'
+"--imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+"--smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+"--" SuperTab like snippets behavior
+"--imap <expr><TAB> neosnippet#expandable() ? "\<Plug>(neosnippet_expand_or_jump)" : pumvisible() ? "\<C-n>" : "\<TAB>"
+"--smap <expr><TAB> neosnippet#expandable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+"--" For snippet_complete marker
+"--if has('conceal')
+"--  set conceallevel=2 concealcursor=i
+"--endif
+"--
+"--" Dim inactive windows using 'colorcolumn'. May slow down redrawing on old machines
+"--" Based on https://groups.google.com/d/msg/vim_use/IJU-Vk-QLJE/xz4hjPjCRBUJ
+"--function! s:DimInactiveWindows()
+"--  for i in range(1, tabpagewinnr(tabpagenr(), '$'))
+"--    let l:range = ""
+"--    if i != winnr()
+"--      if &wrap
+"--        " HACK: when wrapping lines is enabled, we use the maximum number
+"--        " of columns getting highlighted. This might get calculated by
+"--        " looking for the longest visible line and using a multiple of
+"--        " winwidth().
+"--        let l:width=256 " max
+"--      else
+"--        let l:width=winwidth(i)
+"--      endif
+"--      let l:range = join(range(1, l:width), ',')
+"--    endif
+"--    call setwinvar(i, '&colorcolumn', l:range)
+"--  endfor
+"--endfunction
+"--augroup DimInactiveWindows
+"--  au!
+"--  au WinEnter * call s:DimInactiveWindows()
+"--  au WinEnter * set cursorline
+"--  au WinLeave * set nocursorline
+"--augroup END
+"--
 " \:let tmp0=&clipboard <BAR>
 " \let &clipboard=''<BAR>
 " \let tmp1=@"<BAR>
@@ -451,3 +468,17 @@ augroup END
 
 "au syntax * cal rainbow_parentheses#activate()
 "au filetypedetect BufRead,BufNewFile *.txt setfiletype txtfmt
+
+func! SayWordMode()
+  setlocal formatoptions=1
+  setlocal noexpandtab
+  map j gj
+  map k gk
+  setlocal spell spelllang=en_us
+  set thesaurus+=~/.vim/thesaurus/mthesaur.txt
+  set complete+=s
+  set formatprg=par
+  setlocal wrap
+  setlocal linebreak
+endfu
+com! SayWord call SayWordMode()

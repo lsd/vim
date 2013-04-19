@@ -1,16 +1,14 @@
-## .vimrc and .vim/ for MacVim/console web development and writing
-## http://github.com/lsd/vim
-### Updated 04/12/2013
-### Note This is WORK IN PROGRESS
+## .vimrc for MacVim/console web dev
+### Updated 04/12/2013  <http://github.com/lsd/vim>
+### Note This is WORK IN PROGRESS  
 
-### I use MacVim but this setup should be OS-agnostic.
-### Please contribute/contact if you encounter problems.
-
-### Extraneous buffers enabled in MacVim (not console.)
-### Note: This cfg maps all function keys, use/edit as needed
-### FIXME typing on console vim is very sluggish
-
-
+I use MacVim but this setup should be OS-agnostic.  
+Please contribute/contact if you encounter problems.  
+   
+Extraneous buffers enabled in MacVim (not console.)  
+Note: This cfg maps all function keys, use/edit as needed  
+FIXME typing on console vim is very sluggish  
+   
 ~/.vimrc and ~/.vim directories. I use MacVim but this setup should be OS-agnostic.  
 Extraneous buffers are enabled in MacVim but not console vim, for which toggle keys   
 exist to open up NERDTree, Taglist, MiniBuffexplorer, etc.  

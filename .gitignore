@@ -1,6 +1,6 @@
-/tmp/
+/tmp/*
 /backups/*~
-/bundle/*
+!/bundle/
 !/bundle/neobundle.vim
 /bundle/neobundle.vim/.git
 /autoload/*
@@ -9,3 +9,4 @@
 /doc/*.txt
 /.netrwhist
 view/*
+*.swp

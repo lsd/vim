@@ -241,10 +241,10 @@ nnoremap <silent> <C-K> :bn<CR>
 
 " TODO: !!! Cmd+W should close ALL buffers.
 nnoremap <silent> <C-W><C-W>0 :qa!<CR>
-nnoremap :wqq :wqa<CR>
-nnoremap :wqq! :wqa!<CR>
-nnoremap :qq :qa<CR>
-nnoremap :qq! :qa!<CR>
+nnoremap :WQQ<CR> :wqa<CR>
+nnoremap :WQQ! :wqa!<CR>
+nnoremap :QQ :qa<CR>
+nnoremap :QQ! :qa!<CR>
 
 let g:vim_markdown_folding_disabled=0
 let g:Powerline_symbols = 'fancy'

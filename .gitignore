@@ -8,5 +8,6 @@
 /doc/tags
 /doc/*.txt
 /.netrwhist
+.netrwhist
 view/*
 *.swp

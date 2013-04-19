@@ -1,0 +1,5 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =3
+let g:netrw_dirhist_1='/Users/blue/domainbook/app/controllers'
+let g:netrw_dirhist_2='/Users/blue/domainbook'
+let g:netrw_dirhist_3='/Users/blue'

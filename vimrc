@@ -8,6 +8,8 @@
 " Extraneous buffers enabled in MacVim (not console.)
 " Note: This cfg maps all function keys, use/edit as needed
 " FIXME typing on console vim is very sluggish
+"
+" [FT] Set .md to Markdown and .as to Actionscript files
 
 set t_Co=256
 set nocompatible
@@ -239,6 +241,8 @@ nnoremap <silent> <C-K> :bn<CR>
 
 " TODO: !!! Cmd+W should close ALL buffers.
 nnoremap <silent> <C-W><C-W>0 :qa!<CR>
+nnoremap :wqq :wqa<CR>
+nnoremap :wqq! :wqa!<CR>
 nnoremap :qq :qa<CR>
 nnoremap :qq! :qa!<CR>
 
@@ -260,6 +264,8 @@ let g:indent_guides_auto_colors = 0
 autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=#222222 ctermbg=232
 autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=#222222 ctermbg=232
 
+" [FT] Set .md to Markdown and .as to Actionscript files
+au BufRead,BufNewFile *.md set ft=markdown
 au BufRead,BufNewFile *.as set ft=actionscript
 
 " Automatically spellcheck Git commits
@@ -327,7 +333,7 @@ if has("gui_running")
   set guioptions-=L
   set guioptions-=r
   set guioptions-=R
-  set guifont=Monaco:h17
+  set guifont=Bitstream\ Vera\ Sans\ Mono:h14
   "g:solarized_contrast  = "high"
   "g:solarized_visibility= "high"
   "g:solarized_hitrail   = 1

@@ -1,16 +1,73 @@
 " Vim web development config
 " http://github.com/lsd/vim
-" Updated 04/12/2013
+" Updated 04/21/2013
 
 " I use MacVim but this setup should be OS-agnostic.
 " Please contribute/contact if you encounter problems.
-
+"
 " Extraneous buffers enabled in MacVim (not console.)
 " Note: This cfg maps all function keys, use/edit as needed
 " FIXME typing on console vim is very sluggish
 "
 " [FT] Set .md to Markdown and .as to Actionscript files
 
+"""""""""""""""""""""""""""""""""
+" CURRENT WORK IN PROGRESS
+"""""""""""""""""""""""""""""""""
+" Learn basic vimL
+"   variables, globals, functions, conditionals, OOP, format of a 
+"   plugin, file structure, managing and patterns for external files
+"   and config files (YAML), testing
+" 
+" Divide .vimrc into specific environments
+"   Lite: remote machine, bare, only has 'safe' cross-platform commands, and a package
+"   manager, but no extra plugins included. No app specific confs.
+"   Complete: Lite with configs, included and included micro-env or components
+"   Writer: big clear font, margined, wrap, spell check, bind to export to
+"   html or markdown or text
+"
+"   Examples of components: (They can be included by environments above)
+"   Markdown: .md ft=markdown; File should have :MouOpen binds, pwd is my .md repo
+"   Git: [instant]sync: binding to quickly branch+commit+push to backup
+"   Rails: rails.vim, bindings to check ruby syn (or auto on save, etc.)
+"   Local dev setup: OS X/term settings/git, ruby, rbenv, js-lint, etc.
+"   Utils: common popular or recommended aliases and commands for an overall
+"   improvement of the console experience
+"   
+" Learn window winbf wincmp commands to manipulate screens
+"
+" **Rails specific** screen env: Tagbar, buffer tabs, rails.vim, nerdtree,
+" running quickfix pry/rails-c on bottom. windows divided to show spec | src
+" side by side, to show MVC side by side, or Layout + CSS + JS + VIEW, etc.
+" Binding to show most common commands
+" and patterns for rails work in a pop up window
+"
+" Timer Paromodo Technique or to invert or gray out colorscheme after N minutes.
+"
+" How to show a quickfix window that has numerical shortcuts to jump to (minibufexpl)
+"
+" Create a toggle button
+"
+" Pow to run local browser app to modify vimrc with UI
+"
+" map to open from console vim to macvim
+"
+" quick key to browse current pwd (:!ls<CR>)
+"
+" quick key to open current pwd (:!open .<CR>)
+"
+" lower buffer window height
+"
+"
+" Collections: v code (left bar w/ repos nerdtree - recent projects - is git repo?)
+"              v write (write model on + PWD into text directory with optimized 
+"                      NERDTree on left, Ctrl+P, dictionaries
+"
+"              v notes instance is for quickly taking notes. automatically
+"              saved. saved timestamped, tagged, etc. maybe 4 windows cubed
+"              for 4 notes at once. left side lists recent notes, right side
+"              lists favorited dirs/notes
+"""""""""""""""""""""""""""""""""
 set t_Co=256
 set nocompatible
 set smartindent
@@ -64,6 +121,7 @@ set wildignore+=*.o,*.obj,.git,.svn,vendor/rails/**,tmp/**,public/system/**
 let g:CommandTMaxCachedDirectories=10
 let g:CommandTMaxHeight=20
 
+colors hybrid
 set bg=dark
 set vb
 
@@ -96,6 +154,7 @@ NeoBundle 'kien/ctrlp.vim.git'
 NeoBundle 'honza/writer.vim'
 NeoBundle 'vim-ruby/vim-ruby'
 NeoBundle 'plasticboy/vim-markdown'
+NeoBundle 'juvenn/mustache.vim'
 " Original repos (vim.org) on github
 NeoBundle 'tpope/vim-rails'
 NeoBundle 'tpope/vim-fugitive'
@@ -114,6 +173,7 @@ NeoBundle 'git://github.com/kchmck/vim-coffee-script.git'
 "NeoBundle 'git://github.com/vimplugins/project.vim.git'
 NeoBundle 'altercation/vim-colors-solarized'
 " vim-scripts repos
+NeoBundle 'vim-scripts/vim-mou'
 NeoBundle 'vim-scripts/ShowMarks'
 NeoBundle 'vim-scripts/dbext.vim'
 NeoBundle 'vim-scripts/Txtfmt-The-Vim-Highlighter'
@@ -167,7 +227,7 @@ nnoremap \tg <ESC>:TagbarOpenAutoClose<CR><ESC>
 nnoremap \ts :set spell!<CR>
 
 " Writer mode (no distractions, zen)
-nnoremap \tw :echo TODO toggle writer mode<CR>
+"nnoremap \tw :echo TODO toggle writer mode<CR>
 
 nnoremap \tw :echo TODO toggle contrast/invert<CR>
 "] nnoremap \tw :echo TODO toggle writer mode<CR>
@@ -215,15 +275,13 @@ noremap \et :Etask
 " F12 Re-source .vimrc
 nnoremap <F2> :set invpaste paste?<CR>
 nnoremap <F3> :MRU<CR>
-"nnoremap <F3> :!ruby -c %; :w<CR>:!ruby %<CR>
+nnoremap <F3> :MouOpen %<CR>
 nnoremap <F4> :buffers<CR>:buffer<Space>
 nnoremap <F5> :set wrap!<CR>
-nnoremap <F7> :!ruby -c %<CR>
-
-" destructive
-nnoremap <F1> :NERDTreeTabsToggle<CR>
 nnoremap <F6> :TagbarToggle<CR>
-nnoremap <F8> :WriterToggle<CR>
+nnoremap <F7> :!ruby -c %<CR>
+nnoremap <F1> :NERDTreeTabsToggle<CR>
+"nnoremap <F8> :WriterToggle<CR>
 nnoremap <F9> :GundoToggle<CR>
 
 " Highlight tabs/trailing/blank lines
@@ -241,10 +299,11 @@ nnoremap <silent> <C-K> :bn<CR>
 
 " TODO: !!! Cmd+W should close ALL buffers.
 nnoremap <silent> <C-W><C-W>0 :qa!<CR>
-nnoremap :WQQ<CR> :wqa<CR>
-nnoremap :WQQ! :wqa!<CR>
-nnoremap :QQ :qa<CR>
-nnoremap :QQ! :qa!<CR>
+
+nnoremap :q<CR> :qa<CR>
+nnoremap :q!<CR> :qa!<CR>
+nnoremap :wq<CR> :wqa<CR>
+nnoremap :wq!<CR> :wqa!<CR>
 
 let g:vim_markdown_folding_disabled=0
 let g:Powerline_symbols = 'fancy'
@@ -280,7 +339,6 @@ if has("gui_running")
   let g:buffergator_viewport_split_policy = "b"
   let g:buffergator_suppress_keymaps = 0
   let g:buffergator_autodismiss_on_select = 1
-  let g:buffergator_split_size = 15
   let g:buffergator_autoupdate = 1
   let g:buffergator_display_regime = 'basename'
 
@@ -337,14 +395,13 @@ if has("gui_running")
   "g:solarized_contrast  = "high"
   "g:solarized_visibility= "high"
   "g:solarized_hitrail   = 1
-  colors hybrid
 else
-  colors hybrid
-  "colors zenburn
+  " how to map C-6 instead of C-^ ? map <C-6> :buffer #<CR>
 endif
 
 syntax on
 
+"very informative :help map-overview
 
 " INJECTIONS (Delay is set low, meaning: hit these keys fast)
 " TODO package as plugin
@@ -356,6 +413,9 @@ inoremap <silent> }   }<ESC>
 
 inoremap <?     <?php  ?><LEFT><LEFT><LEFT>
 inoremap <??    <?php echo  ?><LEFT><LEFT><LEFT>
+inoremap <?r    <?php require_once('.php') ?><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT>
+inoremap <?!    <?php die('<pre>' . var_dump(Array()) . '</pre>') ?><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT>
+
 inoremap <%     <%  %><LEFT><LEFT><LEFT>
 inoremap <%%    <%=  %><LEFT><LEFT><LEFT>
 
@@ -363,9 +423,13 @@ inoremap ccl    console.log();<LEFT><LEFT>
 inoremap cc'    console.log('');<LEFT><LEFT><LEFT>
 inoremap cc"    console.log("");<LEFT><LEFT><LEFT>
 
-inoremap rri    raise [].to_yaml<LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT>
-inoremap brp    binding.remote_pry
+inoremap rri raise [].to_yaml<LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT>
+inoremap brp binding.remote_pry
+inoremap brp binding.remote_pry
 
+" Markdown newline. Press <Space><Enter> to end the current 
+" line with 2 spaces and move to the next line
+inoremap <SPACE><CR> <SPACE><SPACE><CR>
 
 " NOTE: All below is EXPERIMENTAL and probably breaks something
 " neocomplcache - disable AutoComplPop

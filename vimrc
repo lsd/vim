@@ -1,6 +1,6 @@
 " Vim web development config
 " http://github.com/lsd/vim
-" Updated 04/21/2013
+" Updated 05/28/2013
 
 " I use MacVim but this setup should be OS-agnostic.
 " Please contribute/contact if you encounter problems.
@@ -92,6 +92,9 @@ set timeoutlen=200
 set mouse=a
 set nolist
 set gdefault
+
+au FocusLost * silent! wa
+
 "set hlsearch " use \tl to toggle
 set incsearch
 set formatoptions+=1
@@ -99,6 +102,7 @@ set foldminlines=4
 " Does this belong here or in the TOGGLE below?
 set pastetoggle=<F2>
 set complete-=k complete+=k
+
 
 highlight FoldColumn guibg=grey guifg=blue
 highlight Folded ctermfg=11 ctermbg=8 guibg=#444444 guifg=#cccccc
@@ -111,6 +115,7 @@ set fillchars=
 " TODO make sure gem-ctags is being used
 set tags=./.tags;./tags;./
 
+let g:ScreenImpl = 'Tmux'
 " MRU - Most Recently Used
 let g:MRU_Max_Entries=200
 let g:MRU_Max_Menu_Entries=30
@@ -173,6 +178,8 @@ NeoBundle 'git://github.com/kchmck/vim-coffee-script.git'
 "NeoBundle 'git://github.com/vimplugins/project.vim.git'
 NeoBundle 'altercation/vim-colors-solarized'
 " vim-scripts repos
+NeoBundle 'vim-scripts/Vim-R-plugin'
+NeoBundle 'vim-scripts/R-MacOSX'
 NeoBundle 'vim-scripts/vim-mou'
 NeoBundle 'vim-scripts/ShowMarks'
 NeoBundle 'vim-scripts/dbext.vim'
@@ -181,6 +188,7 @@ NeoBundle 'vim-scripts/mru.vim'
 NeoBundle 'vim-scripts/YankRing.vim'
 NeoBundle 'majutsushi/tagbar'
 NeoBundle 'mileszs/ack.vim'
+NeoBundle 'ervandew/screen'
 NeoBundle 'L9'
 "NeoBundle 'FuzzyFinder'
 NeoBundle 'Gundo'
@@ -344,7 +352,7 @@ if has("gui_running")
 
   " http://mg.pov.lt/vim/doc/NERD_tree.txt
   let NERDTreeIgnore = ['\.swp$', '\.DS_Store$','\.git$','\.vim$', '\~$', 'tags']
-  let NERDTreeMouseMode = 3
+  let NERDTreeMouseMode = 1
   let NERDTreeShowLineNumbers = 0
   let NERDTreeChDirMode = 2
   let g:NERDTreeShowHidden = 0
@@ -391,7 +399,7 @@ if has("gui_running")
   set guioptions-=L
   set guioptions-=r
   set guioptions-=R
-  set guifont=Bitstream\ Vera\ Sans\ Mono:h14
+  set guifont=Source\ Code\ Pro\ for\ Powerline:h14
   "g:solarized_contrast  = "high"
   "g:solarized_visibility= "high"
   "g:solarized_hitrail   = 1

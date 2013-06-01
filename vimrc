@@ -126,10 +126,6 @@ set wildignore+=*.o,*.obj,.git,.svn,vendor/rails/**,tmp/**,public/system/**
 let g:CommandTMaxCachedDirectories=10
 let g:CommandTMaxHeight=20
 
-colors hybrid
-set bg=dark
-set vb
-
 if $VIM_NOBACKUPS == "true"
   echo ""
   echo "NOTICE: vim backups temporarily disabled. (VIM_NOBACKUPS == true)"
@@ -313,8 +309,8 @@ nnoremap :q!<CR> :qa!<CR>
 nnoremap :wq<CR> :wqa<CR>
 nnoremap :wq!<CR> :wqa!<CR>
 
-let g:vim_markdown_folding_disabled=0
-let g:Powerline_symbols = 'fancy'
+let g:vim_markdown_folding_disabled=0             
+let g:Powerline_symbols = 'fancy'           
 
 let Tlist_Exit_OnlyWindow = 1
 let Tlist_Show_One_File = 1
@@ -328,8 +324,8 @@ let Tlist_WinWidth = 5
 let g:indent_guides_guide_size = 1
 let g:indent_guides_enable_on_vim_startup = 1
 let g:indent_guides_auto_colors = 0
-autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=#222222 ctermbg=232
-autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=#222222 ctermbg=232
+"autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=#222222 ctermbg=232
+"autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=#222222 ctermbg=232
 
 " [FT] Set .md to Markdown and .as to Actionscript files
 au BufRead,BufNewFile *.md set ft=markdown
@@ -361,8 +357,8 @@ if has("gui_running")
   let g:nerdtree_tabs_meaningful_tab_names = 1
   let g:nerdtree_tabs_autoclose = 1
   let g:nerdtree_tabs_synchronize_view = 0
-  let g:NERDTreeWinSize = 35
-  let g:nerdtree_tabs_open_on_console_startup = 0
+  let g:NERDTreeWinSize = 55                  
+  let g:nerdtree_tabs_open_on_console_startup = 0         
   let g:nerdtree_tabs_open_on_gui_startup = 1
   let g:nerdtree_tabs_no_startup_for_diff = 1
   let g:nerdtree_tabs_smart_startup_focus = 1
@@ -407,7 +403,13 @@ else
   " how to map C-6 instead of C-^ ? map <C-6> :buffer #<CR>
 endif
 
+set vb t_vb=
 syntax on
+set background=dark
+colorscheme solarized
+
+set list listchars=trail:·
+highlight SpecialKey guifg=#073642 guibg=NONE ctermbg=NONE ctermfg=241
 
 "very informative :help map-overview
 
@@ -559,4 +561,7 @@ func! SayWordMode()
   setlocal wrap
   setlocal linebreak
 endfu
-com! SayWord call SayWordMode()
+com! SayWord call SayWordMode()         
+
+
+

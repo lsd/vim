@@ -6,54 +6,6 @@
 " Note: cfg maps most function (F1, ..) keys, use/edit as needed
 " FIXME: console vim is sometimes sluggish
 
-" WORK IN PROGRESS
-" [FT] Set .md to Markdown and .as to Actionscript files
-" vimL
-"   variables, globals, functions, conditionals, OOP, format of a
-"   plugin, file structure, managing and patterns for external files
-"   and config files (YAML), testing
-"
-" Divide .vimrc into specific environments
-"   Lite: remote machine, bare, only has 'safe' cross-platform commands, and a package
-"   manager, but no extra plugins included. No app specific confs.
-"   Complete: Lite with configs, included and included micro-env or components
-"   Writer: big clear font, margined, wrap, spell check, bind to export to
-"   html or markdown or text
-"
-"   Examples of components:
-"   Markdown: .md ft=markdown; File should have :MouOpen binds, pwd is my .md repo
-"   Git: [instant]sync: binding to quickly branch+commit+push to backup
-"   Rails: rails.vim, bindings to check ruby syn (or auto on save, etc.)
-"   Local dev setup: OS X/term settings/git, ruby, rbenv, js-lint, etc.
-"   Utils: common popular or recommended aliases and commands for an overall
-"   improvement of the console experience
-"
-" Learn window winbf wincmp commands to manipulate screens
-"
-" **Rails specific** screen env: Tagbar, buffer tabs, rails.vim, nerdtree,
-" running quickfix pry/rails-c on bottom. windows divided to show spec | src
-" side by side, to show MVC side by side, or Layout + CSS + JS + VIEW, etc.
-" Binding to show most common commands
-" and patterns for rails work in a pop up window
-"
-" Timer Paromodo Technique or to invert or gray out colorscheme after N minutes.
-" How to show a quickfix window that has numerical shortcuts to jump to (minibufexpl)
-" Create a toggle button
-" Pow to run local browser app to modify vimrc with UI
-" map to open from console vim to macvim
-" quick key to browse current pwd (:!ls<CR>)
-" quick key to open current pwd (:!open .<CR>)
-" lower buffer window height
-"
-" Collections: v code (left bar w/ repos nerdtree - recent projects - is git repo?)
-"              v write (write model on + PWD into text directory with optimized
-"                      NERDTree on left, Ctrl+P, dictionaries
-"
-"              v notes instance is for quickly taking notes. automatically
-"              saved. saved timestamped, tagged, etc. maybe 4 windows cubed
-"              for 4 notes at once. left side lists recent notes, right side
-"              lists favorited dirs/notes
-
 set t_Co=256
 set nocompatible
 set smartindent
@@ -136,9 +88,6 @@ endif
 call neobundle#rc(expand('~/.vim/bundle/'))
 
 " After install, exec ~/.vim/bundle/vimproc, (n,g)make -f your_machines_makefile
-"NeoBundle 'Shougo/neocomplcache.git'
-"NeoBundle 'Shougo/neosnippet.git'
-"NeoBundle 'honza/vim-snippets'
 NeoBundle 'Shougo/vimproc'
 NeoBundle 'Shougo/vimshell'
 NeoBundle 'kien/ctrlp.vim.git'
@@ -146,7 +95,6 @@ NeoBundle 'honza/writer.vim'
 NeoBundle 'vim-ruby/vim-ruby'
 NeoBundle 'plasticboy/vim-markdown'
 NeoBundle 'juvenn/mustache.vim'
-" Original repos (vim.org) on github
 NeoBundle 'tpope/vim-rails'
 NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'tpope/vim-unimpaired'
@@ -161,9 +109,7 @@ NeoBundle 'Lokaltog/vim-easymotion'
 NeoBundle 'jeetsukumaran/vim-buffergator'
 NeoBundle 'tilljoel/vim-automatic-ctags'
 NeoBundle 'git://github.com/kchmck/vim-coffee-script.git'
-"NeoBundle 'git://github.com/vimplugins/project.vim.git'
 NeoBundle 'altercation/vim-colors-solarized'
-" vim-scripts repos
 NeoBundle 'vim-scripts/Vim-R-plugin'
 NeoBundle 'vim-scripts/R-MacOSX'
 NeoBundle 'vim-scripts/vim-mou'
@@ -176,14 +122,13 @@ NeoBundle 'majutsushi/tagbar'
 NeoBundle 'mileszs/ack.vim'
 NeoBundle 'ervandew/screen'
 NeoBundle 'L9'
-"NeoBundle 'FuzzyFinder'
 NeoBundle 'Gundo'
 NeoBundle 'mattn/zencoding-vim'
 NeoBundle 'scrooloose/nerdtree'
 NeoBundle 'scrooloose/nerdcommenter'
 NeoBundle 'jistr/vim-nerdtree-tabs'
 NeoBundle 'nathanaelkane/vim-indent-guides'
-" Non github
+" Non-github
 NeoBundle 'git://git.wincent.com/command-t.git'
 NeoBundle 'git://github.com/Lokaltog/vim-powerline.git'
 NeoBundle 'http://svn.macports.org/repository/macports/contrib/mpvim/'
@@ -196,81 +141,6 @@ if neobundle#exists_not_installed_bundles()
 endif
 
 let showmarks_enable = 0
-
-" Change all [TAB] to 2 [SPACE]s
-nnoremap \tc :%s:	:  :<CR><ESC>
-
-" Change ALL whitespace to single [SPACE]
-nnoremap \tcc :%s:\s\+: :<CR><ESC>
-
-" Search Highlight
-nnoremap \tl :set hlsearch!<CR><ESC>
-
-" Search Highlight
-nnoremap \tg <ESC>:TagbarOpenAutoClose<CR><ESC>
-
-" Spellcheck
-nnoremap \ts :set spell!<CR>
-
-" Writer mode (no distractions, zen)
-"nnoremap \tw :echo TODO toggle writer mode<CR>
-
-nnoremap \tw :echo TODO toggle contrast/invert<CR>
-"] nnoremap \tw :echo TODO toggle writer mode<CR>
-
-" Marks/signs?
-nnoremap \tm :ShowMarksToggle<CR>
-
-" [FN KEYS]
-noremap \h :echomsg 'F3=MRU  F6=Tagbar  F8=writer  F10=NeoBundleInstall  F11=Whitespace  '<CR>
-noremap \em :Emodel
-noremap \ev :Eview
-noremap \ec :Econtroller
-noremap \es :Espec
-noremap \ej :Ejavascript
-noremap \et :Etask
-
-" F1  Toggle left (nerd/buffergator) TODO Fn keys should be univeral
-" F2  Pastetoggle
-" F3  Save/run current ruby file TODO Fn keys should be universal
-" F4  List buffers (bufexplorer)
-" F5  Toggle wrap!
-" F6  TagBarToggle (currently OFF)
-" F7  Check current .rb syntax
-" F9  Gundo Undo Tree
-" F11 Toggle whitespace on/off (replace \tl?)
-" F12 Re-source .vimrc
-nnoremap <F2> :set invpaste paste?<CR>
-nnoremap <F3> :MRU<CR>
-nnoremap <F3> :MouOpen %<CR>
-nnoremap <F4> :buffers<CR>:buffer<Space>
-nnoremap <F5> :set wrap!<CR>
-nnoremap <F6> :TagbarToggle<CR>
-nnoremap <F7> :!ruby -c %<CR>
-nnoremap <F1> :NERDTreeTabsToggle<CR>
-"nnoremap <F8> :WriterToggle<CR>
-nnoremap <F9> :GundoToggle<CR>
-
-" Highlight tabs/trailing/blank lines
-nnoremap <F11> <ESC>:set hlsearch!<CR>/\s<CR><ESC>
-nnoremap <F10> :NeoBundleInstall<CR>
-
-" current file re-sources .vimrc when its updated
-" other files need to have this called:
-nnoremap <F12> :so ~/.vimrc<CR>
-
-"nnoremap <silent> <C-T> :CommandT<CR>
-nnoremap <silent> <C-T> :CtrlP<CR>
-nnoremap <silent> <C-J> :bp<CR>
-nnoremap <silent> <C-K> :bn<CR>
-
-" TODO: !!! Cmd+W should close ALL buffers.
-nnoremap <silent> <C-W><C-W>0 :qa!<CR>
-
-nnoremap :q<CR> :qa<CR>
-nnoremap :q!<CR> :qa!<CR>
-nnoremap :wq<CR> :wqa<CR>
-nnoremap :wq!<CR> :wqa!<CR>
 
 let g:vim_markdown_folding_disabled=0
 let g:Powerline_symbols = 'fancy'
@@ -363,6 +233,60 @@ highlight SpecialKey guifg=#073642 guibg=NONE ctermbg=NONE ctermfg=241
 syntax on
 set background=dark
 colorscheme solarized
+
+" Change all [TAB] to 2 [SPACE]s
+nnoremap \tc :%s:	:  :<CR><ESC>
+
+" Change ALL whitespace to single [SPACE]
+nnoremap \tcc :%s:\s\+: :<CR><ESC>
+
+" Search Highlight
+nnoremap \tl :set hlsearch!<CR><ESC>
+
+nnoremap \tg <ESC>:TagbarOpenAutoClose<CR><ESC>
+nnoremap \ts :set spell!<CR>
+nnoremap \tm :ShowMarksToggle<CR>
+
+noremap \h :echomsg 'F3=MRU  F6=Tagbar  F8=writer  F10=NeoBundleInstall  F11=Whitespace  '<CR>
+noremap \em :Emodel
+noremap \ev :Eview
+noremap \ec :Econtroller
+noremap \es :Espec
+noremap \ej :Ejavascript
+noremap \et :Etask
+
+" F1  Toggle left (nerd/buffergator) TODO Fn keys should be universal
+" F2  Pastetoggle
+" F3  Save/run current ruby file TODO Fn keys should be universal
+" F4  List buffers (bufexplorer)
+" F5  Toggle wrap!
+" F6  TagBarToggle (currently OFF)
+" F7  Check current .rb syntax
+" F9  Gundo Undo Tree
+" F11 Toggle whitespace on/off (replace \tl?)
+" F12 Re-source .vimrc
+nnoremap <F2> :set invpaste paste?<CR>
+nnoremap <F3> :MRU<CR>
+nnoremap <F3> :MouOpen %<CR>
+nnoremap <F4> :buffers<CR>:buffer<Space>
+nnoremap <F5> :set wrap!<CR>
+nnoremap <F6> :TagbarToggle<CR>
+nnoremap <F7> :!ruby -c %<CR>
+nnoremap <F1> :NERDTreeTabsToggle<CR>
+nnoremap <F9> :GundoToggle<CR>
+nnoremap <F10> :NeoBundleInstall<CR>
+
+" Highlight tabs/trailing/blank lines
+nnoremap <F11> <ESC>:set hlsearch!<CR>/\s<CR><ESC>
+nnoremap <F12> :so ~/.vimrc<CR>
+
+nnoremap <silent> <C-T> :CtrlP<CR>
+nnoremap <silent> <C-J> :bp<CR>
+nnoremap <silent> <C-K> :bn<CR>
+
+" Shift+Cmd+W closes ALL buffers
+nnoremap <silent> <D-W> :qa<CR>
+ 
 
 " INJECTIONS (delay set low: hit keys fast)
 " See :help map-overview

@@ -1,0 +1,68 @@
+" WORK IN PROGRESS
+" [FT] Set .md to Markdown and .as to Actionscript files
+" vimL
+"   variables, globals, functions, conditionals, OOP, format of a
+"   plugin, file structure, managing and patterns for external files
+"   and config files (YAML), testing
+"
+" Divide .vimrc into specific environments
+"   Lite: remote machine, bare, only has 'safe' cross-platform commands, and a package
+"   manager, but no extra plugins included. No app specific confs.
+"   Complete: Lite with configs, included and included micro-env or components
+"   Writer: big clear font, margined, wrap, spell check, bind to export to
+"   html or markdown or text
+"
+"   Examples of components:
+"   Markdown: .md ft=markdown; File should have :MouOpen binds, pwd is my .md repo
+"   Git: [instant]sync: binding to quickly branch+commit+push to backup
+"   Rails: rails.vim, bindings to check ruby syn (or auto on save, etc.)
+"   Local dev setup: OS X/term settings/git, ruby, rbenv, js-lint, etc.
+"   Utils: common popular or recommended aliases and commands for an overall
+"   improvement of the console experience
+"
+" Learn window winbf wincmp commands to manipulate screens
+"
+" **Rails specific** screen env: Tagbar, buffer tabs, rails.vim, nerdtree,
+" running quickfix pry/rails-c on bottom. windows divided to show spec | src
+" side by side, to show MVC side by side, or Layout + CSS + JS + VIEW, etc.
+" Binding to show most common commands
+" and patterns for rails work in a pop up window
+"
+" Timer Paromodo Technique or to invert or gray out colorscheme after N minutes.
+" How to show a quickfix window that has numerical shortcuts to jump to (minibufexpl)
+" Create a toggle button
+" Pow to run local browser app to modify vimrc with UI
+" map to open from console vim to macvim
+" quick key to browse current pwd (:!ls<CR>)
+" quick key to open current pwd (:!open .<CR>)
+" lower buffer window height
+"
+" Collections: v code (left bar w/ repos nerdtree - recent projects - is git repo?)
+"              v write (write model on + PWD into text directory with optimized
+"                      NERDTree on left, Ctrl+P, dictionaries
+"
+"              v notes instance is for quickly taking notes. automatically
+"              saved. saved timestamped, tagged, etc. maybe 4 windows cubed
+"              for 4 notes at once. left side lists recent notes, right side
+"              lists favorited dirs/notes
+
+" --------------------------
+
+"NeoBundle 'Shougo/neocomplcache.git'
+"NeoBundle 'Shougo/neosnippet.git'
+"NeoBundle 'honza/vim-snippets'
+
+" original vim.org on github
+"NeoBundle 'git://github.com/vimplugins/project.vim.git'
+"NeoBundle 'FuzzyFinder'
+
+" Writer mode (no distractions, zen)
+"nnoremap \tw :echo TODO toggle writer mode<CR>
+
+nnoremap \tw :echo TODO toggle contrast/invert<CR>
+"] nnoremap \tw :echo TODO toggle writer mode<CR>
+
+"nnoremap <F8> :WriterToggle<CR>
+
+"nnoremap <silent> <C-T> :CommandT<CR>
+

@@ -9,8 +9,10 @@
 "   Lite: remote machine, bare, only has 'safe' cross-platform commands, and a package
 "   manager, but no extra plugins included. No app specific confs.
 "   Complete: Lite with configs, included and included micro-env or components
-"   Writer: big clear font, margined, wrap, spell check, bind to export to
-"   html or markdown or text
+"
+"   Writer: big clear font, margined, wrap, spell check, 
+"   bind to export to html or markdown or text, light solarized default, invert bind,
+"   use shifted join as hyphen (longer than the default minus)
 "
 "   Examples of components:
 "   Markdown: .md ft=markdown; File should have :MouOpen binds, pwd is my .md repo

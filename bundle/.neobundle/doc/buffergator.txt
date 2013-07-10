@@ -84,6 +84,20 @@ key mappings are defined:
 <Leader>T           Invokes ":BuffergatorTabsClose": close the tab page
                     catalog.
 
+[b, <M-B>           Invokes ":BuffergatorMruCyclePrev": cycle to an older
+                    buffer in the most-recently used (MRU) buffer list.
+                    most-recently used buffer. If
+                    "g:buffergator_mru_cycle_loop" is set to 1 (default), then
+                    this will loop, i.e. returning to the initial buffer after
+                    reaching the oldest buffer.
+
+]b, <M-S-B>         Invokes ":BuffergatorMruCycleNext": cycle to a newer
+                    buffer in the most-recently used (MRU) buffer list.
+                    most-recently used buffer. If
+                    "g:buffergator_mru_cycle_loop" is set to 1 (default), then
+                    this will loop, i.e. returning to the oldest buffer after
+                    reaching the newest buffer.
+
 ===============================================================================
                                                       *buffergator-buffer-keys*
 KEY MAPPINGS (BUFFER CATALOG)~
@@ -97,6 +111,8 @@ Catalog Management~
 
 cs                  Cycle through sort regimes.
 cd                  Cycle through display regimes.
+cw                  Cycle through window (viewport) split modes.
+cq                  Cycle through quit (autodismiss-on-select) policies.
 r                   Update (rebuild/refresh) index.
 d                   Delete the selected buffer.
 D                   Unconditionally delete the selected buffer.
@@ -118,11 +134,13 @@ true; otherwise it will be kept open.
 s                   Open the currently-selected buffer (or, if [count] is
                     given, buffer with number [count]), in a new vertical
                     split.
+<C-V>               As above (compatibility with Ctrl-P/Command-T)
 i                   Open the currently-selected buffer (or, if [count] is
                     given, buffer with number [count]), in a new split.
+<C-S>               As above (compatibility with Ctrl-P/Command-T)
 t                   Open the currently-selected buffer (or, if [count] is
                     given, buffer with number [count]), in a new tab page.
-
+<C-T>               As above (compatibility with Ctrl-P/Command-T)
 
 -------------------------------------------------------------------------------
 Preview Selected Buffer~
@@ -263,6 +281,16 @@ g:buffergator_split_size~
     Default: 40
     If greater than 0, this will be the width of the Buffergator window in any
     vertical splitting mode, or its height in any horizontal splitting mode.
+
+g:buffergator_vsplit_size~
+    Default: 40
+    If greater than 0, this will be the width of the Buffergator window in
+    any vertical splitting mode.
+
+g:buffergator_hplit_size~
+    Default: 20
+    If greater than 0, this will be the height of the Buffergator window in
+    any horizontal splitting mode.
 
 g:buffergator_sort_regime~
     Default: "bufnum"

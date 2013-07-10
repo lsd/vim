@@ -59,11 +59,9 @@
 'g:ctrlp_lazy_update'	ctrlp.txt	/*'g:ctrlp_lazy_update'*
 'g:ctrlp_map'	ctrlp.txt	/*'g:ctrlp_map'*
 'g:ctrlp_match_func'	ctrlp.txt	/*'g:ctrlp_match_func'*
-'g:ctrlp_match_window_bottom'	ctrlp.txt	/*'g:ctrlp_match_window_bottom'*
-'g:ctrlp_match_window_reversed'	ctrlp.txt	/*'g:ctrlp_match_window_reversed'*
+'g:ctrlp_match_window'	ctrlp.txt	/*'g:ctrlp_match_window'*
 'g:ctrlp_max_depth'	ctrlp.txt	/*'g:ctrlp_max_depth'*
 'g:ctrlp_max_files'	ctrlp.txt	/*'g:ctrlp_max_files'*
-'g:ctrlp_max_height'	ctrlp.txt	/*'g:ctrlp_max_height'*
 'g:ctrlp_max_history'	ctrlp.txt	/*'g:ctrlp_max_history'*
 'g:ctrlp_mruf_case_sensitive'	ctrlp.txt	/*'g:ctrlp_mruf_case_sensitive'*
 'g:ctrlp_mruf_default_order'	ctrlp.txt	/*'g:ctrlp_mruf_default_order'*
@@ -90,10 +88,12 @@
 'g:loaded_ctrlp'	ctrlp.txt	/*'g:loaded_ctrlp'*
 'indent_guides_auto_colors'	indent_guides.txt	/*'indent_guides_auto_colors'*
 'indent_guides_color_change_percent'	indent_guides.txt	/*'indent_guides_color_change_percent'*
+'indent_guides_default_mapping'	indent_guides.txt	/*'indent_guides_default_mapping'*
 'indent_guides_enable_on_vim_startup'	indent_guides.txt	/*'indent_guides_enable_on_vim_startup'*
 'indent_guides_exclude_filetypes'	indent_guides.txt	/*'indent_guides_exclude_filetypes'*
 'indent_guides_guide_size'	indent_guides.txt	/*'indent_guides_guide_size'*
 'indent_guides_indent_levels'	indent_guides.txt	/*'indent_guides_indent_levels'*
+'indent_guides_soft_pattern'	indent_guides.txt	/*'indent_guides_soft_pattern'*
 'indent_guides_space_guides'	indent_guides.txt	/*'indent_guides_space_guides'*
 'indent_guides_start_level'	indent_guides.txt	/*'indent_guides_start_level'*
 'loaded_nerd_comments'	NERD_commenter.txt	/*'loaded_nerd_comments'*
@@ -859,6 +859,9 @@ g:ctrlp_dotfiles	ctrlp.txt	/*g:ctrlp_dotfiles*
 g:ctrlp_highlight_match	ctrlp.txt	/*g:ctrlp_highlight_match*
 g:ctrlp_jump_to_buffer	ctrlp.txt	/*g:ctrlp_jump_to_buffer*
 g:ctrlp_live_update	ctrlp.txt	/*g:ctrlp_live_update*
+g:ctrlp_match_window_bottom	ctrlp.txt	/*g:ctrlp_match_window_bottom*
+g:ctrlp_match_window_reversed	ctrlp.txt	/*g:ctrlp_match_window_reversed*
+g:ctrlp_max_height	ctrlp.txt	/*g:ctrlp_max_height*
 g:ctrlp_mru_files	ctrlp.txt	/*g:ctrlp_mru_files*
 g:ctrlp_open_multi	ctrlp.txt	/*g:ctrlp_open_multi*
 g:ctrlp_persistent_input	ctrlp.txt	/*g:ctrlp_persistent_input*
@@ -916,6 +919,8 @@ g:vimshell_editor_command	vimshell.txt	/*g:vimshell_editor_command*
 g:vimshell_enable_transient_user_prompt	vimshell.txt	/*g:vimshell_enable_transient_user_prompt*
 g:vimshell_environment_term	vimshell.txt	/*g:vimshell_environment_term*
 g:vimshell_escape_colors	vimshell.txt	/*g:vimshell_escape_colors*
+g:vimshell_execute_file_list	vimshell.txt	/*g:vimshell_execute_file_list*
+g:vimshell_force_overwrite_statusline	vimshell.txt	/*g:vimshell_force_overwrite_statusline*
 g:vimshell_interactive_command_options	vimshell.txt	/*g:vimshell_interactive_command_options*
 g:vimshell_interactive_cygwin_commands	vimshell.txt	/*g:vimshell_interactive_cygwin_commands*
 g:vimshell_interactive_cygwin_home	vimshell.txt	/*g:vimshell_interactive_cygwin_home*
@@ -968,6 +973,7 @@ i_<Plug>(vimshell_enter)	vimshell.txt	/*i_<Plug>(vimshell_enter)*
 i_<Plug>(vimshell_execute_by_background)	vimshell.txt	/*i_<Plug>(vimshell_execute_by_background)*
 i_<Plug>(vimshell_exit)	vimshell.txt	/*i_<Plug>(vimshell_exit)*
 i_<Plug>(vimshell_hide)	vimshell.txt	/*i_<Plug>(vimshell_hide)*
+i_<Plug>(vimshell_history_unite)	vimshell.txt	/*i_<Plug>(vimshell_history_unite)*
 i_<Plug>(vimshell_insert_last_word)	vimshell.txt	/*i_<Plug>(vimshell_insert_last_word)*
 i_<Plug>(vimshell_int_another_delete_backward_char)	vimshell.txt	/*i_<Plug>(vimshell_int_another_delete_backward_char)*
 i_<Plug>(vimshell_int_command_complete)	vimshell.txt	/*i_<Plug>(vimshell_int_command_complete)*
@@ -976,6 +982,7 @@ i_<Plug>(vimshell_int_delete_backward_line)	vimshell.txt	/*i_<Plug>(vimshell_int
 i_<Plug>(vimshell_int_delete_backward_word)	vimshell.txt	/*i_<Plug>(vimshell_int_delete_backward_word)*
 i_<Plug>(vimshell_int_delete_forward_line)	vimshell.txt	/*i_<Plug>(vimshell_int_delete_forward_line)*
 i_<Plug>(vimshell_int_execute_line)	vimshell.txt	/*i_<Plug>(vimshell_int_execute_line)*
+i_<Plug>(vimshell_int_history_unite)	vimshell.txt	/*i_<Plug>(vimshell_int_history_unite)*
 i_<Plug>(vimshell_int_interrupt)	vimshell.txt	/*i_<Plug>(vimshell_int_interrupt)*
 i_<Plug>(vimshell_int_move_head)	vimshell.txt	/*i_<Plug>(vimshell_int_move_head)*
 i_<Plug>(vimshell_int_send_input)	vimshell.txt	/*i_<Plug>(vimshell_int_send_input)*
@@ -1593,6 +1600,7 @@ vim-colors-solarized	solarized.txt	/*vim-colors-solarized*
 vim-nerdtree-tabs	vim-nerdtree-tabs.txt	/*vim-nerdtree-tabs*
 vim-r-plugin	r-plugin.txt	/*vim-r-plugin*
 vim-ruby.txt	vim-ruby.txt	/*vim-ruby.txt*
+vimproc#cmd#system()	vimproc.txt	/*vimproc#cmd#system()*
 vimproc#delete_trash()	vimproc.txt	/*vimproc#delete_trash()*
 vimproc#dll_version()	vimproc.txt	/*vimproc#dll_version()*
 vimproc#fopen()	vimproc.txt	/*vimproc#fopen()*
@@ -1618,10 +1626,10 @@ vimproc#system_gui()	vimproc.txt	/*vimproc#system_gui()*
 vimproc#system_passwd()	vimproc.txt	/*vimproc#system_passwd()*
 vimproc#version()	vimproc.txt	/*vimproc#version()*
 vimproc#write()	vimproc.txt	/*vimproc#write()*
-vimproc-changelog	vimproc.txt	/*vimproc-changelog*
 vimproc-commands	vimproc.txt	/*vimproc-commands*
 vimproc-contents	vimproc.txt	/*vimproc-contents*
 vimproc-examples	vimproc.txt	/*vimproc-examples*
+vimproc-faq	vimproc.txt	/*vimproc-faq*
 vimproc-functions	vimproc.txt	/*vimproc-functions*
 vimproc-install	vimproc.txt	/*vimproc-install*
 vimproc-interface	vimproc.txt	/*vimproc-interface*
@@ -1674,15 +1682,16 @@ vimrplugin_term_cmd	r-plugin.txt	/*vimrplugin_term_cmd*
 vimrplugin_tmux	r-plugin.txt	/*vimrplugin_tmux*
 vimrplugin_vimpager	r-plugin.txt	/*vimrplugin_vimpager*
 vimshell	vimshell.txt	/*vimshell*
+vimshell#get_status_string()	vimshell.txt	/*vimshell#get_status_string()*
 vimshell#hook#add()	vimshell.txt	/*vimshell#hook#add()*
 vimshell#hook#get()	vimshell.txt	/*vimshell#hook#get()*
 vimshell#hook#remove()	vimshell.txt	/*vimshell#hook#remove()*
 vimshell#hook#set()	vimshell.txt	/*vimshell#hook#set()*
 vimshell#interactive#send()	vimshell.txt	/*vimshell#interactive#send()*
 vimshell#interactive#send_string()	vimshell.txt	/*vimshell#interactive#send_string()*
+vimshell#set_execute_file()	vimshell.txt	/*vimshell#set_execute_file()*
 vimshell-alter-command	vimshell.txt	/*vimshell-alter-command*
 vimshell-buffer-key-mappings	vimshell.txt	/*vimshell-buffer-key-mappings*
-vimshell-changelog	vimshell.txt	/*vimshell-changelog*
 vimshell-commands	vimshell.txt	/*vimshell-commands*
 vimshell-contents	vimshell.txt	/*vimshell-contents*
 vimshell-create-plugin	vimshell.txt	/*vimshell-create-plugin*
@@ -1708,6 +1717,7 @@ vimshell-interface	vimshell.txt	/*vimshell-interface*
 vimshell-internal-bg	vimshell.txt	/*vimshell-internal-bg*
 vimshell-internal-build	vimshell.txt	/*vimshell-internal-build*
 vimshell-internal-cd	vimshell.txt	/*vimshell-internal-cd*
+vimshell-internal-cdup	vimshell.txt	/*vimshell-internal-cdup*
 vimshell-internal-clear	vimshell.txt	/*vimshell-internal-clear*
 vimshell-internal-commands	vimshell.txt	/*vimshell-internal-commands*
 vimshell-internal-dirs	vimshell.txt	/*vimshell-internal-dirs*
@@ -1827,6 +1837,7 @@ zencoding-indent-size	zencoding.txt	/*zencoding-indent-size*
 zencoding-install	zencoding.txt	/*zencoding-install*
 zencoding-introduction	zencoding.txt	/*zencoding-introduction*
 zencoding-links	zencoding.txt	/*zencoding-links*
+zencoding-lorem-ipsum	zencoding.txt	/*zencoding-lorem-ipsum*
 zencoding-make-anchor-url	zencoding.txt	/*zencoding-make-anchor-url*
 zencoding-merge-lines	zencoding.txt	/*zencoding-merge-lines*
 zencoding-quoted-text-url	zencoding.txt	/*zencoding-quoted-text-url*

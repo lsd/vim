@@ -32,9 +32,6 @@ set nolist
 set gdefault
 set vb t_vb=
 
-" Autosave all bufs
-au FocusLost * silent! wa
-
 "set hlsearch " use \tl to toggle
 set incsearch
 set formatoptions+=1
@@ -161,7 +158,18 @@ au BufRead,BufNewFile *.as set ft=actionscript
 " auto spellcheck git commits
 autocmd FileType gitcommit setlocal spell
 
+set list listchars=trail:·
+highlight SpecialKey guifg=#073642 guibg=NONE ctermbg=NONE ctermfg=241
+
+set background=dark
+colorscheme solarized
+syntax on
+
+" Autosave all bufs, ignore warnings
+au FocusLost * silent! wa
+
 if has("gui_running")
+  set bg=light
   set lines=65
   set columns=160
 
@@ -175,27 +183,27 @@ if has("gui_running")
   let g:buffergator_split_size = 15
 
   " http://mg.pov.lt/vim/doc/NERD_tree.txt
-  let NERDTreeIgnore = ['\.swp$', '\.DS_Store$','\.git$','\.vim$', '\~$', 'tags']
+  let NERDTreeIgnore = ['\.swp$', '\.DS_Store$','\.git$','\.vim$', '\~$', 'tags', 'Thumbs.db']
   let NERDTreeMouseMode = 1
   let NERDTreeShowLineNumbers = 0
   let NERDTreeChDirMode = 2
 
-  let g:NERDTreeShowHidden = 0
+  let g:NERDTreeShowHidden = 1
   let g:NERDTreeWinSize = 45
   let g:nerdtree_tabs_meaningful_tab_names = 1
-  let g:nerdtree_tabs_autoclose = 1
+  let g:nerdtree_tabs_autoclose = 0
   let g:nerdtree_tabs_synchronize_view = 0
-  let g:nerdtree_tabs_open_on_console_startup = 0
+  let g:nerdtree_tabs_open_on_console_startup = 1
   let g:nerdtree_tabs_open_on_gui_startup = 1
   let g:nerdtree_tabs_no_startup_for_diff = 1
   let g:nerdtree_tabs_smart_startup_focus = 1
 
   autocmd VimEnter <buffer=1> hi ColorColumn guibg=#333333
 
-  autocmd VimEnter * NERDTreeTabsToggle
-  autocmd VimEnter * wincmd c
-  autocmd VimEnter * BuffergatorToggle
-  autocmd VimEnter * wincmd b
+"  autocmd VimEnter * NERDTreeTabsToggle
+"  autocmd VimEnter * wincmd c
+"  autocmd VimEnter * BuffergatorToggle
+"  autocmd VimEnter * wincmd b
 
   " Toggle left sidebar http://justmao.name/life/integrate-nerdtree-and-buffergator/
   fu! LSidebarToggle()
@@ -226,13 +234,6 @@ if has("gui_running")
 else
   " how to map C-6 instead of C-^ ? map <C-6> :buffer #<CR>
 endif
-
-set list listchars=trail:·
-highlight SpecialKey guifg=#073642 guibg=NONE ctermbg=NONE ctermfg=241
-
-syntax on
-set background=dark
-colorscheme solarized
 
 " Change all [TAB] to 2 [SPACE]s
 nnoremap \tc :%s:	:  :<CR><ESC>
@@ -464,4 +465,3 @@ com! SayWord call SayWordMode()
 "    autocmd!
 "    autocmd BufWritePost $MYVIMRC source $MYVIMRC
 "augroup END " }
-

@@ -13,6 +13,8 @@ set expandtab
 set tabstop=2 shiftwidth=2 softtabstop=2
 set backspace=indent,eol,start
 set history=1000
+set textwidth=0
+set wrapmargin=0
 set nowrap
 set number
 set copyindent
@@ -36,9 +38,6 @@ set vb t_vb=
 set incsearch
 set formatoptions+=1
 set foldminlines=4
-
-" Does this belong here or in the TOGGLE below?
-set pastetoggle=<F2>
 set complete-=k complete+=k
 
 " TODO make sure gem-ctags is being used
@@ -81,7 +80,6 @@ filetype off " REQUIRED
 if has('vim_starting')
   set runtimepath+=~/.vim/bundle/neobundle.vim/
 endif
-
 call neobundle#rc(expand('~/.vim/bundle/'))
 
 " After install, exec ~/.vim/bundle/vimproc, (n,g)make -f your_machines_makefile
@@ -235,6 +233,42 @@ else
   " how to map C-6 instead of C-^ ? map <C-6> :buffer #<CR>
 endif
 
+let g:FnKeyMappings="\n
+\ F1: Toggle Left Side NERDTree\n
+\ F2: Toggle Paste Mode\n
+\ F3: Display Recent Files\n
+\ F4: Display and Jump to Buffer\n
+\ F5: Toggle Word Wrap\n
+\ F6: Toggle Right Side Tag Bar\n
+\ F7: ???\n
+\ F8: Toggle Dark/Light BG (solarized plugin)\n
+\ F9: Toggle Gundo Undo Tree\n
+\ F10: exec NeoBundInstall\n
+\ F11: Show all whitespace\n
+\ F12: SourceVimRC\n"
+
+noremap \h :echo g:FnKeyMappings<CR>
+
+let g:leaderMappings="\nList of Leader Key Mappings (\\)\n
+\ --------------------------\n
+\ \\tc : Fix all ^I, ^M chars in buffer\n
+\ \\tcc: Change all whitespace to 1 space\n
+\ \\tl : Toggle search Highlight\n
+\ \\tg : Toggle Tagbar Autoclose\n
+\ \\ts : Toggle spellcheck\n
+\ \\tm : Toggle Show Line Marks\n
+\ \\md : Open current buffer in Mou\n\n
+\ Plugin rails.vim\n
+\ --------------------------\n
+\ \\em : Emodel (rails.vim)\n
+\ \\ev : Eview\n
+\ \\ec : Econtroller\n
+\ \\es : Espec\n
+\ \\ej : Ejavascript\n
+\ \\et : Etask\n\n"
+
+noremap \hh :echo g:leaderMappings<CR>
+
 " Change all [TAB] to 2 [SPACE]s
 nnoremap \tc :%s:	:  :<CR><ESC>
 
@@ -247,8 +281,8 @@ nnoremap \tl :set hlsearch!<CR><ESC>
 nnoremap \tg <ESC>:TagbarOpenAutoClose<CR><ESC>
 nnoremap \ts :set spell!<CR>
 nnoremap \tm :ShowMarksToggle<CR>
+nnoremap \mk :MouOpen<CR>
 
-noremap \h :echomsg 'F3=MRU  F6=Tagbar  F8=writer  F10=NeoBundleInstall  F11=Whitespace  '<CR>
 noremap \em :Emodel
 noremap \ev :Eview
 noremap \ec :Econtroller
@@ -257,26 +291,27 @@ noremap \ej :Ejavascript
 noremap \et :Etask
 
 " F1  Toggle left (nerd/buffergator) TODO Fn keys should be universal
-" F2  Pastetoggle
+" F2  toggle paste mode (insert + normal mode)
 " F3  Save/run current ruby file TODO Fn keys should be universal
 " F4  List buffers (bufexplorer)
 " F5  Toggle wrap!
 " F6  TagBarToggle (currently OFF)
 " F7  Check current .rb syntax
+" F8  toggle dark/light BG with solarized-togglebg
 " F9  Gundo Undo Tree
 " F11 Toggle whitespace on/off (replace \tl?)
 " F12 Re-source .vimrc
-nnoremap <F2> :set invpaste paste?<CR>
+nnoremap <F1> :NERDTreeTabsToggle<CR>
+map <F2> :set invpaste paste?<CR>
+set pastetoggle=<F2>
 nnoremap <F3> :MRU<CR>
-nnoremap <F3> :MouOpen %<CR>
 nnoremap <F4> :buffers<CR>:buffer<Space>
 nnoremap <F5> :set wrap!<CR>
 nnoremap <F6> :TagbarToggle<CR>
 nnoremap <F7> :!ruby -c %<CR>
-nnoremap <F1> :NERDTreeTabsToggle<CR>
+call togglebg#map("<F8>")
 nnoremap <F9> :GundoToggle<CR>
 nnoremap <F10> :NeoBundleInstall<CR>
-
 " Highlight tabs/trailing/blank lines
 nnoremap <F11> <ESC>:set hlsearch!<CR>/\s<CR><ESC>
 nnoremap <F12> :so ~/.vimrc<CR>
@@ -285,9 +320,8 @@ nnoremap <silent> <C-T> :CtrlP<CR>
 nnoremap <silent> <C-J> :bp<CR>
 nnoremap <silent> <C-K> :bn<CR>
 
+" Use OS X System Preferences to assign Close Window to CMD+W
 " Shift+Cmd+W closes ALL buffers
-nnoremap <silent> <D-W> :qa<CR>
- 
 
 " INJECTIONS (delay set low: hit keys fast)
 " See :help map-overview
@@ -297,9 +331,8 @@ inoremap {{     {
 inoremap {}     {}
 inoremap <silent> }   }<ESC>
 
-inoremap <?     <?php  ?><LEFT><LEFT><LEFT>
+inoremap <?     <?php namespace ;<LEFT>
 inoremap <??    <?php echo  ?><LEFT><LEFT><LEFT>
-inoremap <?r    <?php require_once('.php') ?><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT>
 inoremap <?!    <?php die('<pre>' . var_dump(Array()) . '</pre>') ?><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT>
 
 inoremap <%     <%  %><LEFT><LEFT><LEFT>
@@ -309,12 +342,11 @@ inoremap ccl    console.log();<LEFT><LEFT>
 inoremap cc'    console.log('');<LEFT><LEFT><LEFT>
 inoremap cc"    console.log("");<LEFT><LEFT><LEFT>
 
-inoremap rri raise [].to_yaml<LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT>
-inoremap brp binding.remote_pry
 inoremap brp binding.remote_pry
 
-" Markdown newline. Space+Enter to end current line with 2 spaces
-inoremap <SPACE><CR> <SPACE><SPACE><CR>
+" Markdown newline; (CMD+Enter ends current line w/ 2 spaces)
+inoremap <C-CR> <SPACE><SPACE><CR>
+
 
  " NOTE: All below is EXPERIMENTAL and probably breaks something
 func! SayWordMode()

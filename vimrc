@@ -57,7 +57,12 @@ let g:MRU_Max_Entries=50
 let g:MRU_Max_Menu_Entries=20
 let g:MRU_Window_Open_Always=1
 
-" CommandT (lags on big projects)
+" 
+"if has("gui_running")
+"  macmenu &File.New\ Tab key=<nop>
+"endif
+"map <Leader>t <nop>
+
 set wildignore+=*.o,*.obj,.git,.svn,vendor/rails/**,tmp/**,public/system/**
 let g:CommandTMaxCachedDirectories=10
 let g:CommandTMaxHeight=20
@@ -124,7 +129,6 @@ NeoBundle 'scrooloose/nerdcommenter'
 NeoBundle 'jistr/vim-nerdtree-tabs'
 NeoBundle 'nathanaelkane/vim-indent-guides'
 " Non-github
-NeoBundle 'git://git.wincent.com/command-t.git'
 NeoBundle 'git://github.com/Lokaltog/vim-powerline.git'
 NeoBundle 'http://svn.macports.org/repository/macports/contrib/mpvim/'
 
@@ -167,55 +171,48 @@ syntax on
 au FocusLost * silent! wa
 
 if has("gui_running")
-  set bg=light
+  set bg=dark
   set lines=65
   set columns=160
 
   " split viewport horizontally new split on top
   " github.com/jeetsukumaran/vim-buffergator/blob/master/doc/buffergator.txt
   let g:buffergator_viewport_split_policy = "b"
-  let g:buffergator_suppress_keymaps = 0
+  let g:buffergator_suppress_keymaps = 1
   let g:buffergator_autodismiss_on_select = 1
   let g:buffergator_autoupdate = 1
   let g:buffergator_display_regime = 'basename'
   let g:buffergator_split_size = 15
 
   " http://mg.pov.lt/vim/doc/NERD_tree.txt
-  let NERDTreeIgnore = ['\.swp$', '\.DS_Store$','\.git$','\.vim$', '\~$', 'tags', 'Thumbs.db']
+  let NERDTreeIgnore = ['\.swp$', '\.DS_Store$','\.git$','\.vim$', '\~$', 'tags', 'Thumbs.db', '^\.com\.apple', '\.svn$']
   let NERDTreeMouseMode = 1
   let NERDTreeShowLineNumbers = 0
   let NERDTreeChDirMode = 2
 
   let g:NERDTreeShowHidden = 1
-  let g:NERDTreeWinSize = 45
+  let g:NERDTreeWinSize = 35
   let g:nerdtree_tabs_meaningful_tab_names = 1
   let g:nerdtree_tabs_autoclose = 0
   let g:nerdtree_tabs_synchronize_view = 0
-  let g:nerdtree_tabs_open_on_console_startup = 1
-  let g:nerdtree_tabs_open_on_gui_startup = 1
+  let g:nerdtree_tabs_open_on_console_startup = 0
+  let g:nerdtree_tabs_open_on_gui_startup = 0
   let g:nerdtree_tabs_no_startup_for_diff = 1
   let g:nerdtree_tabs_smart_startup_focus = 1
 
   autocmd VimEnter <buffer=1> hi ColorColumn guibg=#333333
 
-"  autocmd VimEnter * NERDTreeTabsToggle
-"  autocmd VimEnter * wincmd c
-"  autocmd VimEnter * BuffergatorToggle
-"  autocmd VimEnter * wincmd b
-
-  " Toggle left sidebar http://justmao.name/life/integrate-nerdtree-and-buffergator/
-  fu! LSidebarToggle()
-    let b = bufnr("%")
-    execute "NERDTreeToggle | BuffergatorToggle"
-    execute ( bufwinnr(b) . "wincmd w" )
+  fu! LeftSidebarToggle()
+    let main = bufnr("%")
+    exe 'NERDTreeTabsToggle'
+    exe 'BuffergatorToggle'
+    exe bufwinnr(main) . 'wincmd w'
   endf
 
-  map  <silent> <Leader>w  <ESC>:call LSidebarToggle()<CR>
-  map! <silent> <Leader>w  <ESC>:call LSidebarToggle()<CR>
+  autocmd VimEnter * call LeftSidebarToggle()
+  nnoremap <F1> :call LeftSidebarToggle()<CR>
 
   map <Leader>n :NERDTreeCWD<CR>
-  map <Leader>b :BuffergatorOpen<CR>
-  map <Leader>v :wincmd b<CR>
 
   map <Leader>] :bnext<CR>
   map <Leader>[ :bprevious<CR>
@@ -229,12 +226,14 @@ if has("gui_running")
   set guioptions-=r
   set guioptions-=R
   set guifont=Source\ Code\ Pro\ for\ Powerline:h14
+
 else
   " how to map C-6 instead of C-^ ? map <C-6> :buffer #<CR>
+  nnoremap <F1> :NERDTreeTabsToggle<CR>
 endif
 
 let g:FnKeyMappings="\n
-\ F1: Toggle Left Side NERDTree\n
+\ F1: Toggle Left Side Toggle\n
 \ F2: Toggle Paste Mode\n
 \ F3: Display Recent Files\n
 \ F4: Display and Jump to Buffer\n
@@ -251,21 +250,23 @@ noremap \h :echo g:FnKeyMappings<CR>
 
 let g:leaderMappings="\nList of Leader Key Mappings (\\)\n
 \ --------------------------\n
-\ \\tc : Fix all ^I, ^M chars in buffer\n
-\ \\tcc: Change all whitespace to 1 space\n
-\ \\tl : Toggle search Highlight\n
-\ \\tg : Toggle Tagbar Autoclose\n
-\ \\ts : Toggle spellcheck\n
-\ \\tm : Toggle Show Line Marks\n
-\ \\md : Open current buffer in Mou\n\n
+\ <Leader>tc : Fix all ^I, ^M chars in buffer\n
+\ <Leader>tcc: Change all whitespace to 1 space\n
+\ <Leader>tl : Toggle search Highlight\n
+\ <Leader>tg : Toggle Tagbar Autoclose\n
+\ <Leader>ts : Toggle spellcheck\n
+\ <Leader>tm : Toggle Show Line Marks\n
+\ <Leader>mk : Open current buffer in Mou\n\n
+\ <Leader>h : List Fn key maps\n\n
+\ <Leader>hh : List Leader key maps\n\n
 \ Plugin rails.vim\n
 \ --------------------------\n
-\ \\em : Emodel (rails.vim)\n
-\ \\ev : Eview\n
-\ \\ec : Econtroller\n
-\ \\es : Espec\n
-\ \\ej : Ejavascript\n
-\ \\et : Etask\n\n"
+\ <Leader>em : Emodel (rails.vim)\n
+\ <Leader>ev : Eview\n
+\ <Leader>ec : Econtroller\n
+\ <Leader>es : Espec\n
+\ <Leader>ej : Ejavascript\n
+\ <Leader>et : Etask\n\n"
 
 noremap \hh :echo g:leaderMappings<CR>
 
@@ -290,9 +291,9 @@ noremap \es :Espec
 noremap \ej :Ejavascript
 noremap \et :Etask
 
-" F1  Toggle left (nerd/buffergator) TODO Fn keys should be universal
+" F1  Toggle left nerd/buffergator
 " F2  toggle paste mode (insert + normal mode)
-" F3  Save/run current ruby file TODO Fn keys should be universal
+" F3  Save/run current ruby file
 " F4  List buffers (bufexplorer)
 " F5  Toggle wrap!
 " F6  TagBarToggle (currently OFF)
@@ -301,7 +302,6 @@ noremap \et :Etask
 " F9  Gundo Undo Tree
 " F11 Toggle whitespace on/off (replace \tl?)
 " F12 Re-source .vimrc
-nnoremap <F1> :NERDTreeTabsToggle<CR>
 map <F2> :set invpaste paste?<CR>
 set pastetoggle=<F2>
 nnoremap <F3> :MRU<CR>
@@ -316,9 +316,9 @@ nnoremap <F10> :NeoBundleInstall<CR>
 nnoremap <F11> <ESC>:set hlsearch!<CR>/\s<CR><ESC>
 nnoremap <F12> :so ~/.vimrc<CR>
 
-nnoremap <silent> <C-T> :CtrlP<CR>
-nnoremap <silent> <C-J> :bp<CR>
-nnoremap <silent> <C-K> :bn<CR>
+nnoremap <silent> <C-t> :CtrlP<CR>
+nnoremap <silent> <C-j> :bp<CR>
+nnoremap <silent> <C-k> :bn<CR>
 
 " Use OS X System Preferences to assign Close Window to CMD+W
 " Shift+Cmd+W closes ALL buffers
@@ -349,19 +349,19 @@ inoremap <C-CR> <SPACE><SPACE><CR>
 
 
  " NOTE: All below is EXPERIMENTAL and probably breaks something
-func! SayWordMode()
-  setlocal formatoptions=1
-  setlocal noexpandtab
-  map j gj
-  map k gk
-  setlocal spell spelllang=en_us
-  set thesaurus+=~/.vim/thesaurus/mthesaur.txt
-  set complete+=s
-  set formatprg=par
-  setlocal wrap
-  setlocal linebreak
-endfu
-com! SayWord call SayWordMode() 
+"func! SayWordMode()
+"  setlocal formatoptions=1
+"  setlocal noexpandtab
+"  map j gj
+"  map k gk
+"  setlocal spell spelllang=en_us
+"  set thesaurus+=~/.vim/thesaurus/mthesaur.txt
+"  set complete+=s
+"  set formatprg=par
+"  setlocal wrap
+"  setlocal linebreak
+"endfu
+"com! SayWord call SayWordMode()
 
 "let g:indent_guides_guide_size = 1
 "let g:indent_guides_enable_on_vim_startup = 1

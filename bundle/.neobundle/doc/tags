@@ -938,6 +938,8 @@ g:vimshell_no_save_history_commands	vimshell.txt	/*g:vimshell_no_save_history_co
 g:vimshell_popup_command	vimshell.txt	/*g:vimshell_popup_command*
 g:vimshell_popup_height	vimshell.txt	/*g:vimshell_popup_height*
 g:vimshell_prompt	vimshell.txt	/*g:vimshell_prompt*
+g:vimshell_prompt_expr	vimshell.txt	/*g:vimshell_prompt_expr*
+g:vimshell_prompt_pattern	vimshell.txt	/*g:vimshell_prompt_pattern*
 g:vimshell_right_prompt	vimshell.txt	/*g:vimshell_right_prompt*
 g:vimshell_scrollback_limit	vimshell.txt	/*g:vimshell_scrollback_limit*
 g:vimshell_secondary_prompt	vimshell.txt	/*g:vimshell_secondary_prompt*
@@ -1762,6 +1764,8 @@ vimshell-options-create	vimshell.txt	/*vimshell-options-create*
 vimshell-options-popup	vimshell.txt	/*vimshell-options-popup*
 vimshell-options-project	vimshell.txt	/*vimshell-options-project*
 vimshell-options-prompt	vimshell.txt	/*vimshell-options-prompt*
+vimshell-options-prompt_expr	vimshell.txt	/*vimshell-options-prompt_expr*
+vimshell-options-prompt_pattern	vimshell.txt	/*vimshell-options-prompt_pattern*
 vimshell-options-right-prompt	vimshell.txt	/*vimshell-options-right-prompt*
 vimshell-options-secondary-prompt	vimshell.txt	/*vimshell-options-secondary-prompt*
 vimshell-options-split	vimshell.txt	/*vimshell-options-split*

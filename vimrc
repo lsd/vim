@@ -1,10 +1,16 @@
-" vimrc web dev : http://github.com/lsd/vim
-" Updated 06/02/2013
+" A vimrc for us developers : http://github.com/lsd/vim
+" Updated 07/30/2013
 
 " Tested on MacVim but should be vim/OS agnostic
+" Note: By default, backups go in ~/.vim/backups & ~/.vim/tmp
+"       To disable this, set $VIM_NOBACKUPS == "true"
+
 " Note: Extraneous buffers enabled in MacVim (not console)
-" Note: cfg maps most function (F1, ..) keys, use/edit as needed
-" FIXME: console vim is sometimes sluggish
+
+" Note: This maps most function (F1, ... F19) keys, use/edit as needed
+
+" Note: Fiddle with [t]timeoutlen if mappings are difficult to hit. The
+"       low timeoutlen means you need to hit key maps fast to register.
 
 set t_Co=256
 set nocompatible
@@ -41,8 +47,11 @@ set formatoptions+=1
 set foldminlines=4
 set complete-=k complete+=k
 
-" TODO make sure gem-ctags is being used
-set tags=./tags;./.tags;/
+" read ~/.vim/tags/README.md
+set tags=./tags,tags
+au BufRead,BufNewFile *.rb set tags+=~/.vim/tags/ruby2.0.0.tags
+au BufRead,BufNewFile *.php set tags+=~/.vim/tags/php5.4.10.tags
+au BufRead,BufNewFile *.py set tags+=~/.vim/tags/python3.3.tags
 
 set nofoldenable
 set foldmethod=syntax
@@ -53,12 +62,13 @@ set fillchars=
 highlight FoldColumn guibg=grey guifg=blue
 highlight Folded ctermfg=11 ctermbg=8 guibg=#444444 guifg=#cccccc
 
+let g:tagbar_phpctags_memory_limit = '512MB'
+
 " Most Recently Used
 let g:MRU_Max_Entries=50
 let g:MRU_Max_Menu_Entries=20
 let g:MRU_Window_Open_Always=1
 
-" 
 "if has("gui_running")
 "  macmenu &File.New\ Tab key=<nop>
 "endif
@@ -95,6 +105,7 @@ NeoBundle 'kien/ctrlp.vim.git'
 NeoBundle 'tpope/vim-rails'
 NeoBundle 'lsdr/monokai'
 NeoBundle 'tpope/vim-rake'
+NeoBundle 'techlivezheng/vim-plugin-tagbar-phpctags'
 NeoBundle 'jeetsukumaran/vim-buffergator'
 NeoBundle 'altercation/vim-colors-solarized'
 NeoBundle 'vim-scripts/vim-mou'

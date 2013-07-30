@@ -28,7 +28,8 @@ set cmdheight=2
 set mat=5
 set scrolloff=4
 set virtualedit=all
-set timeoutlen=200
+set timeoutlen=265
+set ttimeoutlen=100
 set mouse=a
 set nolist
 set gdefault
@@ -41,7 +42,7 @@ set foldminlines=4
 set complete-=k complete+=k
 
 " TODO make sure gem-ctags is being used
-set tags=./.tags;./tags;./
+set tags=./tags;./.tags;/
 
 set nofoldenable
 set foldmethod=syntax
@@ -87,50 +88,69 @@ if has('vim_starting')
 endif
 call neobundle#rc(expand('~/.vim/bundle/'))
 
-" After install, exec ~/.vim/bundle/vimproc, (n,g)make -f your_machines_makefile
-NeoBundle 'Shougo/vimproc'
+" NeoBundle 'Shougo/vimproc' " then ~/.vim/bundle/vimproc, (n,g)make -f your_machines_makefile OR
+NeoBundle 'Shougo/vimproc', { 'build' : { 'mac' : 'make -f make_mac.mak' }, }
 NeoBundle 'Shougo/vimshell'
 NeoBundle 'kien/ctrlp.vim.git'
-NeoBundle 'honza/writer.vim'
-NeoBundle 'vim-ruby/vim-ruby'
-NeoBundle 'plasticboy/vim-markdown'
-NeoBundle 'juvenn/mustache.vim'
 NeoBundle 'tpope/vim-rails'
-NeoBundle 'tpope/vim-fugitive'
+NeoBundle 'lsdr/monokai'
+NeoBundle 'tpope/vim-rake'
+NeoBundle 'jeetsukumaran/vim-buffergator'
+NeoBundle 'altercation/vim-colors-solarized'
+NeoBundle 'vim-scripts/vim-mou'
+NeoBundle 'vim-scripts/dbext.vim'
+NeoBundle 'vim-scripts/mru.vim'
+NeoBundle 'scrooloose/nerdtree'
+NeoBundle 'jistr/vim-nerdtree-tabs'
+NeoBundle 'vim-ruby/vim-ruby'
+NeoBundle 'git://github.com/Lokaltog/vim-powerline.git'
+"NeoBundle 'https://github.com/bling/vim-airline' " TODO replace powerline with this
+
+" LEARN THESE
+NeoBundle 'scrooloose/nerdcommenter'
+" TODO
+" \cu uncomment
+" \ci comment lines individually //..
+" \cm comment block /* */..
+" \cs comment pretty (?)
+" \cl or \cb comments aligned to left/BOL
+" \cA add comment at end of line
+" \c<space> toggle comment state
+"
+NeoBundle 'tpope/vim-surround'
+NeoBundle 'tpope/vim-characterize'
+NeoBundle 'mileszs/ack.vim'
+NeoBundle 'juvenn/mustache.vim' 
+NeoBundle 'vim-scripts/ShowMarks'
+NeoBundle 'mattn/zencoding-vim'
+NeoBundle 'vim-scripts/Txtfmt-The-Vim-Highlighter' 
+NeoBundle 'nathanaelkane/vim-indent-guides'
+NeoBundle 'tilljoel/vim-automatic-ctags'
+NeoBundle 'majutsushi/tagbar'
 NeoBundle 'tpope/vim-unimpaired'
 NeoBundle 'tpope/vim-abolish'
 NeoBundle 'tpope/vim-surround'
-NeoBundle 'tpope/vim-bundler'
-NeoBundle 'tpope/vim-surround'
-NeoBundle 'tpope/vim-characterize'
-NeoBundle 'tpope/vim-haml'
-NeoBundle 'tpope/vim-rake'
-NeoBundle 'Lokaltog/vim-easymotion'
-NeoBundle 'jeetsukumaran/vim-buffergator'
-NeoBundle 'tilljoel/vim-automatic-ctags'
-NeoBundle 'git://github.com/kchmck/vim-coffee-script.git'
-NeoBundle 'altercation/vim-colors-solarized'
-NeoBundle 'vim-scripts/Vim-R-plugin'
-NeoBundle 'vim-scripts/R-MacOSX'
-NeoBundle 'vim-scripts/vim-mou'
-NeoBundle 'vim-scripts/ShowMarks'
-NeoBundle 'vim-scripts/dbext.vim'
-NeoBundle 'vim-scripts/Txtfmt-The-Vim-Highlighter'
-NeoBundle 'vim-scripts/mru.vim'
-"NeoBundle 'vim-scripts/YankRing.vim'
-NeoBundle 'majutsushi/tagbar'
-NeoBundle 'mileszs/ack.vim'
-NeoBundle 'ervandew/screen'
-NeoBundle 'L9'
-NeoBundle 'Gundo'
-NeoBundle 'mattn/zencoding-vim'
-NeoBundle 'scrooloose/nerdtree'
-NeoBundle 'scrooloose/nerdcommenter'
-NeoBundle 'jistr/vim-nerdtree-tabs'
-NeoBundle 'nathanaelkane/vim-indent-guides'
+
 " Non-github
-NeoBundle 'git://github.com/Lokaltog/vim-powerline.git'
-NeoBundle 'http://svn.macports.org/repository/macports/contrib/mpvim/'
+NeoBundle 'tpope/vim-fugitive'
+NeoBundle 'tpope/vim-bundler'
+NeoBundle 'tpope/vim-haml'
+NeoBundle 'Gundo'
+NeoBundle 'L9'
+NeoBundle 'plasticboy/vim-markdown'
+
+"NeoBundle 'http://svn.macports.org/repository/macports/contrib/mpvim/'
+
+"barely used or need LEARNING or new/recommended
+
+"NeoBundle 'ervandew/screen'
+"NeoBundle 'prendradjaja/vim-vertigo'
+"NeoBundle 'https://github.com/moll/vim-node.git'
+"NeoBundle 'vim-scripts/Vim-R-plugin'
+"NeoBundle 'vim-scripts/R-MacOSX'
+"NeoBundle 'Lokaltog/vim-easymotion'
+"NeoBundle 'git://github.com/kchmck/vim-coffee-script.git' 
+"NeoBundle 'honza/writer.vim' 
 
 filetype plugin indent on
 if neobundle#exists_not_installed_bundles()
@@ -291,6 +311,10 @@ noremap \es :Espec
 noremap \ej :Ejavascript
 noremap \et :Etask
 
+" Experiment with magic mouse + these
+"noremap <SwipeLeft> ...
+"noremap <SwipeRight> ...
+
 " F1  Toggle left nerd/buffergator
 " F2  toggle paste mode (insert + normal mode)
 " F3  Save/run current ruby file
@@ -302,7 +326,7 @@ noremap \et :Etask
 " F9  Gundo Undo Tree
 " F11 Toggle whitespace on/off (replace \tl?)
 " F12 Re-source .vimrc
-map <F2> :set invpaste paste?<CR>
+nnoremap <F2> :set invpaste paste?<CR>
 set pastetoggle=<F2>
 nnoremap <F3> :MRU<CR>
 nnoremap <F4> :buffers<CR>:buffer<Space>

@@ -190,7 +190,7 @@ if has("gui_running")
   let NERDTreeShowLineNumbers = 0
   let NERDTreeChDirMode = 2
 
-  let g:NERDTreeShowHidden = 1
+  let g:NERDTreeShowHidden = 0
   let g:NERDTreeWinSize = 35
   let g:nerdtree_tabs_meaningful_tab_names = 1
   let g:nerdtree_tabs_autoclose = 0

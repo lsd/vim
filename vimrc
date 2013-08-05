@@ -236,6 +236,10 @@ else
 endif
 
 " MAPPINGS
+if (&ft=='help')
+  nnoremap q :q<CR>
+endif
+
 let g:FnKeyMappings="\n
 \ F1: Toggle Left Side Toggle\n
 \ F2: Toggle Paste Mode\n

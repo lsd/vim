@@ -1,5 +1,29 @@
 " WORK IN PROGRESS
-" [FT] Set .md to Markdown and .as to Actionscript files
+
+" EXPERIMENTAL
+"
+" use \L to lint current file
+" nmap <Leader><S-L> :call LintMe()<CR>
+" Use OS X System Preferences to assign Close Window to CMD+W
+" Shift+Cmd+W closes ALL buffers
+" Experiment with magic mouse + these
+"noremap <SwipeLeft> ...
+"noremap <SwipeRight> ...
+"if has("gui_running")
+"  macmenu &File.New\ Tab key=<nop>
+"endif
+"map <Leader>t <nop>
+"barely used or need LEARNING or new/recommended
+"NeoBundle 'ervandew/screen'
+"NeoBundle 'prendradjaja/vim-vertigo'
+"NeoBundle 'https://github.com/moll/vim-node.git'
+"NeoBundle 'vim-scripts/Vim-R-plugin'
+"NeoBundle 'vim-scripts/R-MacOSX'
+"NeoBundle 'Lokaltog/vim-easymotion'
+"NeoBundle 'git://github.com/kchmck/vim-coffee-script.git'
+"NeoBundle 'honza/writer.vim' 
+
+
 " vimL
 "   variables, globals, functions, conditionals, OOP, format of a
 "   plugin, file structure, managing and patterns for external files

@@ -3,16 +3,14 @@
 "     : Vinnoisseurs and collectors of Fine Vim RCs.
 " Official: http://github.com/lsd/vim
 " Updated: 08/11/2013
+" Help: <Leader>h and <Leader>hh in INSERT mode for cheatsheet! (ie \hh<enter>)
 "
 " * getting there. Tested on MacVim but should be agnostic
-
-" NOTE Use: <Leader>h and <Leader>hh in INSERT mode for help! (ie \hh<enter>)
-" Note: By default, backups go in ~/.vim/backups & ~/.vim/tmp
-"       To disable this, set $VIM_NOBACKUPS == "true"
-" Note: Extraneous buffers enabled in MacVim (not console)
-" Note: This maps most function (F1, ... F19) keys, use/edit as needed
-" Note: Fiddle with [t]timeoutlen if mappings are difficult to hit. The
-"       low timeoutlen means you need to hit key maps fast to register.
+" By default, backups go in ~/.vim/backups & ~/.vim/tmp
+" This vimrc maps most function (F1, ... F19) keys, use/edit as needed
+"   to disable this, set $VIM_NOBACKUPS == "true"
+" Fiddle with [t]timeoutlen if mappings are difficult to hit. The
+"   low timeoutlen means you need to hit key maps fast to register.
 
 function! SettingsGeneral()
   set mat=5
@@ -168,7 +166,6 @@ function! SetAutoCommands()
 endfunction
 
 function! SetFnKeyMaps()
-  " KEY MAPPINGS
   set pastetoggle=<F2>
   nnoremap <F2> :set invpaste paste?<CR>
   nnoremap <F3> :MRU<CR>
@@ -180,7 +177,7 @@ function! SetFnKeyMaps()
   nnoremap <F9> :GundoToggle<CR>
   nnoremap <F10> :NeoBundleInstall<CR>
   nnoremap <F11> <ESC>:set hlsearch!<CR>/\s<CR><ESC>
-  nnoremap <F12> :so ~/.vimrc<CR>:echo "Reloaded &%\n"<CR>
+  nnoremap <F12> :so ~/.vimrc<CR>:echo "** reloaded .vimrc\n"<CR>
 
   nnoremap q :echo 'q'<CR>
   nnoremap qq :echo 'qq? did you mean ``?'<CR>
@@ -196,10 +193,13 @@ function! SetLeaderMaps()
   " Change ALL whitespace to single [SPACE]
   nnoremap \tcc :%s:\s\+: :<CR><ESC>
   nnoremap \tl :set hlsearch!<CR><ESC>
-  nnoremap \tg <ESC>:TagbarOpenAutoClose<CR><ESC>
   nnoremap \ts :set spell!<CR>
+
+  nnoremap \tg :TagbarOpenAutoClose<CR><ESC>
   nnoremap \tm :ShowMarksToggle<CR>
+  nnoremap \vs :VimShellPop<CR>
   nnoremap \mk :MouOpen<CR>
+
   noremap \em :Emodel
   noremap \ev :Eview
   noremap \ec :Econtroller
@@ -403,10 +403,8 @@ endfunction
 
 call SettingsGeneral()
 call SettingsDeveloper()
-
-" This REMOVES all autocmd!
+" CAVEAT: This removes all current autocmds
 call SetAutoCommands()
-
 call PluginManagement()
 call SettingsPlugins()
 call SetFnKeyMaps()
@@ -415,26 +413,3 @@ call MappingHelper()
 call LittlePinPrick()
 
 syntax on
-
-" EXPERIMENTAL
-"
-" use \L to lint current file
-" nmap <Leader><S-L> :call LintMe()<CR>
-" Use OS X System Preferences to assign Close Window to CMD+W
-" Shift+Cmd+W closes ALL buffers
-" Experiment with magic mouse + these
-"noremap <SwipeLeft> ...
-"noremap <SwipeRight> ...
-"if has("gui_running")
-"  macmenu &File.New\ Tab key=<nop>
-"endif
-"map <Leader>t <nop>
-"barely used or need LEARNING or new/recommended
-"NeoBundle 'ervandew/screen'
-"NeoBundle 'prendradjaja/vim-vertigo'
-"NeoBundle 'https://github.com/moll/vim-node.git'
-"NeoBundle 'vim-scripts/Vim-R-plugin'
-"NeoBundle 'vim-scripts/R-MacOSX'
-"NeoBundle 'Lokaltog/vim-easymotion'
-"NeoBundle 'git://github.com/kchmck/vim-coffee-script.git'
-"NeoBundle 'honza/writer.vim'

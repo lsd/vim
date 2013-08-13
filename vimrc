@@ -143,8 +143,11 @@ function! SetAutoCommands()
   " Empty autocommands to avoid duplicate autocmd on :source %
   autocmd!
 
-  " Autosave all bufs, ignore warnings
+  " Autosave all bufs on blur, ignore warnings
   au FocusLost * silent! wa
+
+  " Change to current file's working dir
+  au BufEnter * silent! lcd %:p:h
 
   " auto spellcheck git commits
   au FileType gitcommit setlocal spell

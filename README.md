@@ -1,5 +1,5 @@
 ## .vimrc for MacVim/console web dev
-### Updated 04/12/2013  <http://github.com/lsd/vim>
+### Updated 08/12/2013  <http://github.com/lsd/vim>
 ### Note This is WORK IN PROGRESS  
 
 I use MacVim but this setup should be OS-agnostic.  

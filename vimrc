@@ -152,8 +152,11 @@ function! SetAutoCommands()
   " auto spellcheck git commits
   au FileType gitcommit setlocal spell
 
-  au BufRead,BufNewFile *.md set ft=markdown
+  au BufRead,BufNewFile *.json set ft=javascript
   au BufRead,BufNewFile *.as set ft=actionscript
+  au BufRead,BufNewFile *.md set ft=markdown
+  au BufRead,BufNewFile *.mkd set ft=markdown
+  au BufRead,BufNewFile *.markdown set ft=markdown
 
   " SPECIFIC: PHP (PSR-2 compliance: EOF needs newline, indent is 4 space tab, { on newline)
   au BufRead,BufNewFile *.php,*.phps,*.phtml set tabstop=4 shiftwidth=4 softtabstop=4
@@ -182,12 +185,13 @@ function! SetFnKeyMaps()
   nnoremap <F11> <ESC>:set hlsearch!<CR>/\s<CR><ESC>
   nnoremap <F12> :so ~/.vimrc<CR>:echo "** reloaded .vimrc\n"<CR>
 
-  nnoremap q :echo 'q'<CR>
-  nnoremap qq :echo 'qq? did you mean ``?'<CR>
+  nnoremap q :echo 'q recording disabled'<CR>
+  nnoremap qq :echo 'qq recording disabled. Did you mean ``?'<CR>
 
   if (&ft=='help')
-    nnoremap q :q<CR>
+    "map <buffer> q :q<CR>
   endif
+
 endfunction
 
 function! SetLeaderMaps()
@@ -252,13 +256,15 @@ endfunction!
 
 function! LittlePinPrick()
   " INJECTIONS ([t]timeoutlen LOW, so hit keys fast :h map-overview)
+  " TODO OPTIMIZE XXX should only be enabled per filetype
+
   inoremap {      {}<LEFT>
-  inoremap {<CR>  {<CR>}<ESC>O
-  inoremap {{     {
   inoremap {}     {}
+  inoremap {{     {
+  inoremap {<CR>  {<CR>}<ESC>O<Space><Space>
   inoremap <silent> }   }<ESC>
 
-  inoremap <?     <?php namespace ;<LEFT>
+  inoremap <?     <?php<CR>namespace ;<CR><ESC>bi
   inoremap <??    <?php echo  ?><LEFT><LEFT><LEFT>
   inoremap <?!    <?php die('<pre>' . var_dump(Array()) . '</pre>') ?><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT>
 
@@ -403,16 +409,18 @@ function! SettingsPlugins()
   endif
 endfunction
 
+function! Vinitialize()
+  call SettingsGeneral()
+  call SettingsDeveloper()
+  " CAVEAT: This removes all current autocmds
+  call SetAutoCommands()
+  call PluginManagement()
+  call SettingsPlugins()
+  call SetFnKeyMaps()
+  call SetLeaderMaps()
+  call MappingHelper()
+  call LittlePinPrick()
+  syntax on
+endfunction
 
-call SettingsGeneral()
-call SettingsDeveloper()
-" CAVEAT: This removes all current autocmds
-call SetAutoCommands()
-call PluginManagement()
-call SettingsPlugins()
-call SetFnKeyMaps()
-call SetLeaderMaps()
-call MappingHelper()
-call LittlePinPrick()
-
-syntax on
+call Vinitialize()

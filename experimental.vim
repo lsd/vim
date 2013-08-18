@@ -1,4 +1,5 @@
- " NOTE: All below is EXPERIMENTAL and probably breaks something
+ " This is either deprecated or experimental
+
 "func! SayWordMode()
 "  setlocal formatoptions=1
 "  setlocal noexpandtab

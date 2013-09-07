@@ -85,6 +85,8 @@ function! PluginManagement()
 
   NeoBundle 'Shougo/vimproc', { 'build' : { 'mac' : 'make -f make_mac.mak' }, }
   NeoBundle 'Shougo/vimshell'
+  " TODO setup https://github.com/wannesm/rmvim.vim
+  " NeoBundle 'wannesm/rmvim.vim'
   NeoBundle 'kien/ctrlp.vim.git'
   NeoBundle 'tpope/vim-rails'
   NeoBundle 'lsdr/monokai'
@@ -100,6 +102,7 @@ function! PluginManagement()
   NeoBundle 'vim-ruby/vim-ruby'
   NeoBundle 'vim-scripts/applescript.vim'
   NeoBundle 'git://github.com/Lokaltog/vim-powerline.git'
+  NeoBundle 'rodjek/vim-puppet'
   "NeoBundle 'https://github.com/bling/vim-airline' " TODO replace powerline with this
 
   " Internalize these
@@ -184,6 +187,13 @@ function! SetFnKeyMaps()
   nnoremap <F10> :NeoBundleInstall<CR>
   nnoremap <F11> <ESC>:set hlsearch!<CR>/\s<CR><ESC>
   nnoremap <F12> :so ~/.vimrc<CR>:echo "** reloaded .vimrc\n"<CR>
+
+  " Drag Current Line/s Vertically
+  nnoremap <C-j> :m+<CR>
+  nnoremap <C-k> :m-2<CR>
+  inoremap <C-j> <Esc>:m+<CR>
+  inoremap <C-k> <Esc>:m-2<CR>
+  vnoremap <C-j> :m'>+<CR>gv
 
   nnoremap q :echo 'q recording disabled'<CR>
   nnoremap qq :echo 'qq recording disabled. Did you mean ``?'<CR>
@@ -316,8 +326,24 @@ endfunction
 
 function! SettingsPlugins()
   nnoremap <silent> <C-t> :CtrlP<CR>
-  nnoremap <silent> <C-j> :bp<CR>
-  nnoremap <silent> <C-k> :bn<CR>
+
+  " Move bwt buffers
+  nnoremap <C-h> :bp<CR>
+  inoremap <C-h> <ESC>:bp<CR>
+  nnoremap <C-l> :bn<CR>
+  inoremap <C-l> <ESC>:bn<CR>
+  "nnoremap <silent> <C-k> :bn<CR>
+  "nnoremap <silent> <C-j> :bp<CR>
+
+  " Move Line/selection UP/DOWN
+  nnoremap <C-k> :m+<CR>
+  inoremap <C-k> <Esc>:m+<CR>
+  "vnoremap <C-k> :m'>+<CR>gv
+
+  " DOWN
+  nnoremap <C-j> :m-2<CR>
+  inoremap <C-j> <Esc>:m-2<CR>
+  "vnoremap <C-j> :m'<-2<CR>gv
 
   " PLUGIN SETTINGS
   let g:MRU_Max_Entries=50
@@ -390,8 +416,8 @@ function! SettingsPlugins()
 
     map <Leader>n :NERDTreeCWD<CR>
 
-    map <Leader>] :bnext<CR>
-    map <Leader>[ :bprevious<CR>
+    map <Leader>] :bn<CR>
+    map <Leader>[ :bp<CR>
     map <Leader>} :blast<CR>
     map <Leader>{ :bfirst<CR>
 

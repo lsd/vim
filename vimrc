@@ -1,5 +1,4 @@
 " Official: http://github.com/lsd/vim
-"
 " Updated: 09/22/2013
 "
 " What:  Boilerplate GUI and shell vim rc.
@@ -125,9 +124,10 @@ function! PluginManagement()
   NeoBundle 'jistr/vim-nerdtree-tabs'
   NeoBundle 'vim-ruby/vim-ruby'
   NeoBundle 'vim-scripts/applescript.vim'
-  NeoBundle 'git://github.com/Lokaltog/vim-powerline.git'
+  "NeoBundle 'git://github.com/Lokaltog/vim-powerline.git'
+  NeoBundle 'https://github.com/bling/vim-airline'
   NeoBundle 'rodjek/vim-puppet'
-  "NeoBundle 'https://github.com/bling/vim-airline' " TODO replace powerline with this
+  NeoBundle 'vim-scripts/CF-Utils'
 
   " Internalize these
   " \cu uncomment
@@ -465,7 +465,6 @@ function! OnWriteOverride()
   " autocmd!
   au FocusLost * :%s/\s\+$//ge
   au FocusLost * :set ff=unix
-
 endfunction
 
 function! Vinitialize()

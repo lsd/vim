@@ -108,7 +108,7 @@ COMMANDS 					*vimshell-commands*
 :VimShellCreate [{options}...] [{path}]		*:VimShellCreate*
 		Runs vimshell as the same :VimShell, but it creates a new
 		vimshell buffer instead of activating other vimshells which
-		are up and runnig.
+		are up and running.
 
 :VimShellTab [{options}...] [{path}]		*:VimShellTab*
 		It's same as |:VimShellCreate|, but creates a new tab.
@@ -1433,7 +1433,7 @@ block							*vimshell-tips-block*
 <
 wild card					*vimshell-tips-wildcard*
 		Vimshell supports wildcard. If wildcard files are not found,
-		an error is occured.
+		an error is occurred.
 >
 		vimshell% ls *.htm
 <

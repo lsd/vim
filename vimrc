@@ -142,7 +142,7 @@ function! PluginManagement()
   NeoBundle 'tpope/vim-characterize'
   NeoBundle 'mileszs/ack.vim'
   NeoBundle 'juvenn/mustache.vim'
-  NeoBundle 'vim-scriptshowMarks'
+  NeoBundle 'vim-scripts/showMarks'
   NeoBundle 'mattn/zencoding-vim'
   NeoBundle 'vim-scripts/Txtfmt-The-Vim-Highlighter'
   NeoBundle 'nathanaelkane/vim-indent-guides'

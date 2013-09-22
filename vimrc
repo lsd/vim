@@ -1,16 +1,38 @@
-" WHAT: (Mac|Console)Vim rc and light* framework
-"     : Language-agnostic, modular* and optimized* for
-"     : Vinnoisseurs and collectors of Fine Vim RCs.
 " Official: http://github.com/lsd/vim
-" Updated: 08/11/2013
-" Help: <Leader>h and <Leader>hh in INSERT mode for cheatsheet! (ie \hh<enter>)
 "
-" * getting there. Tested on MacVim but should be agnostic
+" Updated: 09/22/2013
+"
+" What:  Boilerplate GUI and shell vim rc.
+"          For developers, sysadmins, and
+"          any user who chooses vim as
+"          their tool to write prose or
+"          keeping notes.
+"
+"          This is WIP. Before using, you may want to
+"          turn off the automatic behavior that occurs
+"          when any file is written. This is done by
+"          commenting call to the OnWriteOverride
+"          function. The behavior (trimming whitespace, ff
+"          to unix, etc) is around line 465
+"
+" Features: Uses NeoBundle package
+"           Autowrite when focus losed
+"           Auto trim whitespace on write
+"           Comes with themes including solarized,
+"           zenburn and monokai.
+"           Tab enters 2+ spaces instead of TAB key ^T
+"           Uses Fixed width Powerline Fonts
+"           ... TODO
+"
+" Help: <Leader>h and <Leader>hh in INSERT mode. <ESC>\h<CR> opens cheatsheet
+"
+" Getting there. Tested on MacVim but should be agnostic
 " By default, backups go in ~/.vim/backups & ~/.vim/tmp
 " This vimrc maps most function (F1, ... F19) keys, use/edit as needed
 "   to disable this, set $VIM_NOBACKUPS == "true"
-" Fiddle with [t]timeoutlen if mappings are difficult to hit. The
-"   low timeoutlen means you need to hit key maps fast to register.
+" Keymaps don't always register?
+" Low timeoutlen=NEED TO HIT KEY MAPS FAST to register
+" Change [t]timeoutlen length (256) to
 
 function! SettingsGeneral()
   set mat=5
@@ -47,6 +69,10 @@ function! SettingsGeneral()
 endfunction
 
 function! SettingsDeveloper()
+  " see note above
+  set timeoutlen=265
+  set ttimeoutlen=100
+
   set smartindent
   set showmatch
   set smartcase
@@ -56,11 +82,9 @@ function! SettingsDeveloper()
   set number
   set nowrap
   set foldlevel=1
-  set nofoldenable 
+  set nofoldenable
   set foldnestmax=6
-  set timeoutlen=265
   set foldminlines=4
-  set ttimeoutlen=100
   set virtualedit=all
   set formatoptions+=1
 
@@ -118,7 +142,7 @@ function! PluginManagement()
   NeoBundle 'tpope/vim-characterize'
   NeoBundle 'mileszs/ack.vim'
   NeoBundle 'juvenn/mustache.vim'
-  NeoBundle 'vim-scripts/ShowMarks'
+  NeoBundle 'vim-scriptshowMarks'
   NeoBundle 'mattn/zencoding-vim'
   NeoBundle 'vim-scripts/Txtfmt-The-Vim-Highlighter'
   NeoBundle 'nathanaelkane/vim-indent-guides'
@@ -149,6 +173,9 @@ function! SetAutoCommands()
   " Autosave all bufs on blur, ignore warnings
   au FocusLost * silent! wa
 
+  " Trim trailing whitespace
+  au FocusLost * silent! wa
+
   " Change to current file's working dir
   au BufEnter * silent! lcd %:p:h
 
@@ -171,7 +198,7 @@ function! SetAutoCommands()
   " SPECIFIC: Python
   au BufRead,BufNewFile *.py set tags+=~/.vim/tags/python3.3.tags
 
-  " SPECIFIC: Other
+  call OnWriteOverride()
 endfunction
 
 function! SetFnKeyMaps()
@@ -188,7 +215,7 @@ function! SetFnKeyMaps()
   nnoremap <F11> <ESC>:set hlsearch!<CR>/\s<CR><ESC>
   nnoremap <F12> :so ~/.vimrc<CR>:echo "** reloaded .vimrc\n"<CR>
 
-  " Drag Current Line/s Vertically
+  " Drag Current Line Vertically
   nnoremap <C-j> :m+<CR>
   nnoremap <C-k> :m-2<CR>
   inoremap <C-j> <Esc>:m+<CR>
@@ -287,7 +314,6 @@ function! LittlePinPrick()
 
   inoremap brp binding.remote_pry
 
-  " Markdown newline; (CMD+Enter ends current line w/ 2 spaces)
   inoremap <C-CR> <SPACE><SPACE><CR>
 endfunction
 
@@ -335,7 +361,7 @@ function! SettingsPlugins()
   "nnoremap <silent> <C-k> :bn<CR>
   "nnoremap <silent> <C-j> :bp<CR>
 
-  " Move Line/selection UP/DOWN
+  " Move Lineelection UP/DOWN
   nnoremap <C-k> :m+<CR>
   inoremap <C-k> <Esc>:m+<CR>
   "vnoremap <C-k> :m'>+<CR>gv
@@ -352,7 +378,7 @@ function! SettingsPlugins()
 
   let g:ScreenImpl = 'Tmux'
 
-  set wildignore+=*.o,*.obj,.git,.svn,vendor/rails/**,tmp/**,public/system/**
+  set wildignore+=*.o,*.obj,.git,.svn,vendor/rails/**,tmp/**,publicystem/**
   let g:CommandTMaxCachedDirectories=10
   let g:CommandTMaxHeight=20
 
@@ -433,6 +459,13 @@ function! SettingsPlugins()
     colorscheme darkburn
     nnoremap <F1> :NERDTreeTabsToggle<CR>
   endif
+endfunction
+
+function! OnWriteOverride()
+  " autocmd!
+  au FocusLost * :%s/\s\+$//ge
+  au FocusLost * :set ff=unix
+
 endfunction
 
 function! Vinitialize()

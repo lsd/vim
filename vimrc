@@ -463,8 +463,9 @@ endfunction
 
 function! OnWriteOverride()
   " autocmd!
-  au FocusLost * :%s/\s\+$//ge
+  "au FocusLost * :%s/\s\+$//ge
   au FocusLost * :set ff=unix
+endfunction
 
 function! ShellColors()
   "set bg=light
@@ -479,7 +480,6 @@ function! GuiColors()
   let g:solarized_contrast = "high"
   colors solarized
   set bg=dark
->>>>>>> updates from work
 endfunction
 
 function! Vinitialize()

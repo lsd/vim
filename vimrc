@@ -182,11 +182,12 @@ function! SetAutoCommands()
   " auto spellcheck git commits
   au FileType gitcommit setlocal spell
 
-  au BufRead,BufNewFile *.json set ft=javascript
-  au BufRead,BufNewFile *.as set ft=actionscript
-  au BufRead,BufNewFile *.md set ft=markdown
-  au BufRead,BufNewFile *.mkd set ft=markdown
-  au BufRead,BufNewFile *.markdown set ft=markdown
+  au BufRead,BufNewFile   *.sh       set ft=zsh
+  au BufRead,BufNewFile   *.json     set ft=javascript
+  au BufRead,BufNewFile   *.as       set ft=actionscript
+  au BufRead,BufNewFile   *.md       set ft=markdown
+  au BufRead,BufNewFile   *.mkd      set ft=markdown
+  au BufRead,BufNewFile   *.markdown set ft=markdown
 
   " SPECIFIC: PHP (PSR-2 compliance: EOF needs newline, indent is 4 space tab, { on newline)
   au BufRead,BufNewFile *.php,*.phps,*.phtml set tabstop=4 shiftwidth=4 softtabstop=4
@@ -399,10 +400,8 @@ function! SettingsPlugins()
   let g:Tlist_Compact_Format = 1
 
   if has("gui_running")
-    set bg=dark
     set lines=65
     set columns=160
-    colorscheme monokai
 
     " split viewport horizontally new split on top
     let g:buffergator_viewport_split_policy = "b"
@@ -453,10 +452,11 @@ function! SettingsPlugins()
     set guioptions-=L
     set guioptions-=r
     set guioptions-=R
-    set guifont=Source\ Code\ Pro\ Light\ for\ Powerline:h14
+    set guifont=Literation\ Mono\ Powerline:h14
 
   else
-    colorscheme darkburn
+    "colorscheme darkburn
+    "colors monokai
     nnoremap <F1> :NERDTreeTabsToggle<CR>
   endif
 endfunction
@@ -465,19 +465,43 @@ function! OnWriteOverride()
   " autocmd!
   au FocusLost * :%s/\s\+$//ge
   au FocusLost * :set ff=unix
+
+function! ShellColors()
+  "set bg=light
+  "colors zenburn
+  let g:solarized_contrast = "high"
+  let g:solarized_termcolors = 256
+  colors solarized
+  set bg=dark
+endfunction
+
+function! GuiColors()
+  let g:solarized_contrast = "high"
+  colors solarized
+  set bg=dark
+>>>>>>> updates from work
 endfunction
 
 function! Vinitialize()
   call SettingsGeneral()
   call SettingsDeveloper()
-  " CAVEAT: This removes all current autocmds
+
+  " TODO/XXX/CAVEAT: This removes all current autocmds
   call SetAutoCommands()
+
   call PluginManagement()
   call SettingsPlugins()
   call SetFnKeyMaps()
   call SetLeaderMaps()
   call MappingHelper()
   call LittlePinPrick()
+
+  if has("gui_running")
+    call GuiColors()
+  else
+    call ShellColors()
+  end
+
   syntax on
 endfunction
 

@@ -1,5 +1,5 @@
 " Official: http://github.com/lsd/vim
-" Updated: 09/22/2013
+" Updated: 10/09/2013
 "
 " What:  Boilerplate GUI and shell vim rc.
 "          For developers, sysadmins, and
@@ -51,6 +51,7 @@ function! SettingsGeneral()
   set cmdheight=2
   set scrolloff=4
   set showbreak=↪
+  set laststatus=2
 
   highlight FoldColumn guibg=grey guifg=blue
   highlight Folded ctermfg=11 ctermbg=8 guibg=#444444 guifg=#cccccc
@@ -77,7 +78,7 @@ function! SettingsDeveloper()
   set smartcase
   set expandtab
   set nocompatible
-  set fillchars=stl:^,stlnc:-,vert:\|,fold:-,diff:-
+  set fillchars=stlnc:-,vert:\|,fold:-,diff:-
   set number
   set nowrap
   set foldlevel=1
@@ -121,13 +122,15 @@ function! PluginManagement()
   NeoBundle 'vim-scripts/dbext.vim'
   NeoBundle 'vim-scripts/mru.vim'
   NeoBundle 'scrooloose/nerdtree'
+  NeoBundle 'scrooloose/syntastic'
   NeoBundle 'jistr/vim-nerdtree-tabs'
   NeoBundle 'vim-ruby/vim-ruby'
   NeoBundle 'vim-scripts/applescript.vim'
   "NeoBundle 'git://github.com/Lokaltog/vim-powerline.git'
   NeoBundle 'https://github.com/bling/vim-airline'
   NeoBundle 'rodjek/vim-puppet'
-  NeoBundle 'vim-scripts/CF-Utils'
+  NeoBundle 'airblade/vim-gitgutter'
+  "NeoBundle 'vim-scripts/CF-Utils'
 
   " Internalize these
   " \cu uncomment
@@ -384,12 +387,18 @@ function! SettingsPlugins()
   let g:CommandTMaxHeight=20
 
   let g:showmarks_enable = 0
-
   let g:vim_markdown_folding_disabled=0
-  let g:Powerline_symbols = 'fancy'
+
+  "let g:Powerline_symbols = 'fancy'
+  let g:airline#extensions#tabline#enabled = 1
+  let g:airline_powerline_fonts=1
+
+  exec 'GitGutterLineHighlightsEnable'
+  exec 'GitGutterEnable'
 
   let g:tagbar_width = 25
   let g:tagbar_phpctags_memory_limit = '512MB'
+
   let g:Tlist_Exit_OnlyWindow = 1
   let g:Tlist_Show_One_File = 1
   let g:Tlist_Enable_Fold_Column = 1
@@ -452,7 +461,7 @@ function! SettingsPlugins()
     set guioptions-=L
     set guioptions-=r
     set guioptions-=R
-    set guifont=Literation\ Mono\ Powerline:h14
+    set guifont=Literation\ Mono\ Powerline:h18
 
   else
     "colorscheme darkburn
@@ -465,28 +474,40 @@ function! OnWriteOverride()
   " autocmd!
   "au FocusLost * :%s/\s\+$//ge
   au FocusLost * :set ff=unix
+  au FocusLost * :set ff=unix
+endfunction
+
+function! ColorSplash()
+  let g:solarized_contrast = "high"
+  colors solarized
+  set bg=dark
 endfunction
 
 function! ShellColors()
-  "set bg=light
-  "colors zenburn
-  let g:solarized_contrast = "high"
   let g:solarized_termcolors = 256
-  colors solarized
-  set bg=dark
+  call ColorSplash()
 endfunction
 
 function! GuiColors()
-  let g:solarized_contrast = "high"
-  colors solarized
-  set bg=dark
+  call ColorSplash()
+endfunction
+
+function! PostSetup()
+  if has("gui_running")
+    call GuiColors()
+  else
+    call ShellColors()
+  end
+
+  exe 'AirlineToggle'
+  syntax on
 endfunction
 
 function! Vinitialize()
   call SettingsGeneral()
   call SettingsDeveloper()
 
-  " TODO/XXX/CAVEAT: This removes all current autocmds
+  " TODO/XXX: This removes all current autocmds
   call SetAutoCommands()
 
   call PluginManagement()
@@ -495,14 +516,7 @@ function! Vinitialize()
   call SetLeaderMaps()
   call MappingHelper()
   call LittlePinPrick()
-
-  if has("gui_running")
-    call GuiColors()
-  else
-    call ShellColors()
-  end
-
-  syntax on
+  call PostSetup()
 endfunction
 
 call Vinitialize()

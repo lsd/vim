@@ -127,7 +127,7 @@ function! PluginManagement()
   NeoBundle 'vim-ruby/vim-ruby'
   NeoBundle 'vim-scripts/applescript.vim'
   "NeoBundle 'git://github.com/Lokaltog/vim-powerline.git'
-  NeoBundle 'https://github.com/bling/vim-airline'
+  NeoBundle 'bling/vim-airline'
   NeoBundle 'rodjek/vim-puppet'
   NeoBundle 'airblade/vim-gitgutter'
   "NeoBundle 'vim-scripts/CF-Utils'
@@ -393,9 +393,6 @@ function! SettingsPlugins()
   let g:airline#extensions#tabline#enabled = 1
   let g:airline_powerline_fonts=1
 
-  exec 'GitGutterLineHighlightsEnable'
-  exec 'GitGutterEnable'
-
   let g:tagbar_width = 25
   let g:tagbar_phpctags_memory_limit = '512MB'
 
@@ -479,13 +476,13 @@ endfunction
 
 function! ColorSplash()
   let g:solarized_contrast = "high"
-  colors solarized
   set bg=dark
+  colors solarized
 endfunction
 
 function! ShellColors()
-  let g:solarized_termcolors = 256
   call ColorSplash()
+  let g:solarized_termcolors = 256
 endfunction
 
 function! GuiColors()
@@ -499,7 +496,9 @@ function! PostSetup()
     call ShellColors()
   end
 
-  exe 'AirlineToggle'
+  "exe 'AirlineToggle'
+  "exe 'GitGutterLineHighlightsEnable'
+  "exe 'GitGutterEnable'
   syntax on
 endfunction
 

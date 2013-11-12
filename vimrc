@@ -1,6 +1,5 @@
 " Official: http://github.com/lsd/vim
-"
-" Updated: 09/22/2013
+" Updated: 11/09/2013
 "
 " What:  Boilerplate GUI and shell vim rc.
 "          For developers, sysadmins, and
@@ -23,6 +22,22 @@
 "           Tab enters 2+ spaces instead of TAB key ^T
 "           Uses Fixed width Powerline Fonts
 "           ... TODO
+" Caveats: Make sure your $PATH is correct within vim. View it using :!echo $PATH
+"          If not correct, try putting your PATHs in /etc/paths. Mine looks
+"          like this:
+"          ~/.rbenv/shims
+             " /Applications/MAMP/bin/php/current/bin
+             " /Library/Frameworks/Python.framework/Versions/3.3/bin
+             " /usr/local/share/npm/bin
+             " /usr/local/bin
+             " /usr/bin
+             " /usr/local/sbin
+             " /usr/sbin
+             " /sbin
+             " /bin
+             " ~/bin
+             " Its important to have /u/l/b before /u/b else the non-exuberant ctags is picked up and
+             " gives an error: 'illegal option -R'
 "
 " Help: <Leader>h and <Leader>hh in INSERT mode. <ESC>\h<CR> opens cheatsheet
 "
@@ -78,7 +93,7 @@ function! SettingsDeveloper()
   set smartcase
   set expandtab
   set nocompatible
-  set fillchars=stl:^,stlnc:-,vert:\|,fold:-,diff:-
+  set fillchars=stl:~,stlnc:-,vert:\|,fold:-,diff:-
   set number
   set nowrap
   set foldlevel=1
@@ -222,6 +237,8 @@ function! SetFnKeyMaps()
   inoremap <C-k> <Esc>:m-2<CR>
   vnoremap <C-j> :m'>+<CR>gv
 
+  " TODO choose proper comment based on filetype. allow block comments, etc. NERD Commenter?
+  map <C-c> I# <Esc>$<CR><Esc>
   nnoremap q :echo 'q recording disabled'<CR>
   nnoremap qq :echo 'qq recording disabled. Did you mean ``?'<CR>
 
@@ -254,7 +271,7 @@ endfunction
 
 function! MappingHelper()
   let g:FnKeyMappings="\n
-  \ F1: Toggle Left Side Toggle\n
+  \ F1: Toggle Left Side Bar\n
   \ F2: Toggle Paste Mode\n
   \ F3: Display Recent Files\n
   \ F4: Display and Jump to Buffer\n
@@ -387,7 +404,7 @@ function! SettingsPlugins()
   let g:vim_markdown_folding_disabled=0
   let g:Powerline_symbols = 'fancy'
 
-  let g:tagbar_width = 25
+  let g:tagbar_width = 20
   let g:tagbar_phpctags_memory_limit = '512MB'
   let g:Tlist_Exit_OnlyWindow = 1
   let g:Tlist_Show_One_File = 1
@@ -419,7 +436,7 @@ function! SettingsPlugins()
     let g:NERDTreeChDirMode = 2
 
     let g:NERDTreeShowHidden = 0
-    let g:NERDTreeWinSize = 35
+    let g:NERDTreeWinSize = 25
     let g:nerdtree_tabs_meaningful_tab_names = 1
     let g:nerdtree_tabs_autoclose = 0
     let g:nerdtree_tabs_synchronize_view = 0
@@ -453,7 +470,7 @@ function! SettingsPlugins()
     set guioptions-=L
     set guioptions-=r
     set guioptions-=R
-    set guifont=Source\ Code\ Pro\ Light\ for\ Powerline:h14
+    set guifont=Source\ Code\ Pro\ ExtraLight\ for\ Powerline:h18
 
   else
     colorscheme darkburn

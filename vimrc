@@ -34,6 +34,15 @@
 " Change [t]timeoutlen length (256) to
 
 function! SettingsGeneral()
+
+  " MacVim does not pick up the correct $PATH
+  " It checks /usr/libexec/path_helper.
+  " My solution is to put an idempotent PATH
+  " in a dotfile and source it where needed.
+  " here, zshrc, ...
+  " see /etc/zshenv
+  " http://stackoverflow.com/questions/9853584/how-to-use-correct-ruby-in-vim-how-to-modify-path-in-vim
+
   set mat=5
   set nolist
   set mouse=a
@@ -226,6 +235,9 @@ function! SetFnKeyMaps()
   inoremap <C-k> <Esc>:m-2<CR>
   vnoremap <C-j> :m'>+<CR>gv
 
+  nnoremap <C-c>w :w 
+  nnoremap <C-c>s :w ~/sorona/.md<LEFT><LEFT><LEFT>
+
   nnoremap q :echo 'q recording disabled'<CR>
   nnoremap qq :echo 'qq recording disabled. Did you mean ``?'<CR>
 
@@ -299,6 +311,8 @@ function! LittlePinPrick()
   " INJECTIONS ([t]timeoutlen LOW, so hit keys fast :h map-overview)
   " TODO OPTIMIZE XXX should only be enabled per filetype
 
+  inoremap <C-CR> <SPACE><SPACE><CR>
+
   inoremap {      {}<LEFT>
   inoremap {}     {}
   inoremap {{     {
@@ -317,8 +331,8 @@ function! LittlePinPrick()
   inoremap cc"    console.log("");<LEFT><LEFT><LEFT>
 
   inoremap brp binding.remote_pry
+  inoremap gsrc source: 'https://rubygems.org/'<CR>gem ''<LEFT>
 
-  inoremap <C-CR> <SPACE><SPACE><CR>
 endfunction
 
 function! TidyMe()

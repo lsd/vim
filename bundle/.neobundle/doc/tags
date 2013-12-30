@@ -195,6 +195,7 @@
 :RAddLibToList	r-plugin.txt	/*:RAddLibToList*
 :RBuildTags	r-plugin.txt	/*:RBuildTags*
 :RUpdateObjList	r-plugin.txt	/*:RUpdateObjList*
+:RunProcessing	processing.txt	/*:RunProcessing*
 :S	abolish.txt	/*:S*
 :ScreenQuit	screen.txt	/*:ScreenQuit*
 :ScreenSend	screen.txt	/*:ScreenSend*
@@ -881,6 +882,8 @@ g:neobundle_default_site	neobundle.txt	/*g:neobundle_default_site*
 g:neobundle_enable_tail_path	neobundle.txt	/*g:neobundle_enable_tail_path*
 g:neobundle_log_filename	neobundle.txt	/*g:neobundle_log_filename*
 g:neobundle_rm_command	neobundle.txt	/*g:neobundle_rm_command*
+g:processing_doc_path	processing.txt	/*g:processing_doc_path*
+g:processing_doc_style	processing.txt	/*g:processing_doc_style*
 g:rails_abbreviations	rails.txt	/*g:rails_abbreviations*
 g:rails_ctags_arguments	rails.txt	/*g:rails_ctags_arguments*
 g:rails_gem_projections	rails.txt	/*g:rails_gem_projections*
@@ -910,6 +913,7 @@ g:tagbar_updateonsave_maxlines	tagbar.txt	/*g:tagbar_updateonsave_maxlines*
 g:tagbar_width	tagbar.txt	/*g:tagbar_width*
 g:unite_source_neobundle_install_max_processes	neobundle.txt	/*g:unite_source_neobundle_install_max_processes*
 g:unite_source_vimshell_external_history_path	vimshell.txt	/*g:unite_source_vimshell_external_history_path*
+g:use_processing_applescript	processing.txt	/*g:use_processing_applescript*
 g:vimproc#dll_path	vimproc.txt	/*g:vimproc#dll_path*
 g:vimproc#password_pattern	vimproc.txt	/*g:vimproc#password_pattern*
 g:vimproc#popen2_commands	vimproc.txt	/*g:vimproc#popen2_commands*
@@ -1089,6 +1093,17 @@ nerdtree-tabs	vim-nerdtree-tabs.txt	/*nerdtree-tabs*
 ora	dbext.txt	/*ora*
 oracle	dbext.txt	/*oracle*
 pgsql	dbext.txt	/*pgsql*
+processing-applescript	processing.txt	/*processing-applescript*
+processing-cmd	processing.txt	/*processing-cmd*
+processing-compatibility	processing.txt	/*processing-compatibility*
+processing-contents	processing.txt	/*processing-contents*
+processing-contribution	processing.txt	/*processing-contribution*
+processing-doc	processing.txt	/*processing-doc*
+processing-intro	processing.txt	/*processing-intro*
+processing-issues	processing.txt	/*processing-issues*
+processing-syntax	processing.txt	/*processing-syntax*
+processing-variables	processing.txt	/*processing-variables*
+processing.txt	processing.txt	/*processing.txt*
 r-plugin-bindings	r-plugin.txt	/*r-plugin-bindings*
 r-plugin-conque	r-plugin.txt	/*r-plugin-conque*
 r-plugin-features	r-plugin.txt	/*r-plugin-features*

@@ -142,6 +142,7 @@ function! PluginManagement()
   NeoBundle 'vim-scripts/applescript.vim'
   NeoBundle 'git://github.com/Lokaltog/vim-powerline.git'
   NeoBundle 'rodjek/vim-puppet'
+  NeoBundle 'sophacles/vim-processing'
   "NeoBundle 'https://github.com/bling/vim-airline' " TODO replace powerline with this
 
   " Internalize these

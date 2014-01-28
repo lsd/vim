@@ -471,7 +471,7 @@ function! SettingsPlugins()
     set guioptions-=L
     set guioptions-=r
     set guioptions-=R
-    set guifont=Source\ Code\ Pro\ ExtraLight\ for\ Powerline:h18
+    set guifont=Source\ Code\ Pro\ ExtraLight\ for\ Powerline:h14
 
   else
     colorscheme darkburn

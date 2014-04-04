@@ -59,7 +59,7 @@ function! SettingsGeneral()
   set showmode
   set incsearch
   set cursorline
-  set ignorecase
+  "set ignorecase
   set copyindent
   set textwidth=0
   set wrapmargin=0
@@ -124,13 +124,14 @@ function! PluginManagement()
 
   NeoBundle 'Shougo/vimproc', { 'build' : { 'mac' : 'make -f make_mac.mak' }, }
   NeoBundle 'Shougo/vimshell'
+  NeoBundle 'kchmck/vim-coffee-script'
   " TODO setup https://github.com/wannesm/rmvim.vim
   " NeoBundle 'wannesm/rmvim.vim'
   NeoBundle 'kien/ctrlp.vim.git'
   NeoBundle 'tpope/vim-rails'
   NeoBundle 'lsdr/monokai'
   NeoBundle 'tpope/vim-rake'
-  NeoBundle 'techlivezheng/vim-plugin-tagbar-phpctags'
+  "NeoBundle 'techlivezheng/vim-plugin-tagbar-phpctags'
   NeoBundle 'jeetsukumaran/vim-buffergator'
   NeoBundle 'altercation/vim-colors-solarized'
   NeoBundle 'vim-scripts/vim-mou'
@@ -163,7 +164,7 @@ function! PluginManagement()
   NeoBundle 'vim-scripts/Txtfmt-The-Vim-Highlighter'
   NeoBundle 'nathanaelkane/vim-indent-guides'
   NeoBundle 'tilljoel/vim-automatic-ctags'
-  NeoBundle 'majutsushi/tagbar'
+  "NeoBundle 'majutsushi/tagbar'
   NeoBundle 'tpope/vim-unimpaired'
   NeoBundle 'tpope/vim-abolish'
   NeoBundle 'tpope/vim-surround'
@@ -223,9 +224,9 @@ function! SetFnKeyMaps()
   nnoremap <F3> :MRU<CR>
   nnoremap <F4> :buffers<CR>:buffer<Space>
   nnoremap <F5> :set wrap!<CR>
-  nnoremap <F6> :TagbarToggle<CR>
+  "nnoremap <F6> :TagbarToggle<CR>
   nnoremap <F7> :TidyMe<CR>
-  call togglebg#map("<F8>")
+"  call togglebg#map("<F8>")
   nnoremap <F9> :GundoToggle<CR>
   nnoremap <F10> :NeoBundleInstall<CR>
   nnoremap <F11> <ESC>:set hlsearch!<CR>/\s<CR><ESC>
@@ -257,7 +258,7 @@ function! SetLeaderMaps()
   nnoremap \tl :set hlsearch!<CR><ESC>
   nnoremap \ts :set spell!<CR>
 
-  nnoremap \tg :TagbarOpenAutoClose<CR><ESC>
+  "nnoremap \tg :TagbarOpenAutoClose<CR><ESC>
   nnoremap \tm :ShowMarksToggle<CR>
   nnoremap \vs :VimShellPop<CR>
   nnoremap \mk :MouOpen<CR>
@@ -405,8 +406,8 @@ function! SettingsPlugins()
   let g:vim_markdown_folding_disabled=0
   let g:Powerline_symbols = 'fancy'
 
-  let g:tagbar_width = 20
-  let g:tagbar_phpctags_memory_limit = '512MB'
+  "let g:tagbar_width = 20
+  "let g:tagbar_phpctags_memory_limit = '512MB'
   let g:Tlist_Exit_OnlyWindow = 1
   let g:Tlist_Show_One_File = 1
   let g:Tlist_Enable_Fold_Column = 1
@@ -471,7 +472,8 @@ function! SettingsPlugins()
     set guioptions-=L
     set guioptions-=r
     set guioptions-=R
-    set guifont=Source\ Code\ Pro\ ExtraLight\ for\ Powerline:h18
+    "set guifont=Source\ Code\ Pro\ for\ Powerline:h14
+    set guifont=Sauce\ Code\ Powerline:h14
 
   else
     colorscheme darkburn

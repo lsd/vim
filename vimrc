@@ -319,9 +319,11 @@ function! LittlePinPrick()
   inoremap {<CR>  {<CR>}<ESC>O<Space><Space>
   inoremap <silent> }   }<ESC>
 
-  inoremap <?     <?php<CR>namespace ;<CR><ESC>bi
+  inoremap <?     <?php <ESC><CR><CR>i
   inoremap <??    <?php echo  ?><LEFT><LEFT><LEFT>
   inoremap <?!    <?php die('<pre>' . var_dump(Array()) . '</pre>') ?><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT>
+
+  inoremap <xml   <?xml version="1.0" encoding="UTF-8" ?><ESC><CR>i
 
   inoremap <%     <%  %><LEFT><LEFT><LEFT>
   inoremap <%%    <%=  %><LEFT><LEFT><LEFT>

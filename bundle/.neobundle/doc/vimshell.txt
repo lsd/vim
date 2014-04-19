@@ -1,6 +1,6 @@
 *vimshell.txt*	Powerful shell implemented by Vim script
 
-Version: 10.0
+Version: 11.1
 Author : Shougo <Shougo.Matsu@gmail.com>
 License: MIT license  {{{
     Permission is hereby granted, free of charge, to any person obtaining
@@ -241,14 +241,18 @@ g:vimshell_use_terminal_command
 		
 		Initial value is an empty string.
 
-g:vimshell_temporary_directory		*g:vimshell_temporary_directory*
-		Sets a temporary directory used by vimshell.  And history file
-		is saved in this directory.
+g:vimshell_data_directory		*g:vimshell_data_directory*
+		Specify directories to store vimshell configurations.  And
+		history file is saved in this directory.
 
-		Initial value is "expand('~/.vimshell')".
+		Initial value is "expand('~/.cache/vimshell')".
+
+g:vimshell_temporary_directory		*g:vimshell_temporary_directory*
+		Note: It is deprecated name.
 
 g:vimshell_max_command_history		*g:vimshell_max_command_history*
 		Maximum number of entries in history.
+		If it is < 0, you can use infinite histories.
 
 		Initial value is 1000.
 
@@ -360,6 +364,19 @@ g:vimshell_enable_transient_user_prompt
 		prompt line after executing |<Plug>(vimshell_enter)| .
 
 		Default value is 0.
+
+					*g:vimshell_enable_start_insert*
+g:vimshell_enable_start_insert
+		If it is non-zero, vimshell will start in insert mode.
+
+		Default value is 1.
+
+					*g:vimshell_enable_stay_insert*
+g:vimshell_enable_stay_insert
+		If it is non-zero, vimshell will stay in insert mode after
+		the command executed.
+
+		Default value is 1.
 
 					*g:vimshell_execute_file_list*
 g:vimshell_execute_file_list
@@ -491,7 +508,7 @@ g:unite_source_vimshell_external_history_path
 		It is assignment of a history file that
 		|vimshell/external_history| source recognizes.
 
-		Default value is set to suit for $SHELL value.
+		Default value is set to suit for 'shell' value.
 
 ------------------------------------------------------------------------------
 KEY MAPPINGS 					*vimshell-key-mappings*
@@ -645,10 +662,12 @@ Insert mode key mappings.
 		Execute vimshell history by unite interface.
 		Note: To use it, you must install |unite.vim| plugin.
 
+				*i_<Plug>(vimshell_history_neocomplete)*
 <Plug>(vimshell_history_neocomplete)
 		Execute vimshell history by neocomplete interface.
 		Note: To use it, you must install |neocomplete| plugin.
 
+					*vimshell_default_key_mappings*
 Normal mode default key mappings.
 {lhs}			{rhs}
 --------		-----------------------------
@@ -671,17 +690,21 @@ a			<Plug>(vimshell_append_enter)
 <C-l>			<Plug>(vimshell_clear)
 <C-z>			<Plug>(vimshell_execute_by_background)
 
+					*v_vimshell_default_key_mappings*
 Visual mode default key mappings.
 {lhs}			{rhs}
 --------		-----------------------------
 <C-p>			<Plug>(vimshell_select_previous_prompt)
 <C-n>			<Plug>(vimshell_select_next_prompt)
 
+					*i_vimshell_default_key_mappings*
 Insert mode default key mappings.
 {lhs}			{rhs}
 --------		-----------------------------
 <CR>			<Plug>(vimshell_enter)
 <C-l>			<Plug>(vimshell_history_unite)
+<C-p>/<Up>		<Plug>(vimshell_history_neocomplete)
+<C-n>/<Down>		<Plug>(vimshell_history_neocomplete)
 <TAB>			<Plug>(vimshell_command_complete)
 <C-a>			<Plug>(vimshell_move_head)
 <C-u>			<Plug>(vimshell_delete_backward_line)
@@ -790,7 +813,7 @@ Insert mode key mappings.
 		Execute vimshell history by unite interface.
 		Note: To use it, you must install |unite.vim| plugin.
 
-
+					*vimshell_int_default_key_mappings*
 Normal mode default key mappings.
 {lhs}			{rhs}
 --------		-----------------------------
@@ -809,6 +832,7 @@ i			<Plug>(vimshell_int_insert_enter)
 a			<Plug>(vimshell_int_append_enter)
 <C-l>			<Plug>(vimshell_int_clear)
 
+					*i_vimshell_int_default_key_mappings*
 Insert mode default key mappings.
 {lhs}			{rhs}
 --------		-----------------------------
@@ -938,12 +962,17 @@ OPTIONS 					*vimshell-options*
 		-project
 		Move to project directory.
 
+						*vimshell-options-quit*
+		-quit
+		Quit buffer after command finished.
+		If |vimshell-options-popup| is enabled, switch to previous
+		window.
+
 ==============================================================================
 EXAMPLES						*vimshell-examples*
 >
 	let g:vimshell_user_prompt = 'fnamemodify(getcwd(), ":~")'
 	"let g:vimshell_right_prompt = 'vcs#info("(%s)-[%b]", "(%s)-[%b|%a]")'
-	let g:vimshell_enable_smart_case = 1
 	
 	if has('win32') || has('win64')
 	  " Display user name on Windows.
@@ -1045,6 +1074,12 @@ echo [{argument}...]				*vimshell-internal-echo*
 eval {expression}				*vimshell-internal-eval*
 		Eval {expression} as vimshell script and print it.
 
+						*vimshell-internal-export*
+export [{variable-name}={value} , ...]
+		Change {variable-name} environment variable to {value}.
+		If the arguments is empty, print current environment variables.
+		You can use this command like other shells.
+
 exe [{option}...] {command} 			*vimshell-internal-exe*
 		Execute {command} with arguments.  Execute the external command
 		forcibly.
@@ -1088,6 +1123,13 @@ h [{pattern}]						*vimshell-internal-h*
 		you omit {pattern}, execute last command.
 		Note: This command does not add history.
 
+		Note: "![{pattern}]" or "!!" equals to "h" command"
+>
+		vimshell% !          # Execute previous command.
+		vimshell% !2         # Execute history number 2 command.
+		vimshell% !!         # Execute previous command.
+		vimshell% !ls        # Execute "ls" matched command.
+<
 histdel {history-number}			*vimshell-internal-histdel*
 		Deletes {history-number} history.  You can check history number
 		using |vimshell-internal-history| command.
@@ -1308,6 +1350,10 @@ vexe {expression}				*vimshell-special-vexe*
 		You can use prefix ":" instead of vexe.
 		Note: If you use ":", vimshell do not parse anything.
 		
+		--insert
+		Start insert mode after execute {expression}.
+		If omit the option, leave insert mode.
+
 		Example:
 >
 		:ls
@@ -1582,6 +1628,10 @@ Note: |neocomplete| is required.
 >
 	imap <buffer><C-g> <Plug>(vimshell_history_neocomplete)
 <
+Q: vimshell does not use escape sequence color.
+
+A: To use escape sequence, you must enable |+conceal| feature. It is only Vim
+7.3 or above.
 
 ==============================================================================
 vim:tw=78:ts=8:ft=help:norl:noet:fen:isk+=-:

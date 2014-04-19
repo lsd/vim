@@ -38,7 +38,7 @@ FAQ			|vimproc-faq|
 ==============================================================================
 INTRODUCTION					*vimproc-introduction*
 
-|vimproc| is great asynchronous execution library for Vim.  Original vimproc is
+*vimproc* is great asynchronous execution library for Vim.  Original vimproc is
 created by Yukihiro Nakadaira.  But I'm maintaining it now.
 Instead of external shell(example: 'shell'), |vimproc| uses external dll file.
 
@@ -78,9 +78,18 @@ Build Steps:
 
 Note: You must use GNU make to build vimproc.
 
-Linux and Mac OS X
+Linux
 
 	$ make
+
+Mac OS X
+
+	$ make
+
+Note: If you want to build for multiple architectures, you can use ARCHS and CC variables.
+
+Build for i386 and x86-64:
+	$ make ARCHS='i386 x86_64'
 
 Windows
 
@@ -317,6 +326,11 @@ g:vimproc#dll_path	(default
 		error.
 						*g:vimproc_dll_path*
 		Note: |g:vimproc_dll_path| is obsolete name.
+
+						*g:vimproc#disable*
+g:vimproc#disable	(default : not defined)
+		If it is defined, you cannot call vimproc functions.
+		You can use it to disable vimproc before loading it.
 
 						*g:vimproc#popen2_commands*
 g:vimproc#popen2_commands	(default : refer to autoload/vimproc.vim)

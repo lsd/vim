@@ -1,5 +1,5 @@
 " Official: http://github.com/lsd/vim
-" Updated: 11/09/2013
+" Updated: 05/08/2014
 "
 " What:  Boilerplate GUI and shell vim rc.
 "          For developers, sysadmins, and
@@ -22,6 +22,7 @@
 "           Tab enters 2+ spaces instead of TAB key ^T
 "           Uses Fixed width Powerline Fonts
 "           ... TODO
+"
 " Caveats: Make sure your $PATH is correct within vim. View it using :!echo $PATH
 "          If not correct, try putting your PATHs in /etc/paths. Mine looks
 "          like this:
@@ -145,6 +146,7 @@ function! PluginManagement()
   NeoBundle 'rodjek/vim-puppet'
   NeoBundle 'sophacles/vim-processing'
   "NeoBundle 'https://github.com/bling/vim-airline' " TODO replace powerline with this
+  NeoBundle 'rcyrus/snipmate-snippets-rubymotion'
 
   " Internalize these
   " \cu uncomment

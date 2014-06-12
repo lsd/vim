@@ -1,5 +1,5 @@
 " Official: http://github.com/lsd/vim
-" Updated: 05/08/2014
+" Updated: 06/11/2014
 "
 " What:  Boilerplate GUI and shell vim rc.
 "          For developers, sysadmins, and
@@ -260,6 +260,9 @@ function! SetLeaderMaps()
   nnoremap \tl :set hlsearch!<CR><ESC>
   nnoremap \ts :set spell!<CR>
 
+  nnoremap \rf :call RunMe()<CR>
+  nnoremap \lf :call LintMe()<CR>
+
   "nnoremap \tg :TagbarOpenAutoClose<CR><ESC>
   nnoremap \tm :ShowMarksToggle<CR>
   nnoremap \vs :VimShellPop<CR>
@@ -344,33 +347,31 @@ function! TidyMe()
   echo 'PENDING: TODO Implement TidyMe() in ~/.vimrc'
 endfunction
 
-function! LintMe()
-  ":!echo `date +'%H:%m:%s'` Linting ",&%,"type=",&ft," ---"
-  echo "linting..."
-  if (&ft=='rb')
-    :!ruby -c %<CR>
-  elseif (&ft=='js' || &ft=='javascript' || &ft=='json')
-    echo "+js"
-    :!js -w %
-  elseif (&ft=='html' || &ft=='htm')
-    echo "+html"
-    :!echo -e "\t\t(need `&ft` support in LintMe ~/.vimrc)"
-  elseif (&ft=='php')
-    echo "+php"
-    :!php -l %
-  elseif (&ft=='haml')
-    echo "+haml"
-    :!haml -c %
-  elseif (&ft=='vim')
-    echo "pending: implement ft=='vim' in ~/.vimrc"
-  else
-    echo "Filetype"
-    echo &%
-    echo &ft
-    echo "Unknown"
+function! RunMe()
+  if (&ft=='php')
+    !php %
   endif
-  echo "done."
-  ":!echo "`date +'%H:%m:%s'` Done    -----------------------\n"
+  if (&ft=='javascript')
+    !node %
+  endif
+endfunction
+
+function! LintMe()
+  if (&ft=='rb')
+    !ruby -c %<CR>
+  elseif (&ft=='js' || &ft=='javascript' || &ft=='json')
+    !gjslint %
+  elseif (&ft=='html' || &ft=='htm')
+    !echo -e "\t\tneed html `&ft` lint support in ~/.vimrc"
+  elseif (&ft=='php')
+    !php -l %
+  elseif (&ft=='haml')
+    !haml -c %
+  elseif (&ft=='vim')
+    echo "pending: implement vimL lint"
+  else
+    echo "No known lint available for this filetype. see ':set ft'"
+  endif
 endfunction
 
 function! SettingsPlugins()

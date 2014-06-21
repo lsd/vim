@@ -1,5 +1,6 @@
 " Official: http://github.com/lsd/vim
-" Updated: 06/11/2014
+" Updated: 06/21/2014
+"          * Added vim-go (Go lang)
 "
 " What:  Boilerplate GUI and shell vim rc.
 "          For developers, sysadmins, and
@@ -68,6 +69,7 @@ function! SettingsGeneral()
   set cmdheight=2
   set scrolloff=4
   set showbreak=↪
+  set hidden
 
   highlight FoldColumn guibg=grey guifg=blue
   highlight Folded ctermfg=11 ctermbg=8 guibg=#444444 guifg=#cccccc
@@ -125,14 +127,9 @@ function! PluginManagement()
 
   NeoBundle 'Shougo/vimproc', { 'build' : { 'mac' : 'make -f make_mac.mak' }, }
   NeoBundle 'Shougo/vimshell'
-  NeoBundle 'kchmck/vim-coffee-script'
-  " TODO setup https://github.com/wannesm/rmvim.vim
-  " NeoBundle 'wannesm/rmvim.vim'
   NeoBundle 'kien/ctrlp.vim.git'
-  NeoBundle 'tpope/vim-rails'
   NeoBundle 'lsdr/monokai'
   NeoBundle 'tpope/vim-rake'
-  "NeoBundle 'techlivezheng/vim-plugin-tagbar-phpctags'
   NeoBundle 'jeetsukumaran/vim-buffergator'
   NeoBundle 'altercation/vim-colors-solarized'
   NeoBundle 'vim-scripts/vim-mou'
@@ -140,13 +137,16 @@ function! PluginManagement()
   NeoBundle 'vim-scripts/mru.vim'
   NeoBundle 'scrooloose/nerdtree'
   NeoBundle 'jistr/vim-nerdtree-tabs'
-  NeoBundle 'vim-ruby/vim-ruby'
-  NeoBundle 'vim-scripts/applescript.vim'
-  NeoBundle 'git://github.com/Lokaltog/vim-powerline.git'
   NeoBundle 'rodjek/vim-puppet'
+  NeoBundle 'fatih/vim-go'
+  NeoBundle 'tpope/vim-rails'
+  NeoBundle 'vim-ruby/vim-ruby'
   NeoBundle 'sophacles/vim-processing'
-  "NeoBundle 'https://github.com/bling/vim-airline' " TODO replace powerline with this
+  NeoBundle 'kchmck/vim-coffee-script'
+  NeoBundle 'vim-scripts/applescript.vim'
   NeoBundle 'rcyrus/snipmate-snippets-rubymotion'
+  NeoBundle 'git://github.com/Lokaltog/vim-powerline.git'
+  "NeoBundle 'https://github.com/bling/vim-airline' " TODO replace powerline with this
 
   " Internalize these
   " \cu uncomment

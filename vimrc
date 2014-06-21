@@ -201,6 +201,11 @@ function! SetAutoCommands()
   " auto spellcheck git commits
   au FileType gitcommit setlocal spell
 
+  " Universal Go style (gofmt) default is real tabs ts 8
+  au BufRead,BufNewFile *.go setlocal nolist noexpandtab tabstop=8 shiftwidth=8 softtabstop=8
+
+  au BufRead,BufNewFile *.rb set tags+=~/.vim/tags/ruby2.0.0.tags
+  au BufRead,BufNewFile *.py set tags+=~/.vim/tags/python3.3.tags
   au BufRead,BufNewFile *.json set ft=javascript
   au BufRead,BufNewFile *.as set ft=actionscript
   au BufRead,BufNewFile *.md set ft=markdown
@@ -210,12 +215,6 @@ function! SetAutoCommands()
   " SPECIFIC: PHP (PSR-2 compliance: EOF needs newline, indent is 4 space tab, { on newline)
   au BufRead,BufNewFile *.php,*.phps,*.phtml set tabstop=4 shiftwidth=4 softtabstop=4
   au BufRead,BufNewFile *.php set tags+=~/.vim/tags/php5.4.10.tags
-
-  " SPECIFIC: Ruby
-  au BufRead,BufNewFile *.rb set tags+=~/.vim/tags/ruby2.0.0.tags
-
-  " SPECIFIC: Python
-  au BufRead,BufNewFile *.py set tags+=~/.vim/tags/python3.3.tags
 
   call OnWriteOverride()
 endfunction
@@ -491,16 +490,15 @@ function! OnWriteOverride()
   " autocmd!
   au FocusLost * :%s/\s\+$//ge
   au FocusLost * :set ff=unix
-
 endfunction
 
 function! Vinitialize()
   call SettingsGeneral()
   call SettingsDeveloper()
   " CAVEAT: This removes all current autocmds
-  call SetAutoCommands()
   call PluginManagement()
   call SettingsPlugins()
+  call SetAutoCommands()
   call SetFnKeyMaps()
   call SetLeaderMaps()
   call MappingHelper()

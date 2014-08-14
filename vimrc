@@ -135,6 +135,8 @@ function! PluginManagement()
   NeoBundle 'vim-scripts/vim-mou'
   NeoBundle 'vim-scripts/dbext.vim'
   NeoBundle 'vim-scripts/mru.vim'
+  NeoBundle 'scrooloose/syntastic'
+  NeoBundle 'scrooloose/nerdcommenter'
   NeoBundle 'scrooloose/nerdtree'
   NeoBundle 'jistr/vim-nerdtree-tabs'
   NeoBundle 'rodjek/vim-puppet'
@@ -156,7 +158,6 @@ function! PluginManagement()
   " \cl or \cb comments aligned to left/BOL
   " \cA add comment at end of line
   " \c<space> toggle comment state
-  NeoBundle 'scrooloose/nerdcommenter'
   NeoBundle 'tpope/vim-surround'
   NeoBundle 'tpope/vim-characterize'
   NeoBundle 'mileszs/ack.vim'
@@ -207,6 +208,7 @@ function! SetAutoCommands()
   au BufRead,BufNewFile *.rb set tags+=~/.vim/tags/ruby2.0.0.tags
   au BufRead,BufNewFile *.py set tags+=~/.vim/tags/python3.3.tags
   au BufRead,BufNewFile *.json set ft=javascript
+  au BufRead,BufNewFile composer.lock set ft=javascript
   au BufRead,BufNewFile *.as set ft=actionscript
   au BufRead,BufNewFile *.md set ft=markdown
   au BufRead,BufNewFile *.mkd set ft=markdown

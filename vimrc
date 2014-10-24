@@ -8,13 +8,13 @@
 "          their tool to write prose or
 "          keeping notes.
 "
-"          This is WIP. Before using, you may want to
+"               This is WIP. Before using, you may want to
 "          turn off the automatic behavior that occurs
 "          when any file is written. This is done by
 "          commenting call to the OnWriteOverride
 "          function. The behavior (trimming whitespace, ff
 "          to unix, etc) is around line 465
-"
+
 " Features: Uses NeoBundle package
 "           Autowrite when focus losed
 "           Auto trim whitespace on write
@@ -23,7 +23,7 @@
 "           Tab enters 2+ spaces instead of TAB key ^T
 "           Uses Fixed width Powerline Fonts
 "           ... TODO
-"
+
 " Caveats: Make sure your $PATH is correct within vim. View it using :!echo $PATH
 "          If not correct, try putting your PATHs in /etc/paths. Mine looks
 "          like this:
@@ -40,9 +40,9 @@
              " ~/bin
              " Its important to have /u/l/b before /u/b else the non-exuberant ctags is picked up and
              " gives an error: 'illegal option -R'
-"
+
 " Help: <Leader>h and <Leader>hh in INSERT mode. <ESC>\h<CR> opens cheatsheet
-"
+
 " Getting there. Tested on MacVim but should be agnostic
 " By default, backups go in ~/.vim/backups & ~/.vim/tmp
 " This vimrc maps most function (F1, ... F19) keys, use/edit as needed
@@ -133,6 +133,7 @@ function! PluginManagement()
   NeoBundle 'jeetsukumaran/vim-buffergator'
   NeoBundle 'altercation/vim-colors-solarized'
   NeoBundle 'vim-scripts/vim-mou'
+  NeoBundle 'terryma/vim-multiple-cursors'
   NeoBundle 'vim-scripts/dbext.vim'
   NeoBundle 'vim-scripts/mru.vim'
   NeoBundle 'scrooloose/syntastic'
@@ -208,6 +209,7 @@ function! SetAutoCommands()
   au BufRead,BufNewFile *.rb set tags+=~/.vim/tags/ruby2.0.0.tags
   au BufRead,BufNewFile *.py set tags+=~/.vim/tags/python3.3.tags
   au BufRead,BufNewFile *.json set ft=javascript
+  au BufRead,BufNewFile *.twig set ft=php
   au BufRead,BufNewFile composer.lock set ft=javascript
   au BufRead,BufNewFile *.as set ft=actionscript
   au BufRead,BufNewFile *.md set ft=markdown
@@ -423,44 +425,12 @@ function! SettingsPlugins()
   let g:Tlist_Use_Right_Window = 1
   let g:Tlist_Compact_Format = 1
 
+  colorscheme solarized
+  set bg=light
+
   if has("gui_running")
-    set bg=dark
     set lines=65
     set columns=160
-    colorscheme monokai
-
-    " split viewport horizontally new split on top
-    let g:buffergator_viewport_split_policy = "b"
-    let g:buffergator_suppress_keymaps = 1
-    let g:buffergator_autodismiss_on_select = 1
-    let g:buffergator_autoupdate = 1
-    let g:buffergator_display_regime = 'basename'
-    let g:buffergator_split_size = 15
-
-    " http://mg.pov.lt/vim/doc/NERD_tree.txt
-    let g:NERDTreeIgnore = ['\.swp$', '\.DS_Store$','\.git$','\.vim$', '\~$', 'tags', 'Thumbs.db', '^\.com\.apple', '\.svn$']
-    let g:NERDTreeMouseMode = 1
-    let g:NERDTreeShowLineNumbers = 0
-    let g:NERDTreeChDirMode = 2
-
-    let g:NERDTreeShowHidden = 0
-    let g:NERDTreeWinSize = 25
-    let g:nerdtree_tabs_meaningful_tab_names = 1
-    let g:nerdtree_tabs_autoclose = 0
-    let g:nerdtree_tabs_synchronize_view = 0
-    let g:nerdtree_tabs_open_on_console_startup = 1
-    let g:nerdtree_tabs_open_on_gui_startup = 0
-    let g:nerdtree_tabs_no_startup_for_diff = 1
-    let g:nerdtree_tabs_smart_startup_focus = 1
-
-    autocmd VimEnter <buffer=1> hi ColorColumn guibg=#333333
-
-    function! LeftSidebarToggle()
-      let main = bufnr("%")
-      exe 'NERDTreeTabsToggle'
-      exe 'BuffergatorToggle'
-      exe bufwinnr(main) . 'wincmd w'
-    endfunction
 
     autocmd VimEnter * call LeftSidebarToggle()
     nnoremap <F1> :call LeftSidebarToggle()<CR>
@@ -483,7 +453,7 @@ function! SettingsPlugins()
     set guifont=Sauce\ Code\ Powerline:h14
 
   else
-    colorscheme darkburn
+    " colorscheme darkburn
     nnoremap <F1> :NERDTreeTabsToggle<CR>
   endif
 endfunction

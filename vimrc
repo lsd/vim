@@ -128,11 +128,10 @@ function! PluginManagement()
   NeoBundle 'Shougo/vimproc', { 'build' : { 'mac' : 'make -f make_mac.mak' }, }
   NeoBundle 'Shougo/vimshell'
   NeoBundle 'kien/ctrlp.vim.git'
-  NeoBundle 'lsdr/monokai'
-  NeoBundle 'tpope/vim-rake'
   NeoBundle 'jeetsukumaran/vim-buffergator'
   NeoBundle 'altercation/vim-colors-solarized'
   NeoBundle 'vim-scripts/vim-mou'
+  NeoBundle 'vim-scripts/vim-auto-save'
   NeoBundle 'terryma/vim-multiple-cursors'
   NeoBundle 'vim-scripts/dbext.vim'
   NeoBundle 'vim-scripts/mru.vim'
@@ -142,14 +141,21 @@ function! PluginManagement()
   NeoBundle 'jistr/vim-nerdtree-tabs'
   NeoBundle 'rodjek/vim-puppet'
   NeoBundle 'fatih/vim-go'
-  NeoBundle 'tpope/vim-rails'
   NeoBundle 'vim-ruby/vim-ruby'
   NeoBundle 'sophacles/vim-processing'
-  NeoBundle 'kchmck/vim-coffee-script'
-  NeoBundle 'vim-scripts/applescript.vim'
   NeoBundle 'rcyrus/snipmate-snippets-rubymotion'
-  NeoBundle 'git://github.com/Lokaltog/vim-powerline.git'
-  "NeoBundle 'https://github.com/bling/vim-airline' " TODO replace powerline with this
+  NeoBundle 'jplaut/vim-arduino-ino'
+  NeoBundle 'git://github.com/tpope/vim-eunuch.git'
+  NeoBundle 'https://github.com/bling/vim-airline'
+  "NeoBundle 'git://github.com/Lokaltog/vim-powerline.git'
+
+" NeoBundle 'lsdr/monokai'
+" NeoBundle 'tpope/vim-rake'
+" NeoBundle 'tpope/vim-rails'
+" NeoBundle 'kchmck/vim-coffee-script'
+" NeoBundle 'vim-scripts/applescript.vim'
+"  NeoBundle 'tpope/vim-haml'
+"  NeoBundle 'Gundo'
 
   " Internalize these
   " \cu uncomment
@@ -168,14 +174,12 @@ function! PluginManagement()
   NeoBundle 'vim-scripts/Txtfmt-The-Vim-Highlighter'
   NeoBundle 'nathanaelkane/vim-indent-guides'
   NeoBundle 'tilljoel/vim-automatic-ctags'
-  "NeoBundle 'majutsushi/tagbar'
+  NeoBundle 'majutsushi/tagbar'
   NeoBundle 'tpope/vim-unimpaired'
   NeoBundle 'tpope/vim-abolish'
   NeoBundle 'tpope/vim-surround'
   NeoBundle 'tpope/vim-fugitive'
   NeoBundle 'tpope/vim-bundler'
-  NeoBundle 'tpope/vim-haml'
-  NeoBundle 'Gundo'
   NeoBundle 'L9'
   NeoBundle 'plasticboy/vim-markdown'
 
@@ -191,11 +195,10 @@ function! SetAutoCommands()
   " Empty autocommands to avoid duplicate autocmd on :source %
   autocmd!
 
-  " Autosave all bufs on blur, ignore warnings
-  au FocusLost * silent! wa
+  " Autosave on blur (ignore warnings)
+  "au FocusLost * silent! wa
 
   " Trim trailing whitespace
-  au FocusLost * silent! wa
 
   " Change to current file's working dir
   au BufEnter * silent! lcd %:p:h
@@ -216,6 +219,9 @@ function! SetAutoCommands()
   au BufRead,BufNewFile *.mkd set ft=markdown
   au BufRead,BufNewFile *.markdown set ft=markdown
 
+  au BufRead,BufNewFile *.pde set filetype=arduino
+  au BufRead,BufNewFile *.ino set filetype=arduino
+
   " SPECIFIC: PHP (PSR-2 compliance: EOF needs newline, indent is 4 space tab, { on newline)
   au BufRead,BufNewFile *.php,*.phps,*.phtml set tabstop=4 shiftwidth=4 softtabstop=4
   au BufRead,BufNewFile *.php set tags+=~/.vim/tags/php5.4.10.tags
@@ -229,7 +235,7 @@ function! SetFnKeyMaps()
   nnoremap <F3> :MRU<CR>
   nnoremap <F4> :buffers<CR>:buffer<Space>
   nnoremap <F5> :set wrap!<CR>
-  "nnoremap <F6> :TagbarToggle<CR>
+  nnoremap <F6> :TagbarToggle<CR>
   nnoremap <F7> :TidyMe<CR>
 "  call togglebg#map("<F8>")
   nnoremap <F9> :GundoToggle<CR>
@@ -399,7 +405,16 @@ function! SettingsPlugins()
   "vnoremap <C-j> :m'<-2<CR>gv
 
   " PLUGIN SETTINGS
-  let g:MRU_Max_Entries=50
+
+  " vim-auto-save sets uptime to 200.
+  " It autosaves in NORMAL mode only
+  let g:auto_save = 1
+  let g:auto_save_in_insert_mode = 0
+
+  " On launch, autorun nerdtree but set focus to file
+  let g:nerdtree_tabs_smart_startup_focus = 2
+
+  let g:MRU_Max_Entries=30
   let g:MRU_Max_Menu_Entries=20
   let g:MRU_Window_Open_Always=1
 
@@ -412,7 +427,9 @@ function! SettingsPlugins()
   let g:showmarks_enable = 0
 
   let g:vim_markdown_folding_disabled=0
-  let g:Powerline_symbols = 'fancy'
+  "let g:Powerline_symbols = 'fancy'
+  let g:airline_powerline_fonts = 1
+  set laststatus=2
 
   "let g:tagbar_width = 20
   "let g:tagbar_phpctags_memory_limit = '512MB'
@@ -427,13 +444,14 @@ function! SettingsPlugins()
 
   colorscheme solarized
   set bg=light
+  nnoremap <F1> :NERDTreeTabsToggle<CR>
 
   if has("gui_running")
     set lines=65
     set columns=160
 
-    autocmd VimEnter * call LeftSidebarToggle()
-    nnoremap <F1> :call LeftSidebarToggle()<CR>
+    "autocmd VimEnter * call LeftSidebarToggle()
+    "nnoremap <F1> :call LeftSidebarToggle()<CR>
 
     map <Leader>n :NERDTreeCWD<CR>
 
@@ -454,7 +472,6 @@ function! SettingsPlugins()
 
   else
     " colorscheme darkburn
-    nnoremap <F1> :NERDTreeTabsToggle<CR>
   endif
 endfunction
 

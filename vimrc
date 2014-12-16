@@ -133,6 +133,7 @@ function! PluginManagement()
   NeoBundle 'kshenoy/vim-signature'
   NeoBundle 'Slava/tern-meteor'
   NeoBundle 'jeetsukumaran/vim-buffergator'
+  NeoBundle 'Shougo/unite.vim'
   NeoBundle 'altercation/vim-colors-solarized'
   NeoBundle 'vim-scripts/vim-mou'
   NeoBundle 'vim-scripts/vim-auto-save'

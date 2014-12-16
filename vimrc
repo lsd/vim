@@ -128,6 +128,10 @@ function! PluginManagement()
   NeoBundle 'Shougo/vimproc', { 'build' : { 'mac' : 'make -f make_mac.mak' }, }
   NeoBundle 'Shougo/vimshell'
   NeoBundle 'kien/ctrlp.vim.git'
+  NeoBundle 'thinca/vim-quickrun'
+  NeoBundle 'thinca/vim-ref'
+  NeoBundle 'kshenoy/vim-signature'
+  NeoBundle 'Slava/tern-meteor'
   NeoBundle 'jeetsukumaran/vim-buffergator'
   NeoBundle 'altercation/vim-colors-solarized'
   NeoBundle 'vim-scripts/vim-mou'
@@ -138,6 +142,7 @@ function! PluginManagement()
   NeoBundle 'scrooloose/syntastic'
   NeoBundle 'scrooloose/nerdcommenter'
   NeoBundle 'scrooloose/nerdtree'
+  NeoBundle 'evanmiller/nginx-vim-syntax'
   NeoBundle 'jistr/vim-nerdtree-tabs'
   NeoBundle 'rodjek/vim-puppet'
   NeoBundle 'fatih/vim-go'
@@ -235,13 +240,13 @@ function! SetFnKeyMaps()
   nnoremap <F3> :MRU<CR>
   nnoremap <F4> :buffers<CR>:buffer<Space>
   nnoremap <F5> :set wrap!<CR>
-  nnoremap <F6> :TagbarToggle<CR>
-  nnoremap <F7> :TidyMe<CR>
+"  nnoremap <F6> :TagbarToggle<CR>
+  nnoremap <F7> :e ~/.shell_aliases<CR>
 "  call togglebg#map("<F8>")
-  nnoremap <F9> :GundoToggle<CR>
+"  nnoremap <F9> :GundoToggle<CR>
   nnoremap <F10> :NeoBundleInstall<CR>
   nnoremap <F11> <ESC>:set hlsearch!<CR>/\s<CR><ESC>
-  nnoremap <F12> :so ~/.vimrc<CR>:echo "** reloaded .vimrc\n"<CR>
+  nnoremap <F12> :so ~/.vimrc<CR>:echo "reloaded vimrc\n"<CR>
 
   " Drag Current Line Vertically
   nnoremap <C-j> :m+<CR>
@@ -353,7 +358,7 @@ function! LittlePinPrick()
 endfunction
 
 function! TidyMe()
-  echo 'PENDING: TODO Implement TidyMe() in ~/.vimrc'
+  echo 'TODO Implement TidyMe() in ~/.vimrc'
 endfunction
 
 function! RunMe()
@@ -411,8 +416,9 @@ function! SettingsPlugins()
   let g:auto_save = 1
   let g:auto_save_in_insert_mode = 0
 
-  " On launch, autorun nerdtree but set focus to file
+  " open@launch focus on new buffer
   let g:nerdtree_tabs_smart_startup_focus = 2
+  let g:nerdtree_tabs_open_on_console_startup = 0
 
   let g:MRU_Max_Entries=30
   let g:MRU_Max_Menu_Entries=20

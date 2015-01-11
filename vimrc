@@ -417,6 +417,8 @@ function! SettingsPlugins()
   let g:auto_save = 1
   let g:auto_save_in_insert_mode = 0
 
+  let g:syntastic_scss_checkers = ['scss_lint']
+
   " open@launch focus on new buffer
   let g:nerdtree_tabs_smart_startup_focus = 2
   let g:nerdtree_tabs_open_on_console_startup = 0

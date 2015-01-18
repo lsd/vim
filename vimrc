@@ -1,6 +1,5 @@
 " Official: http://github.com/lsd/vim
-" Updated: 06/21/2014
-"          * Added vim-go (Go lang)
+" Updated: 01/18/2015
 "
 " What:  Boilerplate GUI and shell vim rc.
 "          For developers, sysadmins, and
@@ -13,7 +12,7 @@
 "          when any file is written. This is done by
 "          commenting call to the OnWriteOverride
 "          function. The behavior (trimming whitespace, ff
-"          to unix, etc) is around line 465
+"          to unix...) is around line 465
 
 " Features: Uses NeoBundle package
 "           Autowrite when focus losed
@@ -256,7 +255,7 @@ function! SetFnKeyMaps()
   inoremap <C-k> <Esc>:m-2<CR>
   vnoremap <C-j> :m'>+<CR>gv
 
-  " TODO choose proper comment based on filetype. allow block comments, etc. NERD Commenter?
+  " TODO choose proper comment based on filetype. allow block comments,... NERD Commenter?
   map <C-c> I# <Esc>$<CR><Esc>
   nnoremap q :echo 'q recording disabled'<CR>
   nnoremap qq :echo 'qq recording disabled. Did you mean ``?'<CR>
@@ -281,7 +280,8 @@ function! SetLeaderMaps()
   "nnoremap \tg :TagbarOpenAutoClose<CR><ESC>
   nnoremap \tm :ShowMarksToggle<CR>
   nnoremap \vs :VimShellPop<CR>
-  nnoremap \mk :MouOpen<CR>
+  nnoremap \mk :marko %<CR>
+  nnoremap \mv :mvim %<CR>
 
   noremap \em :Emodel
   noremap \ev :Eview
@@ -315,6 +315,7 @@ function! MappingHelper()
   \ <Leader>ts : Toggle spellcheck\n
   \ <Leader>tm : Toggle Show Line Marks\n
   \ <Leader>mk : Open current buffer in Mou\n\n
+  \ <Leader>mv : Open current buffer in mvim\n\n
   \ <Leader>h : List Fn key maps\n\n
   \ <Leader>hh : List Leader key maps\n\n
   \ Plugin rails.vim\n
@@ -351,7 +352,7 @@ function! LittlePinPrick()
 
   inoremap ccl    console.log();<LEFT><LEFT>
   inoremap cc'    console.log('');<LEFT><LEFT><LEFT>
-  inoremap cc"    console.log("");<LEFT><LEFT><LEFT>
+  inoremap ccd    console.debug('___', );<LEFT><LEFT>
 
   inoremap brp binding.remote_pry
 
@@ -505,3 +506,49 @@ function! Vinitialize()
 endfunction
 
 call Vinitialize()
+
+" ------ wip / experimental
+" (marko is a script /usr/local/bin/marko: open -n -a /Applications/Marko.app "$@")
+" echo/prompt to open Marko if
+"  - current buffer ft==mkd and at least N bytes saved
+"  - unsaved buffer mkd and >M bytes long (save to tmp/open swap in Marko)
+"  - opening new mkd file N bytes large
+
+"  function! MkdDaemon()
+"    echomsg "Open Marko preview? (Y) "
+"    let c = getchar()
+"    if c == 121 || c == 13
+"      exec '!marko ' . bufname('%')
+"    endif
+"  endfunction
+"
+"  au! BufNewFile,BufRead *.md call MkdDetected()
+"  au! BufNewFile,BufRead *.markdown call MkdDetected()
+"  au! BufNewFile,BufRead *.mkd call MkdDetected()
+
+" open and setup split
+"function! DisplayStats()
+    "let filetype = system('file ' . bufname("%"))
+
+    "" Open split
+    "vsplit __TempSplit__
+
+    "" clear it. set filetype
+    "normal! ggdG
+    "setlocal filetype=markdown
+    "setlocal buftype=nofile
+"endfunction
+
+" ------- TIPS / NOTES
+" check variable value conditionally: if (&ftp=='ruby')
+" call function
+" set variable:
+" get length of current filename: len(expand('%'))
+" get chars in current file: !wc -c %
+" no 'press enter' prompt: prefix silent, ie silent !clear
+" clear current buffer: normal! ggdG
+" open split: vsplit __Name__
+" echom to display true msg. do not interprent newlines
+" echo in red then set default color: <D-v> :echohl WarningMsg | echo 'fdny!' | echohl None
+" getchar useful key maps: 13=<Enter> 121=y 27=escape 110=n 32=space
+" save external output into var: let data = system('wc ' . bufname("%"))

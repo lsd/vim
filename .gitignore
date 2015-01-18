@@ -1,9 +1,10 @@
+/bundle/
+!/bundle/neobundle.vim
+!/bundle/.neobundle/doc/neobundle.txt
+
 tags/*.tags
 /tmp/*
 /backups/*~
-!/bundle/
-!/bundle/neobundle.vim
-/bundle/neobundle.vim/.git
 /autoload/*
 /plugin/*
 /doc/tags

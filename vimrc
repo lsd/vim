@@ -1,5 +1,5 @@
 " Official: http://github.com/lsd/vim
-" Updated: 01/18/2015
+" Updated: 02/26/2015
 "
 " What:  Boilerplate GUI and shell vim rc.
 "          For developers, sysadmins, and
@@ -267,12 +267,16 @@ function! SetFnKeyMaps()
 endfunction
 
 function! SetLeaderMaps()
+  " unmap \t
+  nnoremap \ts :set spell!<CR>
+
+  nnoremap \\ts :set spell!<CR>
   " Change all [TAB] to 2 [SPACE]s
   nnoremap \tc :%s:	:  :<CR><ESC>
+
   " Change ALL whitespace to single [SPACE]
   nnoremap \tcc :%s:\s\+: :<CR><ESC>
   nnoremap \tl :set hlsearch!<CR><ESC>
-  nnoremap \ts :set spell!<CR>
 
   nnoremap \rf :call RunMe()<CR>
   nnoremap \lf :call LintMe()<CR>
@@ -283,9 +287,9 @@ function! SetLeaderMaps()
   nnoremap \mk :marko %<CR>
   nnoremap \mv :mvim %<CR>
 
-  noremap \em :Emodel
-  noremap \ev :Eview
-  noremap \ec :Econtroller
+"  noremap \em :Emodel
+"  noremap \ev :Eview
+"  noremap \ec :Econtroller
   noremap \es :Espec
   noremap \ej :Ejavascript
   noremap \et :Etask
@@ -306,13 +310,15 @@ function! MappingHelper()
   \ F11: Show all whitespace\n
   \ F12: SourceVimRC\n"
 
+  "\ <Leader>t : unmapped - Delay to help \* \\* commands toggle easier\n
   let g:leaderMappings="\nList of Leader Key Mappings (\\)\n
   \ --------------------------\n
-  \ <Leader>tc : Fix all ^I, ^M chars in buffer\n
+  \ <Leader>ts : Toggle spellcheck\n
+  \ <Leader><Leader>ts : Toggle spellcheck\n
+  \ <Leader>tcw : Fix all ^I, ^M chars in buffer\n
   \ <Leader>tcc: Change all whitespace to 1 space\n
   \ <Leader>tl : Toggle search Highlight\n
   \ <Leader>tg : Toggle Tagbar Autoclose\n
-  \ <Leader>ts : Toggle spellcheck\n
   \ <Leader>tm : Toggle Show Line Marks\n
   \ <Leader>mk : Open current buffer in Mou\n\n
   \ <Leader>mv : Open current buffer in mvim\n\n
@@ -353,6 +359,7 @@ function! LittlePinPrick()
   inoremap ccl    console.log();<LEFT><LEFT>
   inoremap cc'    console.log('');<LEFT><LEFT><LEFT>
   inoremap ccd    console.debug('___', );<LEFT><LEFT>
+  inoremap vdi    die(var_dump(array(__FILE__.':'.__LINE__, )));<LEFT><LEFT><LEFT><LEFT>
 
   inoremap brp binding.remote_pry
 
@@ -478,7 +485,7 @@ function! SettingsPlugins()
     set guioptions-=R
     "set guifont=Source\ Code\ Pro\ ExtraLight\ for\ Powerline:h14
     "set guifont=Source\ Code\ Pro\ for\ Powerline:h14
-    set guifont=Sauce\ Code\ Powerline:h14
+    set guifont=Sauce\ Code\ Powerline:h12
 
   else
     " colorscheme darkburn
@@ -508,6 +515,16 @@ endfunction
 call Vinitialize()
 
 " ------ wip / experimental
+
+function! EditRc()
+  echomsg "Open Marko preview? (Y) "
+  let c = getchar()
+  if c == 121 || c == 13
+
+    exec '!marko ' . bufname('%')
+  endif
+endfunction
+
 " (marko is a script /usr/local/bin/marko: open -n -a /Applications/Marko.app "$@")
 " echo/prompt to open Marko if
 "  - current buffer ft==mkd and at least N bytes saved

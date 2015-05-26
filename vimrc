@@ -1,5 +1,5 @@
 " Official: http://github.com/lsd/vim
-" Updated: 02/26/2015
+" Updated: 05/26/2015
 "
 " What:  Boilerplate GUI and shell vim rc.
 "          For developers, sysadmins, and
@@ -97,6 +97,7 @@ function! SettingsDeveloper()
   set nocompatible
   set fillchars=stl:~,stlnc:-,vert:\|,fold:-,diff:-
   set number
+
   set nowrap
   set foldlevel=1
   set nofoldenable

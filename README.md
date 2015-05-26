@@ -1,7 +1,6 @@
 ## .vimrc for MacVim/console web dev
-#### Updated 08/2014  <http://github.com/lsd/vim>
+#### Updated 05/26/2015  <http://github.com/lsd/vim>
 #### This is WORK IN PROGRESS
-
 
 * **recommended usage:** Rather than clone this repo, grab the vimrc file and save locally as ~/.vimrc or copy into your own ~/.vimrc, install the NeoBundle vim plugin, and run :NeoBundleInstall to install plugins
 
@@ -18,7 +17,7 @@ This config uses (and includes) NeoBundle for plugin management.
 For manual installation, remove bundle/neobundle.vim from the repo  
 and follow the instructions on https://github.com/Shougo/neobundle.vim  
 
-## SCREENSHOT
+## SCREENSHOT (outdated; I no longer use TagList and my current theme is Solarized Light)
 ![Alt text](https://raw.github.com/lsd/vim/master/screenshot-mac.png "MacVim 7.3 colorscheme wombat on 10.8.2 with Inconsolata:18")  
 
 ## INSTALLATION

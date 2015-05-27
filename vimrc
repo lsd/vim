@@ -1,54 +1,55 @@
-" Official: http://github.com/lsd/vim
-" Updated: 05/26/2015
-"
-" What:  Boilerplate GUI and shell vim rc.
-"          For developers, sysadmins, and
-"          any user who chooses vim as
-"          their tool to write prose or
-"          keeping notes.
-"
-"               This is WIP. Before using, you may want to
-"          turn off the automatic behavior that occurs
-"          when any file is written. This is done by
-"          commenting call to the OnWriteOverride
-"          function. The behavior (trimming whitespace, ff
-"          to unix...) is around line 465
+" Author: Isam | http://github.com/lsd/vim | 05/27/2015
 
-" Features: Uses NeoBundle package
-"           Autowrite when focus losed
-"           Auto trim whitespace on write
-"           Comes with themes including solarized,
-"           zenburn and monokai.
-"           Tab enters 2+ spaces instead of TAB key ^T
-"           Uses Fixed width Powerline Fonts
-"           ... TODO
-
-" Caveats: Make sure your $PATH is correct within vim. View it using :!echo $PATH
-"          If not correct, try putting your PATHs in /etc/paths. Mine looks
-"          like this:
-"          ~/.rbenv/shims
-             " /Applications/MAMP/bin/php/current/bin
-             " /Library/Frameworks/Python.framework/Versions/3.3/bin
-             " /usr/local/share/npm/bin
-             " /usr/local/bin
-             " /usr/bin
-             " /usr/local/sbin
-             " /usr/sbin
-             " /sbin
-             " /bin
-             " ~/bin
-             " Its important to have /u/l/b before /u/b else the non-exuberant ctags is picked up and
-             " gives an error: 'illegal option -R'
+" Note: Written/tested primarily on MacVim but should be agnostic
+"       Before using, read Caveats below!
 
 " Help: <Leader>h and <Leader>hh in INSERT mode. <ESC>\h<CR> opens cheatsheet
+"   Internalize these keymaps:
+"     \cu uncomment
+"     \ci comment lines individually //..
+"     \cm comment block /* */..
+"     \cs comment pretty (?)
+"     \cl or \cb comments aligned to left/BOL
+"     \cA add comment at end of line
+"     \c<space> toggle comment state
 
-" Getting there. Tested on MacVim but should be agnostic
-" By default, backups go in ~/.vim/backups & ~/.vim/tmp
-" This vimrc maps most function (F1, ... F19) keys, use/edit as needed
-"   to disable this, set $VIM_NOBACKUPS == "true"
-" Keymaps don't always register?
-" Low timeoutlen=NEED TO HIT KEY MAPS FAST to register
-" Change [t]timeoutlen length (256) to
+" Features:
+"   Uses NeoBundle package
+"   Autowrite when focus losed
+"   Auto trim whitespace on write
+"   Low timeoutlen/ttimeoutlen (256) (see Troubleshooting below)
+"   Comes with themes solarized, zenburn, monokai
+"     I'm working on a monochrome theme.
+"   Tab enters 2+ spaces instead of TAB key ^T
+"   Uses Fixed width Powerline fonts
+
+" Caveats:
+"  Read the onWriteOverride func. It may not be behavior you want!
+"  It runs automatically "call OnWriteOverride()"
+"
+"  By default, backups go in ~/.vim/backups & ~/.vim/tmp
+"  This vimrc maps most function (F1, ... F19) keys, use/edit as needed
+"    to disable this, set $VIM_NOBACKUPS == "true"
+"
+"  Make sure $PATH is correct within vim. To check use :!echo $PATH
+"  If incorrect, try putting your PATHs in /etc/paths. Example:
+"    ~/.rbenv/shims
+"    /Applications/MAMP/bin/php/current/bin
+"    /usr/local/share/npm/bin
+"    /usr/local/bin
+"    /usr/bin
+"    /usr/local/sbin
+"    /usr/sbin
+"    /sbin
+"    /bin
+"    ~/bin
+"    Its important to have /u/l/b before /u/b else the non-exuberant 
+"    ctags is picked up and gives an error: 'illegal option -R'
+
+" Troubleshooting:
+"  Keymaps don't always register?
+"    Low timeoutlen means you need to hit KEYMAPS FAST
+"    If undesired, comment out [t]timeoutlen lines or increase value
 
 function! SettingsGeneral()
   set mat=5
@@ -60,7 +61,6 @@ function! SettingsGeneral()
   set showmode
   set incsearch
   set cursorline
-  "set ignorecase
   set copyindent
   set textwidth=0
   set wrapmargin=0
@@ -69,6 +69,7 @@ function! SettingsGeneral()
   set scrolloff=4
   set showbreak=↪
   set hidden
+" set ignorecase
 
   highlight FoldColumn guibg=grey guifg=blue
   highlight Folded ctermfg=11 ctermbg=8 guibg=#444444 guifg=#cccccc
@@ -86,7 +87,6 @@ function! SettingsGeneral()
 endfunction
 
 function! SettingsDeveloper()
-  " see note above
   set timeoutlen=265
   set ttimeoutlen=100
 
@@ -116,7 +116,7 @@ function! SettingsDeveloper()
 endfunction
 
 function! PluginManagement()
-  " DONT set this in .gvimrc
+" DONT set this in .gvimrc
   filetype off
 
   if has('vim_starting')
@@ -138,39 +138,19 @@ function! PluginManagement()
   NeoBundle 'vim-scripts/vim-mou'
   NeoBundle 'vim-scripts/vim-auto-save'
   NeoBundle 'terryma/vim-multiple-cursors'
-"  NeoBundle 'vim-scripts/dbext.vim'
   NeoBundle 'vim-scripts/mru.vim'
   NeoBundle 'scrooloose/syntastic'
   NeoBundle 'scrooloose/nerdcommenter'
   NeoBundle 'scrooloose/nerdtree'
   NeoBundle 'evanmiller/nginx-vim-syntax'
   NeoBundle 'jistr/vim-nerdtree-tabs'
-"  NeoBundle 'rodjek/vim-puppet'
-"  NeoBundle 'fatih/vim-go'
   NeoBundle 'vim-ruby/vim-ruby'
   NeoBundle 'sophacles/vim-processing'
   NeoBundle 'rcyrus/snipmate-snippets-rubymotion'
   NeoBundle 'jplaut/vim-arduino-ino'
   NeoBundle 'git://github.com/tpope/vim-eunuch.git'
   NeoBundle 'https://github.com/bling/vim-airline'
-  "NeoBundle 'git://github.com/Lokaltog/vim-powerline.git'
 
-" NeoBundle 'lsdr/monokai'
-" NeoBundle 'tpope/vim-rake'
-" NeoBundle 'tpope/vim-rails'
-" NeoBundle 'kchmck/vim-coffee-script'
-" NeoBundle 'vim-scripts/applescript.vim'
-"  NeoBundle 'tpope/vim-haml'
-"  NeoBundle 'Gundo'
-
-  " Internalize these
-  " \cu uncomment
-  " \ci comment lines individually //..
-  " \cm comment block /* */..
-  " \cs comment pretty (?)
-  " \cl or \cb comments aligned to left/BOL
-  " \cA add comment at end of line
-  " \c<space> toggle comment state
   NeoBundle 'tpope/vim-surround'
   NeoBundle 'tpope/vim-characterize'
   NeoBundle 'mileszs/ack.vim'
@@ -189,6 +169,19 @@ function! PluginManagement()
   NeoBundle 'L9'
   NeoBundle 'plasticboy/vim-markdown'
 
+" NeoBundle 'vim-scripts/dbext.vim'
+" NeoBundle 'rodjek/vim-puppet'
+" NeoBundle 'fatih/vim-go'
+" NeoBundle 'git://github.com/Lokaltog/vim-powerline.git'
+
+" NeoBundle 'lsdr/monokai'
+" NeoBundle 'tpope/vim-rake'
+" NeoBundle 'tpope/vim-rails'
+" NeoBundle 'kchmck/vim-coffee-script'
+" NeoBundle 'vim-scripts/applescript.vim'
+" NeoBundle 'tpope/vim-haml'
+" NeoBundle 'Gundo'
+
   filetype plugin indent on
   if neobundle#exists_not_installed_bundles()
     echomsg 'Not installed bundles : ' .
@@ -202,7 +195,7 @@ function! SetAutoCommands()
   autocmd!
 
   " Autosave on blur (ignore warnings)
-  "au FocusLost * silent! wa
+  " au FocusLost * silent! wa
 
   " Trim trailing whitespace
 
@@ -241,7 +234,7 @@ function! SetFnKeyMaps()
   nnoremap <F3> :MRU<CR>
   nnoremap <F4> :buffers<CR>:buffer<Space>
   nnoremap <F5> :set wrap!<CR>
-"  nnoremap <F6> :TagbarToggle<CR>
+  nnoremap <F6> :TagbarToggle<CR>
   nnoremap <F7> :e ~/.shell_aliases<CR>
 "  call togglebg#map("<F8>")
 "  nnoremap <F9> :GundoToggle<CR>
@@ -282,15 +275,15 @@ function! SetLeaderMaps()
   nnoremap \rf :call RunMe()<CR>
   nnoremap \lf :call LintMe()<CR>
 
-  "nnoremap \tg :TagbarOpenAutoClose<CR><ESC>
+" nnoremap \tg :TagbarOpenAutoClose<CR><ESC>
   nnoremap \tm :ShowMarksToggle<CR>
   nnoremap \vs :VimShellPop<CR>
   nnoremap \mk :marko %<CR>
   nnoremap \mv :mvim %<CR>
 
-"  noremap \em :Emodel
-"  noremap \ev :Eview
-"  noremap \ec :Econtroller
+" noremap \em :Emodel
+" noremap \ev :Eview
+" noremap \ec :Econtroller
   noremap \es :Espec
   noremap \ej :Ejavascript
   noremap \et :Etask
@@ -339,8 +332,8 @@ function! MappingHelper()
 endfunction!
 
 function! LittlePinPrick()
-  " INJECTIONS ([t]timeoutlen LOW, so hit keys fast :h map-overview)
-  " TODO OPTIMIZE XXX should only be enabled per filetype
+" INJECTIONS ([t]timeoutlen LOW, so hit keys fast :h map-overview)
+" TODO OPTIMIZE XXX should only be enabled per filetype
 
   inoremap {      {}<LEFT>
   inoremap {}     {}
@@ -426,7 +419,7 @@ function! SettingsPlugins()
   let g:auto_save = 1
   let g:auto_save_in_insert_mode = 0
 
-  let g:syntastic_scss_checkers = ['scss_lint']
+  " let g:syntastic_scss_checkers = ['scss_lint']
 
   " open@launch focus on new buffer
   let g:nerdtree_tabs_smart_startup_focus = 2
@@ -486,7 +479,7 @@ function! SettingsPlugins()
     set guioptions-=R
     "set guifont=Source\ Code\ Pro\ ExtraLight\ for\ Powerline:h14
     "set guifont=Source\ Code\ Pro\ for\ Powerline:h14
-    set guifont=Sauce\ Code\ Powerline:h12
+    set guifont=Sauce\ Code\ Powerline:h11
 
   else
     " colorscheme darkburn
@@ -514,6 +507,7 @@ function! Vinitialize()
 endfunction
 
 call Vinitialize()
+
 
 " ------ wip / experimental
 

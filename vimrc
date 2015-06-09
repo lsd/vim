@@ -43,7 +43,7 @@
 "    /sbin
 "    /bin
 "    ~/bin
-"    Its important to have /u/l/b before /u/b else the non-exuberant 
+"    Its important to have /u/l/b before /u/b else the non-exuberant
 "    ctags is picked up and gives an error: 'illegal option -R'
 
 " Troubleshooting:
@@ -168,6 +168,15 @@ function! PluginManagement()
   NeoBundle 'tpope/vim-bundler'
   NeoBundle 'L9'
   NeoBundle 'plasticboy/vim-markdown'
+  NeoBundle 'fxn/vim-monochrome'
+
+  " see https://github.com/honza/vim-snippets
+  NeoBundle 'pangloss/vim-javascript'
+  NeoBundle 'mxw/vim-jsx'
+  NeoBundle 'justinj/vim-react-snippets'
+  NeoBundle 'garbas/vim-snipmate'
+  NeoBundle 'tomtom/tlib_vim'
+  NeoBundle 'marcweber/vim-addon-mw-utils'
 
 " NeoBundle 'vim-scripts/dbext.vim'
 " NeoBundle 'rodjek/vim-puppet'
@@ -418,6 +427,10 @@ function! SettingsPlugins()
   " It autosaves in NORMAL mode only
   let g:auto_save = 1
   let g:auto_save_in_insert_mode = 0
+
+  " by default, JSX highlighting/indenting is only files .jsx. This adds
+  " it to .js files
+  let g:jsx_ext_required = 0
 
   " let g:syntastic_scss_checkers = ['scss_lint']
 

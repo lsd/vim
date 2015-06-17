@@ -177,6 +177,7 @@ function! PluginManagement()
   NeoBundle 'garbas/vim-snipmate'
   NeoBundle 'tomtom/tlib_vim'
   NeoBundle 'marcweber/vim-addon-mw-utils'
+  NeoBundle 'editorconfig/editorconfig-vim'
 
 " NeoBundle 'vim-scripts/dbext.vim'
 " NeoBundle 'rodjek/vim-puppet'

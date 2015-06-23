@@ -220,13 +220,14 @@ function! SetAutoCommands()
 
   au BufRead,BufNewFile *.rb set tags+=~/.vim/tags/ruby2.0.0.tags
   au BufRead,BufNewFile *.py set tags+=~/.vim/tags/python3.3.tags
+
   au BufRead,BufNewFile *.json set ft=javascript
-  au BufRead,BufNewFile *.twig set ft=php
   au BufRead,BufNewFile composer.lock set ft=javascript
   au BufRead,BufNewFile *.as set ft=actionscript
-  au BufRead,BufNewFile *.md set ft=markdown
-  au BufRead,BufNewFile *.mkd set ft=markdown
-  au BufRead,BufNewFile *.markdown set ft=markdown
+
+  au BufRead,BufNewFile *.md call InitMarkdown()
+  au BufRead,BufNewFile *.mkd call InitMarkdown()
+  au BufRead,BufNewFile *.markdown call InitMarkdown()
 
   au BufRead,BufNewFile *.pde set filetype=arduino
   au BufRead,BufNewFile *.ino set filetype=arduino
@@ -235,7 +236,16 @@ function! SetAutoCommands()
   au BufRead,BufNewFile *.php,*.phps,*.phtml set tabstop=4 shiftwidth=4 softtabstop=4
   au BufRead,BufNewFile *.php set tags+=~/.vim/tags/php5.4.10.tags
 
+  au BufRead,BufNewFile *.twig set ft=php
+
   call OnWriteOverride()
+endfunction
+
+" If opening a Markdown file, set filetype to 'markdown' for diff extensions
+" and open live preview of the buffer using a a shell script 'marko' (open -n -a /Applications/Marko.app "$@")
+function! InitMarkdown()
+  set ft=markdown
+  :!marko %
 endfunction
 
 function! SetFnKeyMaps()

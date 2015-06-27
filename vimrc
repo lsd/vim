@@ -1,8 +1,6 @@
-" Author: Isam | http://github.com/lsd/vim | 05/27/2015
-
-" Note: Written/tested primarily on MacVim but should be agnostic
-"       Before using, read Caveats below!
-
+" Info: Isam | github.com/lsd/vim | 06/27/2015
+" Written/tested primarily on MacVim but should be agnostic
+" Before using, read Caveats below!
 " Help: <Leader>h and <Leader>hh in INSERT mode. <ESC>\h<CR> opens cheatsheet
 "   Internalize these keymaps:
 "     \cu uncomment
@@ -12,44 +10,7 @@
 "     \cl or \cb comments aligned to left/BOL
 "     \cA add comment at end of line
 "     \c<space> toggle comment state
-
-" Features:
-"   Uses NeoBundle package
-"   Autowrite when focus losed
-"   Auto trim whitespace on write
-"   Low timeoutlen/ttimeoutlen (256) (see Troubleshooting below)
-"   Comes with themes solarized, zenburn, monokai
-"     I'm working on a monochrome theme.
-"   Tab enters 2+ spaces instead of TAB key ^T
-"   Uses Fixed width Powerline fonts
-
-" Caveats:
-"  Read the onWriteOverride func. It may not be behavior you want!
-"  It runs automatically "call OnWriteOverride()"
-"
-"  By default, backups go in ~/.vim/backups & ~/.vim/tmp
-"  This vimrc maps most function (F1, ... F19) keys, use/edit as needed
-"    to disable this, set $VIM_NOBACKUPS == "true"
-"
-"  Make sure $PATH is correct within vim. To check use :!echo $PATH
-"  If incorrect, try putting your PATHs in /etc/paths. Example:
-"    ~/.rbenv/shims
-"    /Applications/MAMP/bin/php/current/bin
-"    /usr/local/share/npm/bin
-"    /usr/local/bin
-"    /usr/bin
-"    /usr/local/sbin
-"    /usr/sbin
-"    /sbin
-"    /bin
-"    ~/bin
-"    Its important to have /u/l/b before /u/b else the non-exuberant
-"    ctags is picked up and gives an error: 'illegal option -R'
-
-" Troubleshooting:
-"  Keymaps don't always register?
-"    Low timeoutlen means you need to hit KEYMAPS FAST
-"    If undesired, comment out [t]timeoutlen lines or increase value
+" Note: Everything else was moved to EXTRA.md
 
 function! SettingsGeneral()
   set mat=5
@@ -69,7 +30,6 @@ function! SettingsGeneral()
   set scrolloff=4
   set showbreak=↪
   set hidden
-" set ignorecase
 
   highlight FoldColumn guibg=grey guifg=blue
   highlight Folded ctermfg=11 ctermbg=8 guibg=#444444 guifg=#cccccc
@@ -89,7 +49,6 @@ endfunction
 function! SettingsDeveloper()
   set timeoutlen=265
   set ttimeoutlen=100
-
   set smartindent
   set showmatch
   set smartcase
@@ -97,7 +56,6 @@ function! SettingsDeveloper()
   set nocompatible
   set fillchars=stl:~,stlnc:-,vert:\|,fold:-,diff:-
   set number
-
   set nowrap
   set foldlevel=1
   set nofoldenable
@@ -105,7 +63,6 @@ function! SettingsDeveloper()
   set foldminlines=4
   set virtualedit=all
   set formatoptions+=1
-
   set foldmethod=syntax
   set complete-=k complete+=k
   set backspace=indent,eol,start
@@ -116,47 +73,39 @@ function! SettingsDeveloper()
 endfunction
 
 function! PluginManagement()
-" DONT set this in .gvimrc
-  filetype off
-
   if has('vim_starting')
+    if &compatible
+      set nocompatible
+    endif
     set runtimepath+=~/.vim/bundle/neobundle.vim/
   endif
-
-  call neobundle#rc(expand('~/.vim/bundle/'))
+  filetype off
+  call neobundle#begin(expand('~/.vim/bundle/'))
+  NeoBundleFetch 'Shougo/neobundle.vim'
 
   NeoBundle 'Shougo/vimproc', { 'build' : { 'mac' : 'make -f make_mac.mak' }, }
-  " NeoBundle 'Shougo/vimshell'
   NeoBundle 'kien/ctrlp.vim.git'
-  " NeoBundle 'thinca/vim-quickrun'
+  " NeoBundle 'Valloric/YouCompleteMe'
   NeoBundle 'thinca/vim-ref'
   NeoBundle 'kshenoy/vim-signature'
-  " NeoBundle 'Slava/tern-meteor'
   NeoBundle 'jeetsukumaran/vim-buffergator'
   NeoBundle 'Shougo/unite.vim'
   NeoBundle 'altercation/vim-colors-solarized'
-  " NeoBundle 'vim-scripts/vim-mou'
   NeoBundle 'vim-scripts/vim-auto-save'
   NeoBundle 'terryma/vim-multiple-cursors'
   NeoBundle 'vim-scripts/mru.vim'
-  NeoBundle 'scrooloose/syntastic'
   NeoBundle 'scrooloose/nerdcommenter'
   NeoBundle 'scrooloose/nerdtree'
   NeoBundle 'jistr/vim-nerdtree-tabs'
   NeoBundle 'vim-ruby/vim-ruby'
   NeoBundle 'evanmiller/nginx-vim-syntax'
-  NeoBundle 'sophacles/vim-processing'
-  " NeoBundle 'rcyrus/snipmate-snippets-rubymotion'
-  NeoBundle 'jplaut/vim-arduino-ino'
   NeoBundle 'git://github.com/tpope/vim-eunuch.git'
   NeoBundle 'https://github.com/bling/vim-airline'
-
   NeoBundle 'tpope/vim-surround'
   NeoBundle 'tpope/vim-characterize'
   NeoBundle 'mileszs/ack.vim'
   NeoBundle 'juvenn/mustache.vim'
   NeoBundle 'vim-scripts/showMarks'
-  " NeoBundle 'mattn/emmet-vim'
   NeoBundle 'vim-scripts/Txtfmt-The-Vim-Highlighter'
   NeoBundle 'nathanaelkane/vim-indent-guides'
   NeoBundle 'tilljoel/vim-automatic-ctags'
@@ -168,9 +117,6 @@ function! PluginManagement()
   NeoBundle 'tpope/vim-bundler'
   NeoBundle 'L9'
   NeoBundle 'plasticboy/vim-markdown'
-  " NeoBundle 'fxn/vim-monochrome'
-
-  " see https://github.com/honza/vim-snippets
   NeoBundle 'pangloss/vim-javascript'
   NeoBundle 'mxw/vim-jsx'
   NeoBundle 'justinj/vim-react-snippets'
@@ -178,26 +124,12 @@ function! PluginManagement()
   NeoBundle 'tomtom/tlib_vim'
   NeoBundle 'marcweber/vim-addon-mw-utils'
   NeoBundle 'editorconfig/editorconfig-vim'
+  NeoBundle 'marijnh/tern_for_vim'
 
-" NeoBundle 'vim-scripts/dbext.vim'
-" NeoBundle 'rodjek/vim-puppet'
-" NeoBundle 'fatih/vim-go'
-" NeoBundle 'git://github.com/Lokaltog/vim-powerline.git'
-
-" NeoBundle 'lsdr/monokai'
-" NeoBundle 'tpope/vim-rake'
-" NeoBundle 'tpope/vim-rails'
-" NeoBundle 'kchmck/vim-coffee-script'
-" NeoBundle 'vim-scripts/applescript.vim'
-" NeoBundle 'tpope/vim-haml'
-" NeoBundle 'Gundo'
-
+  call neobundle#end()
   filetype plugin indent on
-  if neobundle#exists_not_installed_bundles()
-    echomsg 'Not installed bundles : ' .
-          \ string(neobundle#get_not_installed_bundle_names())
-    echomsg 'Execute ":NeoBundleInstall"'
-  endif
+  set omnifunc=syntaxcomplete#Complete
+  NeoBundleCheck
 endfunction
 
 function! SetAutoCommands()
@@ -273,11 +205,6 @@ function! SetFnKeyMaps()
   map <C-c> I# <Esc>$<CR><Esc>
   nnoremap q :echo 'q recording disabled'<CR>
   nnoremap qq :echo 'qq recording disabled. Did you mean ``?'<CR>
-
-  if (&ft=='help')
-    "map <buffer> q :q<CR>
-  endif
-
 endfunction
 
 function! SetLeaderMaps()
@@ -380,10 +307,6 @@ function! LittlePinPrick()
   inoremap <C-CR> <SPACE><SPACE><CR>
 endfunction
 
-function! TidyMe()
-  echo 'TODO Implement TidyMe() in ~/.vimrc'
-endfunction
-
 function! RunMe()
   if (&ft=='php')
     !php %
@@ -443,8 +366,6 @@ function! SettingsPlugins()
   " it to .js files
   let g:jsx_ext_required = 0
 
-  " let g:syntastic_scss_checkers = ['scss_lint']
-
   " open@launch focus on new buffer
   let g:nerdtree_tabs_smart_startup_focus = 2
   let g:nerdtree_tabs_open_on_console_startup = 0
@@ -484,12 +405,10 @@ function! SettingsPlugins()
   if has("gui_running")
     set lines=65
     set columns=160
-
     "autocmd VimEnter * call LeftSidebarToggle()
     "nnoremap <F1> :call LeftSidebarToggle()<CR>
 
     map <Leader>n :NERDTreeCWD<CR>
-
     map <Leader>] :bn<CR>
     map <Leader>[ :bp<CR>
     map <Leader>} :blast<CR>
@@ -501,12 +420,7 @@ function! SettingsPlugins()
     set guioptions-=L
     set guioptions-=r
     set guioptions-=R
-    "set guifont=Source\ Code\ Pro\ ExtraLight\ for\ Powerline:h14
-    "set guifont=Source\ Code\ Pro\ for\ Powerline:h14
     set guifont=Sauce\ Code\ Powerline:h11
-
-  else
-    " colorscheme darkburn
   endif
 endfunction
 
@@ -516,11 +430,11 @@ function! OnWriteOverride()
   au FocusLost * :set ff=unix
 endfunction
 
-function! Vinitialize()
+function! InitializeVim()
+  call PluginManagement()
   call SettingsGeneral()
   call SettingsDeveloper()
   " CAVEAT: This removes all current autocmds
-  call PluginManagement()
   call SettingsPlugins()
   call SetAutoCommands()
   call SetFnKeyMaps()
@@ -530,61 +444,4 @@ function! Vinitialize()
   syntax on
 endfunction
 
-call Vinitialize()
-
-
-" ------ wip / experimental
-
-function! EditRc()
-  echomsg "Open Marko preview? (Y) "
-  let c = getchar()
-  if c == 121 || c == 13
-
-    exec '!marko ' . bufname('%')
-  endif
-endfunction
-
-" (marko is a script /usr/local/bin/marko: open -n -a /Applications/Marko.app "$@")
-" echo/prompt to open Marko if
-"  - current buffer ft==mkd and at least N bytes saved
-"  - unsaved buffer mkd and >M bytes long (save to tmp/open swap in Marko)
-"  - opening new mkd file N bytes large
-
-"  function! MkdDaemon()
-"    echomsg "Open Marko preview? (Y) "
-"    let c = getchar()
-"    if c == 121 || c == 13
-"      exec '!marko ' . bufname('%')
-"    endif
-"  endfunction
-"
-"  au! BufNewFile,BufRead *.md call MkdDetected()
-"  au! BufNewFile,BufRead *.markdown call MkdDetected()
-"  au! BufNewFile,BufRead *.mkd call MkdDetected()
-
-" open and setup split
-"function! DisplayStats()
-    "let filetype = system('file ' . bufname("%"))
-
-    "" Open split
-    "vsplit __TempSplit__
-
-    "" clear it. set filetype
-    "normal! ggdG
-    "setlocal filetype=markdown
-    "setlocal buftype=nofile
-"endfunction
-
-" ------- TIPS / NOTES
-" check variable value conditionally: if (&ftp=='ruby')
-" call function
-" set variable:
-" get length of current filename: len(expand('%'))
-" get chars in current file: !wc -c %
-" no 'press enter' prompt: prefix silent, ie silent !clear
-" clear current buffer: normal! ggdG
-" open split: vsplit __Name__
-" echom to display true msg. do not interprent newlines
-" echo in red then set default color: <D-v> :echohl WarningMsg | echo 'fdny!' | echohl None
-" getchar useful key maps: 13=<Enter> 121=y 27=escape 110=n 32=space
-" save external output into var: let data = system('wc ' . bufname("%"))
+call InitializeVim()

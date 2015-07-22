@@ -1,5 +1,5 @@
-" Info: Isam | github.com/lsd/vim | 06/27/2015
 " Written/tested primarily on MacVim but should be agnostic
+" Info: Isam | github.com/lsd/vim | 06/27/2015
 " Before using, read Caveats below!
 " Help: <Leader>h and <Leader>hh in INSERT mode. <ESC>\h<CR> opens cheatsheet
 "   Internalize these keymaps:
@@ -85,6 +85,7 @@ function! PluginManagement()
 
   NeoBundle 'Shougo/vimproc', { 'build' : { 'mac' : 'make -f make_mac.mak' }, }
   NeoBundle 'kien/ctrlp.vim.git'
+  NeoBundle 'tyru/open-browser.vim'
   " NeoBundle 'Valloric/YouCompleteMe'
   NeoBundle 'thinca/vim-ref'
   NeoBundle 'kshenoy/vim-signature'
@@ -115,6 +116,7 @@ function! PluginManagement()
   NeoBundle 'tpope/vim-surround'
   NeoBundle 'tpope/vim-fugitive'
   NeoBundle 'tpope/vim-bundler'
+  NeoBundle 'sophacles/vim-processing'
   NeoBundle 'L9'
   NeoBundle 'plasticboy/vim-markdown'
   NeoBundle 'pangloss/vim-javascript'
@@ -300,7 +302,7 @@ function! LittlePinPrick()
   inoremap ccl    console.log();<LEFT><LEFT>
   inoremap cc'    console.log('');<LEFT><LEFT><LEFT>
   inoremap ccd    console.debug('___', );<LEFT><LEFT>
-  inoremap vdi    die(var_dump(array(__FILE__.':'.__LINE__, )));<LEFT><LEFT><LEFT><LEFT>
+  inoremap dvd    die(var_dump(array(__FILE__.':'.__LINE__, )));<LEFT><LEFT><LEFT><LEFT>
 
   inoremap brp binding.remote_pry
 
@@ -362,6 +364,11 @@ function! SettingsPlugins()
   let g:auto_save = 1
   let g:auto_save_in_insert_mode = 0
 
+  " vim-processing
+  let g:processing_fold = 1
+  let g:processing_doc_style = 'web'
+  let g:processing_doc_path = '/tmp/p'
+
   " by default, JSX highlighting/indenting is only files .jsx. This adds
   " it to .js files
   let g:jsx_ext_required = 0
@@ -398,8 +405,13 @@ function! SettingsPlugins()
   let g:Tlist_Use_Right_Window = 1
   let g:Tlist_Compact_Format = 1
 
-  colorscheme solarized
-  set bg=light
+  if has("gui_running")
+    colorscheme solarized
+    set bg=light
+  else
+    colorscheme peachpuff
+  endif
+
   nnoremap <F1> :NERDTreeTabsToggle<CR>
 
   if has("gui_running")

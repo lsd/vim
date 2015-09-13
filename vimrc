@@ -1,5 +1,8 @@
 " Written/tested primarily on MacVim but should be agnostic
-" Info: Isam | github.com/lsd/vim | 06/27/2015
+" Currently experimenting heavily with VimR on OS X <vimr.org>
+" so automatically opening Markdown previews currently disabled
+"
+" Info: Isam | github.com/lsd/vim | 09/13/2015
 " Before using, read Caveats below!
 " Help: <Leader>h and <Leader>hh in INSERT mode. <ESC>\h<CR> opens cheatsheet
 "   Internalize these keymaps:
@@ -159,9 +162,9 @@ function! SetAutoCommands()
   au BufRead,BufNewFile composer.lock set ft=javascript
   au BufRead,BufNewFile *.as set ft=actionscript
 
-  au BufRead,BufNewFile *.md call InitMarkdown()
-  au BufRead,BufNewFile *.mkd call InitMarkdown()
-  au BufRead,BufNewFile *.markdown call InitMarkdown()
+"  au BufRead,BufNewFile *.md call InitMarkdown()
+"  au BufRead,BufNewFile *.mkd call InitMarkdown()
+"  au BufRead,BufNewFile *.markdown call InitMarkdown()
 
   au BufRead,BufNewFile *.pde set filetype=arduino
   au BufRead,BufNewFile *.ino set filetype=arduino
@@ -172,15 +175,16 @@ function! SetAutoCommands()
 
   au BufRead,BufNewFile *.twig set ft=php
 
-  call OnWriteOverride()
+  " turn off for now, as vimR has this feature
+  " call OnWriteOverride()
 endfunction
 
 " If opening a Markdown file, set filetype to 'markdown' for diff extensions
 " and open live preview of the buffer using a a shell script 'marko' (open -n -a /Applications/Marko.app "$@")
-function! InitMarkdown()
-  set ft=markdown
-  :!marko %
-endfunction
+"function! InitMarkdown()
+"  set ft=markdown
+"  :!marko %
+"endfunction
 
 function! SetFnKeyMaps()
   set pastetoggle=<F2>
@@ -373,8 +377,17 @@ function! SettingsPlugins()
   " it to .js files
   let g:jsx_ext_required = 0
 
-  " open@launch focus on new buffer
-  let g:nerdtree_tabs_smart_startup_focus = 2
+  " open+launch focus on new buffer in MacVim not vimR
+  if has("gui_vimr")
+    let g:nerdtree_tabs_open_on_gui_startup = 0
+    let g:nerdtree_tabs_smart_startup_focus = 0
+  endif
+
+  if has("gui_macvim")
+    let g:nerdtree_tabs_open_on_gui_startup = 1
+    let g:nerdtree_tabs_smart_startup_focus = 2
+  endif
+
   let g:nerdtree_tabs_open_on_console_startup = 0
 
   let g:MRU_Max_Entries=30

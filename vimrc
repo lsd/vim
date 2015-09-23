@@ -125,11 +125,12 @@ function! PluginManagement()
   NeoBundle 'pangloss/vim-javascript'
   NeoBundle 'mxw/vim-jsx'
   NeoBundle 'justinj/vim-react-snippets'
-  NeoBundle 'garbas/vim-snipmate'
+  "NeoBundle 'garbas/vim-snipmate'
   NeoBundle 'tomtom/tlib_vim'
   NeoBundle 'marcweber/vim-addon-mw-utils'
   NeoBundle 'editorconfig/editorconfig-vim'
-  NeoBundle 'marijnh/tern_for_vim'
+  "NeoBundle 'marijnh/tern_for_vim'
+  "NeoBundle 'eiginn/netrw'
 
   call neobundle#end()
   filetype plugin indent on
@@ -213,11 +214,14 @@ function! SetFnKeyMaps()
   nnoremap qq :echo 'qq recording disabled. Did you mean ``?'<CR>
 endfunction
 
+function! DisplayNotice()
+endfunction
+
 function! SetLeaderMaps()
   " unmap \t
   nnoremap \ts :set spell!<CR>
 
-  nnoremap \\ts :set spell!<CR>
+  "nnoremap \\ts :set spell!<CR>
   " Change all [TAB] to 2 [SPACE]s
   nnoremap \tc :%s:	:  :<CR><ESC>
 
@@ -230,16 +234,20 @@ function! SetLeaderMaps()
 
 " nnoremap \tg :TagbarOpenAutoClose<CR><ESC>
   nnoremap \tm :ShowMarksToggle<CR>
-  nnoremap \vs :VimShellPop<CR>
-  nnoremap \mk :marko %<CR>
-  nnoremap \mv :mvim %<CR>
+  cnoremap \vs :VimShellPop<CR>
+
+" now use alt+cmd+P for preview
+  nnoremap \omk :!marko %<CR>
+  nnoremap \ov :!mvim %<CR>
+  nnoremap \orc :e ~/.vimrc<CR>:redraw<CR>:echo "\n* Use F12 to source .vimrc when done\n"<CR>
+  nnoremap \oif :!open -R %<CR>
 
 " noremap \em :Emodel
 " noremap \ev :Eview
 " noremap \ec :Econtroller
-  noremap \es :Espec
-  noremap \ej :Ejavascript
-  noremap \et :Etask
+"  noremap \es :Espec
+"  noremap \ej :Ejavascript
+"  noremap \et :Etask
 endfunction
 
 function! MappingHelper()
@@ -271,14 +279,21 @@ function! MappingHelper()
   \ <Leader>mv : Open current buffer in mvim\n\n
   \ <Leader>h : List Fn key maps\n\n
   \ <Leader>hh : List Leader key maps\n\n
-  \ Plugin rails.vim\n
-  \ --------------------------\n
-  \ <Leader>em : Emodel (rails.vim)\n
-  \ <Leader>ev : Eview\n
-  \ <Leader>ec : Econtroller\n
-  \ <Leader>es : Espec\n
-  \ <Leader>ej : Ejavascript\n
-  \ <Leader>et : Etask\n\n"
+  \
+  \ <Leader>omk : Open current file in Marko (must be .md file)\n\n
+  \ <Leader>ov : Open current file in mvim\n\n
+  \ <Leader>orc : Open .vimrc\n\n
+  \ <Leader>oif : Open current file in Finder\n\n"
+
+
+"  \ Plugin rails.vim\n
+"  \ --------------------------\n
+"  \ <Leader>em : Emodel (rails.vim)\n
+"  \ <Leader>ev : Eview\n
+"  \ <Leader>ec : Econtroller\n
+"  \ <Leader>es : Espec\n
+"  \ <Leader>ej : Ejavascript\n
+"  \ <Leader>et : Etask\n\n"
 
   noremap \h :echo g:FnKeyMappings<CR>
   noremap \hh :echo g:leaderMappings<CR>
@@ -342,6 +357,8 @@ endfunction
 
 function! SettingsPlugins()
   nnoremap <silent> <C-t> :CtrlP<CR>
+
+  let g:netrw_http_cmd = "open"
 
   " Move bwt buffers
   nnoremap <C-h> :bp<CR>
@@ -470,3 +487,16 @@ function! InitializeVim()
 endfunction
 
 call InitializeVim()
+"
+"function! PrintHighlightColors(msg)
+"  let Highlight_Colors_2 = [
+"      \ "WarningMsg",
+"      \ "Question",
+"      \ "Cursor",
+"      \ "CursorIM"]
+"  for color in Highlight_Colors_2
+"    echohl color
+"    echom color a:msg
+"    echohl None
+"  endfor
+"endfunction

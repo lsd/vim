@@ -237,10 +237,10 @@ function! SetLeaderMaps()
   cnoremap \vs :VimShellPop<CR>
 
 " now use alt+cmd+P for preview
-  nnoremap \omk :!marko %<CR>
+  nnoremap \omd :!marko %<CR>
   nnoremap \ov :!mvim %<CR>
+  nnoremap \of :!open -R %<CR>
   nnoremap \orc :e ~/.vimrc<CR>:redraw<CR>:echo "\n* Use F12 to source .vimrc when done\n"<CR>
-  nnoremap \oif :!open -R %<CR>
 
 " noremap \em :Emodel
 " noremap \ev :Eview
@@ -275,16 +275,12 @@ function! MappingHelper()
   \ <Leader>tl : Toggle search Highlight\n
   \ <Leader>tg : Toggle Tagbar Autoclose\n
   \ <Leader>tm : Toggle Show Line Marks\n
-  \ <Leader>mk : Open current buffer in Mou\n\n
-  \ <Leader>mv : Open current buffer in mvim\n\n
+  \ <Leader>omd : Open current buffer with Marko.app. File must be .md\n\n
+  \ <Leader>ov : Open current buffer in mvim\n\n
+  \ <Leader>of : Reveal current file in Finder \n\n
+  \ <Leader>orc : Open .vimrc in current buffer\n\n
   \ <Leader>h : List Fn key maps\n\n
-  \ <Leader>hh : List Leader key maps\n\n
-  \
-  \ <Leader>omk : Open current file in Marko (must be .md file)\n\n
-  \ <Leader>ov : Open current file in mvim\n\n
-  \ <Leader>orc : Open .vimrc\n\n
-  \ <Leader>oif : Open current file in Finder\n\n"
-
+  \ <Leader>hh : List Leader key maps\n\n"
 
 "  \ Plugin rails.vim\n
 "  \ --------------------------\n
@@ -320,7 +316,7 @@ function! LittlePinPrick()
 
   inoremap ccl    console.log();<LEFT><LEFT>
   inoremap cc'    console.log('');<LEFT><LEFT><LEFT>
-  inoremap ccd    console.debug('___', );<LEFT><LEFT>
+  inoremap ccd    console.debug();<LEFT><LEFT>
   inoremap dvd    die(var_dump(array(__FILE__.':'.__LINE__, )));<LEFT><LEFT><LEFT><LEFT>
 
   inoremap brp binding.remote_pry

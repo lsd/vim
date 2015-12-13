@@ -1,9 +1,12 @@
-" Written/tested primarily on MacVim but should be agnostic
-" Currently experimenting heavily with VimR on OS X <vimr.org>
-" so automatically opening Markdown previews currently disabled
 "
-" Info: Isam | github.com/lsd/vim | 09/13/2015
-" Before using, read Caveats below!
+" Isam | http://github.com/lsd/vim | 12/13/2015
+"
+"   Written primarily on MacVim but should be agnostic
+"   Currently experimenting heavily with VimR <vimr.org>
+"   (auto open Markdown preview on BufRead currently off)
+"
+" Notice: Before using, read Caveats below
+"
 " Help: <Leader>h and <Leader>hh in INSERT mode. <ESC>\h<CR> opens cheatsheet
 "   Internalize these keymaps:
 "     \cu uncomment
@@ -13,7 +16,14 @@
 "     \cl or \cb comments aligned to left/BOL
 "     \cA add comment at end of line
 "     \c<space> toggle comment state
+"
 " Note: Everything else was moved to EXTRA.md
+"
+" Upcoming: 
+"   Get YouCompleteMe vim-automatic-ctags setup
+"   Significantly clean up vimrc
+"   Ensure it works out of the box on Linux
+"   Create simple optional setup script
 
 function! SettingsGeneral()
   set mat=5
@@ -50,13 +60,13 @@ function! SettingsGeneral()
 endfunction
 
 function! SettingsDeveloper()
+  set nocompatible
   set timeoutlen=265
   set ttimeoutlen=100
   set smartindent
   set showmatch
   set smartcase
   set expandtab
-  set nocompatible
   set fillchars=stl:~,stlnc:-,vert:\|,fold:-,diff:-
   set number
   set nowrap
@@ -71,7 +81,7 @@ function! SettingsDeveloper()
   set backspace=indent,eol,start
   set tabstop=2 shiftwidth=2 softtabstop=2
   set tags=./tags,tags
-  set list listchars=trail:·
+  "set list listchars=tab:\I>trail:·
   set verbose=0
 endfunction
 
@@ -89,11 +99,9 @@ function! PluginManagement()
   NeoBundle 'Shougo/vimproc', { 'build' : { 'mac' : 'make -f make_mac.mak' }, }
   NeoBundle 'kien/ctrlp.vim.git'
   NeoBundle 'tyru/open-browser.vim'
-  " NeoBundle 'Valloric/YouCompleteMe'
   NeoBundle 'thinca/vim-ref'
   NeoBundle 'kshenoy/vim-signature'
   NeoBundle 'jeetsukumaran/vim-buffergator'
-  NeoBundle 'Shougo/unite.vim'
   NeoBundle 'altercation/vim-colors-solarized'
   NeoBundle 'vim-scripts/vim-auto-save'
   NeoBundle 'terryma/vim-multiple-cursors'
@@ -103,7 +111,6 @@ function! PluginManagement()
   NeoBundle 'jistr/vim-nerdtree-tabs'
   NeoBundle 'vim-ruby/vim-ruby'
   NeoBundle 'evanmiller/nginx-vim-syntax'
-  NeoBundle 'git://github.com/tpope/vim-eunuch.git'
   NeoBundle 'https://github.com/bling/vim-airline'
   NeoBundle 'tpope/vim-surround'
   NeoBundle 'tpope/vim-characterize'
@@ -112,8 +119,6 @@ function! PluginManagement()
   NeoBundle 'vim-scripts/showMarks'
   NeoBundle 'vim-scripts/Txtfmt-The-Vim-Highlighter'
   NeoBundle 'nathanaelkane/vim-indent-guides'
-  NeoBundle 'tilljoel/vim-automatic-ctags'
-  NeoBundle 'majutsushi/tagbar'
   NeoBundle 'tpope/vim-unimpaired'
   NeoBundle 'tpope/vim-abolish'
   NeoBundle 'tpope/vim-surround'
@@ -125,10 +130,16 @@ function! PluginManagement()
   NeoBundle 'pangloss/vim-javascript'
   NeoBundle 'mxw/vim-jsx'
   NeoBundle 'justinj/vim-react-snippets'
-  "NeoBundle 'garbas/vim-snipmate'
   NeoBundle 'tomtom/tlib_vim'
   NeoBundle 'marcweber/vim-addon-mw-utils'
   NeoBundle 'editorconfig/editorconfig-vim'
+  NeoBundle 'mattn/emmet-vim'
+  "NeoBundle 'Valloric/YouCompleteMe'
+  "NeoBundle 'tilljoel/vim-automatic-ctags'
+  "NeoBundle 'majutsushi/tagbar'
+  "NeoBundle 'Shougo/unite.vim'
+  "NeoBundle 'git://github.com/tpope/vim-eunuch.git'
+  "NeoBundle 'garbas/vim-snipmate'
   "NeoBundle 'marijnh/tern_for_vim'
   "NeoBundle 'eiginn/netrw'
 
@@ -156,25 +167,24 @@ function! SetAutoCommands()
   " Universal Go style (gofmt) default is real tabs ts 8
   au BufRead,BufNewFile *.go setlocal nolist noexpandtab tabstop=8 shiftwidth=8 softtabstop=8
 
-  au BufRead,BufNewFile *.rb set tags+=~/.vim/tags/ruby2.0.0.tags
-  au BufRead,BufNewFile *.py set tags+=~/.vim/tags/python3.3.tags
+  " cat tags/README.md to learn how to generate the tag files.
+  "au BufRead,BufNewFile *.rb set tags+=~/.vim/tags/ruby2.0.0.tags
+  "au BufRead,BufNewFile *.py set tags+=~/.vim/tags/python3.3.tags
 
-  au BufRead,BufNewFile *.json set ft=javascript
-  au BufRead,BufNewFile composer.lock set ft=javascript
-  au BufRead,BufNewFile *.as set ft=actionscript
+  au BufRead,BufNewFile composer.lock,*.as,*.json set ft=javascript
+  au BufRead,BufNewFile *.pde set filetype=arduino
+  au BufRead,BufNewFile *.ino set filetype=arduino
+
+  " PHP (PSR-2 compliance: EOF needs newline, indent is 4 space tab, on newline)
+  au BufRead,BufNewFile *.php,*.phps,*.phtml set tabstop=4 shiftwidth=4 softtabstop=4
+  " au BufRead,BufNewFile *.php,*.phps set tags+=~/.vim/tags/php5.6.10.tags
+  au BufRead,BufNewFile *.php,*.phps,*.phtml let php_minlines=500
+
+  au BufRead,BufNewFile *.twig set ft=php
 
 "  au BufRead,BufNewFile *.md call InitMarkdown()
 "  au BufRead,BufNewFile *.mkd call InitMarkdown()
 "  au BufRead,BufNewFile *.markdown call InitMarkdown()
-
-  au BufRead,BufNewFile *.pde set filetype=arduino
-  au BufRead,BufNewFile *.ino set filetype=arduino
-
-  " SPECIFIC: PHP (PSR-2 compliance: EOF needs newline, indent is 4 space tab, { on newline)
-  au BufRead,BufNewFile *.php,*.phps,*.phtml set tabstop=4 shiftwidth=4 softtabstop=4
-  au BufRead,BufNewFile *.php set tags+=~/.vim/tags/php5.4.10.tags
-
-  au BufRead,BufNewFile *.twig set ft=php
 
   " turn off for now, as vimR has this feature
   " call OnWriteOverride()
@@ -223,7 +233,7 @@ function! SetLeaderMaps()
 
   "nnoremap \\ts :set spell!<CR>
   " Change all [TAB] to 2 [SPACE]s
-  nnoremap \tc :%s:	:  :<CR><ESC>
+  " nnoremap \tc :%s:	:  :<CR><ESC>
 
   " Change ALL whitespace to single [SPACE]
   nnoremap \tcc :%s:\s\+: :<CR><ESC>
@@ -269,7 +279,6 @@ function! MappingHelper()
   let g:leaderMappings="\nList of Leader Key Mappings (\\)\n
   \ --------------------------\n
   \ <Leader>ts : Toggle spellcheck\n
-  \ <Leader><Leader>ts : Toggle spellcheck\n
   \ <Leader>tcw : Fix all ^I, ^M chars in buffer\n
   \ <Leader>tcc: Change all whitespace to 1 space\n
   \ <Leader>tl : Toggle search Highlight\n
@@ -431,12 +440,14 @@ function! SettingsPlugins()
   let g:Tlist_Use_Right_Window = 1
   let g:Tlist_Compact_Format = 1
 
-  if has("gui_running")
-    colorscheme solarized
-    set bg=light
-  else
-    colorscheme peachpuff
-  endif
+  set bg=dark
+  colors darkburn
+  " if has("gui_running")
+    " colorscheme solarized
+    " set bg=light
+  " else
+    " colorscheme peachpuff
+  " endif
 
   nnoremap <F1> :NERDTreeTabsToggle<CR>
 
@@ -458,7 +469,7 @@ function! SettingsPlugins()
     set guioptions-=L
     set guioptions-=r
     set guioptions-=R
-    set guifont=Sauce\ Code\ Powerline:h11
+    set guifont=Sauce\ Code\ Powerline:h14
   endif
 endfunction
 

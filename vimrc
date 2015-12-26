@@ -1,5 +1,5 @@
 "
-" Isam | http://github.com/lsd/vim | 12/13/2015
+" Isam | http://github.com/lsd/vim | 12/26/2015
 "
 "   Written primarily on MacVim but should be agnostic
 "   Currently experimenting heavily with VimR <vimr.org>
@@ -20,7 +20,7 @@
 " Note: Everything else was moved to EXTRA.md
 "
 " Upcoming: 
-"   Get YouCompleteMe vim-automatic-ctags setup
+"   Get YouCompleteMe and Unite setup
 "   Significantly clean up vimrc
 "   Ensure it works out of the box on Linux
 "   Create simple optional setup script
@@ -96,9 +96,16 @@ function! PluginManagement()
   call neobundle#begin(expand('~/.vim/bundle/'))
   NeoBundleFetch 'Shougo/neobundle.vim'
 
+  """"""""""""""""""""""""""""""""""""""""""""
+  " 2015 REFACTOR! XXX! TODO!
+  " --- Iterate through bundles from conf file (Bundlefile, Vimscript, 
+  " --- see http://vimawesome.com/plugin/endwise-vim
+  """"""""""""""""""""""""""""""""""""""""""""
+
   NeoBundle 'Shougo/vimproc', { 'build' : { 'mac' : 'make -f make_mac.mak' }, }
   NeoBundle 'kien/ctrlp.vim.git'
   NeoBundle 'tyru/open-browser.vim'
+  NeoBundle 'digitaltoad/vim-jade'
   NeoBundle 'thinca/vim-ref'
   NeoBundle 'kshenoy/vim-signature'
   NeoBundle 'jeetsukumaran/vim-buffergator'
@@ -108,6 +115,7 @@ function! PluginManagement()
   NeoBundle 'vim-scripts/mru.vim'
   NeoBundle 'scrooloose/nerdcommenter'
   NeoBundle 'scrooloose/nerdtree'
+  NeoBundle 'scrooloose/syntastic'
   NeoBundle 'jistr/vim-nerdtree-tabs'
   NeoBundle 'vim-ruby/vim-ruby'
   NeoBundle 'evanmiller/nginx-vim-syntax'
@@ -117,12 +125,16 @@ function! PluginManagement()
   NeoBundle 'mileszs/ack.vim'
   NeoBundle 'juvenn/mustache.vim'
   NeoBundle 'vim-scripts/showMarks'
+  NeoBundle 'vim-scripts/applescript.vim'
   NeoBundle 'vim-scripts/Txtfmt-The-Vim-Highlighter'
   NeoBundle 'nathanaelkane/vim-indent-guides'
+  NeoBundle 'tilljoel/vim-automatic-ctags'
+  NeoBundle 'majutsushi/tagbar'
   NeoBundle 'tpope/vim-unimpaired'
   NeoBundle 'tpope/vim-abolish'
-  NeoBundle 'tpope/vim-surround'
-  NeoBundle 'tpope/vim-fugitive'
+  NeoBundle 'maxbrunsfeld/vim-emacs-bindings'
+  " NeoBundle 'tpope/vim-surround'
+  " NeoBundle 'tpope/vim-fugitive'
   NeoBundle 'tpope/vim-bundler'
   NeoBundle 'sophacles/vim-processing'
   NeoBundle 'L9'
@@ -135,12 +147,10 @@ function! PluginManagement()
   NeoBundle 'editorconfig/editorconfig-vim'
   NeoBundle 'mattn/emmet-vim'
   "NeoBundle 'Valloric/YouCompleteMe'
-  "NeoBundle 'tilljoel/vim-automatic-ctags'
-  "NeoBundle 'majutsushi/tagbar'
+  "NeoBundle 'marijnh/tern_for_vim'
   "NeoBundle 'Shougo/unite.vim'
   "NeoBundle 'git://github.com/tpope/vim-eunuch.git'
   "NeoBundle 'garbas/vim-snipmate'
-  "NeoBundle 'marijnh/tern_for_vim'
   "NeoBundle 'eiginn/netrw'
 
   call neobundle#end()
@@ -365,6 +375,16 @@ function! SettingsPlugins()
 
   let g:netrw_http_cmd = "open"
 
+  " Syntastic
+  set statusline+=%#warningmsg#
+  set statusline+=%{SyntasticStatuslineFlag()}}
+  set statusline+=%*
+
+  let g:syntastic_always_populate_loc_list = 1
+  let g:syntastic_auto_loc_list = 1
+  let g:syntastic_check_on_open = 1
+  let g:syntastic_check_on_wq = 0
+
   " Move bwt buffers
   nnoremap <C-h> :bp<CR>
   inoremap <C-h> <ESC>:bp<CR>
@@ -449,13 +469,13 @@ function! SettingsPlugins()
     " colorscheme peachpuff
   " endif
 
-  nnoremap <F1> :NERDTreeTabsToggle<CR>
+  nnoremap <F1> :NERDTreeToggle<CR>
 
   if has("gui_running")
     set lines=65
     set columns=160
-    "autocmd VimEnter * call LeftSidebarToggle()
-    "nnoremap <F1> :call LeftSidebarToggle()<CR>
+    " autocmd VimEnter * call LeftSidebarToggle()
+    " nnoremap <F1> :call LeftSidebarToggle()<CR>
 
     map <Leader>n :NERDTreeCWD<CR>
     map <Leader>] :bn<CR>
@@ -494,7 +514,7 @@ function! InitializeVim()
 endfunction
 
 call InitializeVim()
-"
+
 "function! PrintHighlightColors(msg)
 "  let Highlight_Colors_2 = [
 "      \ "WarningMsg",

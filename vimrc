@@ -106,6 +106,7 @@ function! PluginManagement()
   NeoBundle 'kien/ctrlp.vim.git'
   NeoBundle 'tyru/open-browser.vim'
   NeoBundle 'digitaltoad/vim-jade'
+  NeoBundle 'kchmck/vim-coffee-script'
   NeoBundle 'thinca/vim-ref'
   NeoBundle 'kshenoy/vim-signature'
   NeoBundle 'jeetsukumaran/vim-buffergator'

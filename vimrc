@@ -104,8 +104,18 @@ function! PluginManagement()
 
   NeoBundle 'Shougo/vimproc', { 'build' : { 'mac' : 'make -f make_mac.mak' }, }
   NeoBundle 'kien/ctrlp.vim.git'
+  "
+  "http://github.com/reedes/vim-colors-pencil
+  "http://github.com/reedes/vim-lexical
+  "http://github.com/reedes/vim-wordy
+  "http://github.com/reedes/vim-pencil
+  "
+  " http://github.com/reedes/vim-thematic
+  " NeoBundle 'reedes/vim-thematic'
+  "
   NeoBundle 'tyru/open-browser.vim'
   NeoBundle 'digitaltoad/vim-jade'
+  NeoBundle 'mikewest/vimroom'
   NeoBundle 'kchmck/vim-coffee-script'
   NeoBundle 'thinca/vim-ref'
   NeoBundle 'kshenoy/vim-signature'

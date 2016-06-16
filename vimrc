@@ -1,5 +1,5 @@
 "
-" Isam | http://github.com/lsd/vim | 12/26/2015
+" Isam | http://github.com/lsd/vim | 06/06/2016
 "
 "   Written primarily on MacVim but should be agnostic
 "   Currently experimenting heavily with VimR <vimr.org>

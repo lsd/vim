@@ -1,5 +1,5 @@
 "
-" Isam | http://github.com/lsd/vim | 06/06/2016
+" Isam | http://github.com/lsd/vim | 07/23/2016
 "
 "   Written primarily on MacVim but should be agnostic
 "   Currently experimenting heavily with VimR <vimr.org>
@@ -114,9 +114,9 @@ function! PluginManagement()
   " NeoBundle 'reedes/vim-thematic'
   "
   NeoBundle 'tyru/open-browser.vim'
-  NeoBundle 'digitaltoad/vim-jade'
-  NeoBundle 'mikewest/vimroom'
-  NeoBundle 'kchmck/vim-coffee-script'
+  " NeoBundle 'digitaltoad/vim-jade'
+  "NeoBundle 'mikewest/vimroom'
+  " NeoBundle 'kchmck/vim-coffee-script'
   NeoBundle 'thinca/vim-ref'
   NeoBundle 'kshenoy/vim-signature'
   NeoBundle 'jeetsukumaran/vim-buffergator'
@@ -136,7 +136,7 @@ function! PluginManagement()
   NeoBundle 'mileszs/ack.vim'
   NeoBundle 'juvenn/mustache.vim'
   NeoBundle 'vim-scripts/showMarks'
-  NeoBundle 'vim-scripts/applescript.vim'
+  "NeoBundle 'vim-scripts/applescript.vim'
   NeoBundle 'vim-scripts/Txtfmt-The-Vim-Highlighter'
   NeoBundle 'nathanaelkane/vim-indent-guides'
   NeoBundle 'tilljoel/vim-automatic-ctags'
@@ -157,8 +157,10 @@ function! PluginManagement()
   NeoBundle 'marcweber/vim-addon-mw-utils'
   NeoBundle 'editorconfig/editorconfig-vim'
   NeoBundle 'mattn/emmet-vim'
-  "NeoBundle 'Valloric/YouCompleteMe'
-  "NeoBundle 'marijnh/tern_for_vim'
+  NeoBundle 'ervandew/supertab'
+  NeoBundle 'nathanaelkane/vim-indent-guides'
+  NeoBundle 'marijnh/tern_for_vim'
+  NeoBundle 'Valloric/YouCompleteMe'
   "NeoBundle 'Shougo/unite.vim'
   "NeoBundle 'git://github.com/tpope/vim-eunuch.git'
   "NeoBundle 'garbas/vim-snipmate'
